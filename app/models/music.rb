@@ -13,6 +13,11 @@ class Music < ApplicationRecord
   }
 
   enum key_signature: {
+    unfinished: 0,
+    finished: 1
+  }
+
+  enum key_signature: {
     '0#': 0, '1#': 1, '2#': 2, '3#': 3,
     '4#': 4, '5#': 5, '6#': 6, '7#': 7,
     '0b': 0, '1b': 1, '2b': 2, '3b': 3,
