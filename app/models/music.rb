@@ -3,7 +3,7 @@ class Music < ApplicationRecord
   belongs_to :exercise
 
   validates :bpm, presence: true, numericality: { greater_than: 10, lower_than: 500 }
-  validates :key_signature
+  validates :key_signature, presence: true
   validates :mode, presence: true
   validates :notes, presence: true
   validates :chords, presence: true
