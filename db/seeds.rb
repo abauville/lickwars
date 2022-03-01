@@ -7,21 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # User.destroy_all
 # Exercise.destroy_all
+require "open-uri"
+
 User.destroy_all
-User.create(email: "tom@lickwars.com", password: "123456", name: "Tom")
-sarah = User.create(email: "sarah@lickwars.com", password: "123456", name: "Sarah")
-hiromi = User.create(email: "hiromi@lickwars.com", password: "123456", name: "Hiromi")
-johann = User.create(email: "johann@lickwars.com", password: "123456", name: "Johann")
-ladygogo = User.create(email: "ladygogo@lickwars.com", password: "123456", name: "LadyGogo")
+tom = User.new(email: "tom@lickwars.com", password: "123456", name: "Tom")
+sarah = User.new(email: "sarah@lickwars.com", password: "123456", name: "Sarah")
+hiromi = User.new(email: "hiromi@lickwars.com", password: "123456", name: "Hiromi")
+johann = User.new(email: "johann@lickwars.com", password: "123456", name: "Johann")
+ladygogo = User.new(email: "ladygogo@lickwars.com", password: "123456", name: "LadyGogo")
 
+tom.avatar_picture.attach(io: URI.open('https://m.media-amazon.com/images/M/MV5BMTU5M2Y5M2QtYmQ3Yi00YjBhLTgyNzEtNDhlMGNiZDRkOTgzXkEyXkFqcGdeQXVyNjc3NDgwNzU@._V1_.jpg'),
+                          filename: "Tom_profile_pic.png", content_type: 'image/png')
 
-# Exercise.new(
-#   difficulty: rand(0.0..10.0),
-#   name: "Exploring the I - V relation ##{1}",
-#   description: "The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.",
-#   chord_progression: "I - V - I",
-#   user: sarah
-# )
+sarah.avatar_picture.attach(io: URI.open('http://www.anomalypodcast.com/wp-content/uploads/2016/05/Terminator_Feature1.jpg'),
+                            filename: "Sarah_profile_pic.png", content_type: 'image/png')
+
+hiromi.avatar_picture.attach(io: URI.open('https://www.eventworld.co/blob/images/pg/hiromi-uehara_1b95b097d3_1000.jpg'),
+                             filename: "Hiromi_profile_pic.png", content_type: 'image/png')
+
+johann.avatar_picture.attach(io: URI.open('https://www.bach-cantatas.com/thefaceofbach/Pic-FOB/1760-08-wdheq-if-300.jpg'),
+                             filename: "Johann_profile_pic.png", content_type: 'image/png')
+
+ladygogo.avatar_picture.attach(io: URI.open('https://cdn.trendhunterstatic.com/phpthumbnails/69/69406/69406_1_600.jpeg'),
+                               filename: "LadyGogo_profile_pic.png", content_type: 'image/png')
 
 11.times do |i_exercise|
   Exercise.create(
