@@ -8,22 +8,4 @@ h1 {
   position:fixed;
   right:50px;
   bottom:50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  background-color: $light-green;
-  color: rgb(238, 238, 238);
-  font-weight: 600;
-  min-height: 20px;
-  min-width: 90px;
-  font-size: 22px;
-  border-radius: 16px;
-  max-height: 80px;
-  margin-bottom: 0;
-  padding: 12px 32px;
-  cursor: pointer;
-  &:hover {
-    background-color: #7C9B9A;
-  }
 }
