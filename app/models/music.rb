@@ -1,4 +1,7 @@
 class Music < ApplicationRecord
+  belongs_to :user
+  belongs_to :exercise
+
   validates :bpm, presence: true, numericality: { greater_than: 10, lower_than: 500 }
   validates :key_signature
   validates :mode, presence: true
@@ -8,6 +11,14 @@ class Music < ApplicationRecord
   validates :chord_values, presence: true
   validate  :each_note_has_value?
   validate  :each_chord_has_value?
+  validates :user, uniqueness: {
+    scope: %i[exercise is_question]
+  }
+
+  enum key_signature: {
+    unfinished: 0,
+    finished: 1
+  }
 
   enum key_signature: {
     '0#': 0, '1#': 1, '2#': 2, '3#': 3,
