@@ -1,1 +1,29 @@
 // Specific CSS for your home-page
+h1 {
+  text-align: center;
+  padding: 20px;
+}
+
+.teacher-ex-card-button-add {
+  position:fixed;
+  right:50px;
+  bottom:50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  background-color: #83b7b5;
+  color: rgb(238, 238, 238);
+  font-weight: 600;
+  min-height: 20px;
+  min-width: 90px;
+  font-size: 22px;
+  border-radius: 16px;
+  max-height: 80px;
+  margin-bottom: 0;
+  padding: 12px 32px;
+  cursor: pointer;
+  &:hover {
+    background-color: #7C9B9A;
+  }
+}
