@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   # validates :name, uniqueness: true, length: { minimum: 3 }
   before_save :default_values
-  has_one_attached :avatar_picture
+  has_one_attached :profile_picture
 
   has_many :musics, dependent: :destroy
   has_many :exercises, dependent: :destroy
