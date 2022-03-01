@@ -15,6 +15,16 @@
   padding: 12px 32px;
   cursor: pointer;
   &:hover {
-    background-color: #7C9B9A;
+    background-color: #7c9b9a;
+  }
+}
+
+.card-result button {
+  background-color: $primary;
+  border-color: $primary;
+  color: white;
+  &:hover {
+    background-color: #7c9b9a;
+    color: white;
   }
 }
