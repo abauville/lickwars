@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2022_03_01_063158) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "exercise_id", null: false
+    t.boolean "is_question", default: false, null: false
     t.integer "status", default: 0, null: false
     t.index ["exercise_id"], name: "index_musics_on_exercise_id"
     t.index ["user_id"], name: "index_musics_on_user_id"
