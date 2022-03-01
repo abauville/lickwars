@@ -1,0 +1,12 @@
+.teacher-exercise-card {
+  margin-right: 8px;
+  display: flex;
+  min-height: 120px;
+  min-width: 40%;
+  border-radius: 16px;
+  background-color: #EDEDED;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0 , 0.15);
+  &:hover {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0 , 0.18);
+  }
+}
