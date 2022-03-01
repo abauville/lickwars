@@ -6,6 +6,9 @@ class User < ApplicationRecord
   validates :name, uniqueness: true, length: { minimum: 3 }
   before_save :default_values
 
+  has_many :musics, dependent: :destroy
+  has_many :exercises, dependent: :destroy
+
   def default_values
     self.name ||= self.email[...self.email.index('@')]
   end
