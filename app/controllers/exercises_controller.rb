@@ -1,21 +1,50 @@
 class ExercisesController < ApplicationController
+  before_action :set_exercise, only: [:edit, :update, :destroy]
   def index
-    @exercises = Exercise.all
+    @exercises = @restaurants = policy_scope(Exercise)
   end
 
   def new
-    raise
+    @exercise = current_user.exercises.new
+    authorize @exercise
   end
 
   def create
-    raise
+    @exercise = current_user.exercises.new(exercise_params)
+    authorize @exercise
+
+    if @exercise.save
+      redirect_to exercises_path
+    else
+      render :new
+    end
   end
 
   def edit
-    raise
   end
 
   def update
+    @exercise.update(exercise_params)
+
+    if @exercise.save
+      redirect_to exercises_path
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @exercise.destroy
+    redirect_to exercises_path
+  end
+
+  def exercise_params
     raise
+    # params.require(:restaurant).permit(:name, :description, :user_id)
+  end
+
+  def set_exercise
+    @exercise = Exercise.find(params[:id])
+    authorize @exercise
   end
 end
