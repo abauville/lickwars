@@ -43,7 +43,7 @@ class Music < ApplicationRecord
     notes.split.length == note_values.split.length
   end
 
-  def each_note_has_value?
+  def each_chord_has_value?
     chords.split.length == chord_values.split.length
   end
 end
