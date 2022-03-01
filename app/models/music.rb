@@ -1,4 +1,7 @@
 class Music < ApplicationRecord
+  belongs_to :user
+  belongs_to :exercise
+
   validates :bpm, presence: true, numericality: { greater_than: 10, lower_than: 500 }
   validates :key_signature
   validates :mode, presence: true
