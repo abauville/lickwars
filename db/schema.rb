@@ -17,14 +17,12 @@ ActiveRecord::Schema.define(version: 2022_03_01_063158) do
 
   create_table "exercises", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "music_id", null: false
     t.float "difficulty"
     t.string "name", null: false
     t.text "description", default: "", null: false
     t.string "chord_progression", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["music_id"], name: "index_exercises_on_music_id"
     t.index ["user_id"], name: "index_exercises_on_user_id"
   end
 
