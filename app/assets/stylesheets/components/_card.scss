@@ -1,12 +1,109 @@
+.card-result {
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.card-result > img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-result h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-result p {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.card-result .card-result-infos {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+
+.card-result-infos .card-result-user {
+  position: absolute;
+  right: 16px;
+  top: -20px;
+  width: 40px;
+}
+
+.card-result p {
+  text-align: left;
+}
+
+.text-center p {
+  text-align: center;
+}
+
+.card-result button {
+  top: 10px !important;
+}
+
 .teacher-exercise-card {
   margin-right: 8px;
   display: flex;
   min-height: 120px;
   min-width: 40%;
   border-radius: 16px;
-  background-color: #EDEDED;
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0 , 0.15);
+  background-color: #ededed;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
   &:hover {
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0 , 0.18);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
   }
+}
+
+.card-review {
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.card-review > img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-review h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-review p {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.card-review .card-review-infos {
+  padding: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: flex-end;
+  position: relative;
+}
+
+.card-review-infos .card-review-user {
+  position: relative;
+  right: 16px;
+  top: 1px;
+  width: 40px;
+}
+
+.card-review p {
+  font-size: $font-size-base;
 }
