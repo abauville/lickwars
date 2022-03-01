@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :name, uniqueness: true, length: { minimum: 3 }
   before_save :default_values
+  has_one_attached :profile_picture
 
   def default_values
     self.name ||= self.email[...self.email.index('@')]
