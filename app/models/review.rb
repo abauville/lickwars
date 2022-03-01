@@ -6,4 +6,5 @@ class Review < ApplicationRecord
 
   def vote_or_content
     vote || content
+  end
 end
