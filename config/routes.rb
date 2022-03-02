@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
-  resources :exercises, only: %i[index new create edit update delete]
+  get "/test", to: 'pages#test'
+  resources :exercises, only: %i[index new create edit update delete] do
+    resources :reviews, only: %i[index create]
+  end
   namespace :teacher do
     resources :exercises, only: :index
   end
