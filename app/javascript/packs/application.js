@@ -9,14 +9,12 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "controllers";
 import "bootstrap";
+import "components";
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
 $(document).ready(function () {
-  $('[data-toggle="popover"]').popover({
-    placement: "top",
-    trigger: "hover",
-  });
+  $('[data-toggle="tooltip"]').tooltip();
 });
