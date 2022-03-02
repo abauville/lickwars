@@ -1,6 +1,24 @@
+<h1>Reviews for review.exercise.name</h1>
+
+<p>Number of votes: <%= @num_votes %> </p>
+<p>Number of reviews: <%= @reviews.length %> </p>
+
+
+<%= simple_form_for [@exercise, @review] do |f| %>
+  <%= f.input :vote, :as => :hidden, :input_html => { :value => @vote_value } %>
+  <%= f.submit @vote_submit_btn_value %>
+<% end %>
+
+
+<%= simple_form_for [@exercise, @review] do |f| %>
+  <%= f.input :content%>
+  <%= f.submit @content_submit_btn_value %>
+<% end %>
+
 <ul>
   <% @reviews.each do |review| %>
     <li>
+      <p><%= review.created_at %></p>
       <p><%= review.content %></p>
       <p><%= review.user.name %></p>
       <p><%= review.exercise.name %></p>
