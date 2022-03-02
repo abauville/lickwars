@@ -39,8 +39,7 @@ class ExercisesController < ApplicationController
   end
 
   def exercise_params
-    raise
-    # params.require(:restaurant).permit(:name, :description, :user_id)
+    params.require(:exercise).permit(:name, :description, :chord_progression, :user_id, :difficulty)
   end
 
   def set_exercise
