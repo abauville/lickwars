@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="col-8 offset-2">
+      <%= simple_form_for @exercise do |f| %>
+        <%= f.input :name %>
+        <%= f.input :description %>
+        <%= f.input :chord_progression %>
+        <%= f.input :difficulty %>
+        <%= f.submit 'Submit', class: "submit-button"%>
+      <% end %>
+  </div>
+</div>
