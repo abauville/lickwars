@@ -4,18 +4,12 @@ class ExercisesController < ApplicationController
   end
 
   def new
-    raise
+    @exercise = Exercise.new
   end
 
-  def create
-    raise
-  end
+  def create; end
 
-  def edit
-    raise
-  end
+  def edit; end
 
-  def update
-    raise
-  end
+  def update; end
 end
