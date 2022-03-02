@@ -49,8 +49,16 @@ ladygogo.save
 end
 # ========================
 
+<<<<<<< HEAD
 # Exercises made by power users ==========================
 
+=======
+<<<<<<< HEAD
+=======
+
+# Exercises made by power users ==========================
+>>>>>>> d0ca6ae9d6cf318fe09665c70ccdaa96d59ddffd
+>>>>>>> 359e6e16d1e4f783be928592597618a7ec6cbb5f
 11.times do |i_exercise|
   Exercise.create(
     difficulty: rand(0.0..10.0),
