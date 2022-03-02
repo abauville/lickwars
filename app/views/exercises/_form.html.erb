@@ -1,11 +1,13 @@
 <div class="container">
-  <div class="col-8 offset-2">
-      <%= simple_form_for @exercise do |f| %>
-        <%= f.input :name %>
-        <%= f.input :description %>
-        <%= f.input :chord_progression %>
-        <%= f.input :difficulty %>
+  <div class="col-8 offset-2 mb-5 mt-2">
+    <%= simple_form_for @exercise do |f| %>
+      <%= f.input :name, placeholder: "Input the exercise name" %>
+      <%= f.input :description %>
+      <%= f.input :chord_progression %>
+      <%= f.input :difficulty, input_html: { min: 0 } %>
+      <div class="d-flex justify-content-center">
         <%= f.submit 'Submit', class: "submit-button"%>
-      <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
