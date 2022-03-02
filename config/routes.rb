@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   get "/test", to: 'pages#test'
   resources :exercises, only: %i[index new create edit update delete] do
-    resources :reviews, only: %i[index create]
+    resources :reviews, only: %i[index create update]
   end
   namespace :teacher do
     resources :exercises, only: :index
