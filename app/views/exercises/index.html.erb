@@ -1,29 +1,6 @@
 <h1>Exercises#index</h1>
 <p>Find me in app/views/exercises/index.html.erb</p>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <ul>
   <% @exercises.each do |ex| %>
     <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
@@ -36,9 +13,9 @@
         </div>
         <div class="d-flex flex-grow-1 align-items-center justify-content-evenly me-5 ">
          <p class="mb-0 lw-text-header prog-realign mr-5" data-toggle="tooltip" title="Chord progression"><%= ex.chord_progression %></p>
-          <p class="ml-5 mb-0 lw-text-header"> <%=ex.name %></p>
+          <p class="pl-4 ml-5 mb-0 lw-text-header fw-bold"> <%=ex.name %></p>
         </div>
-        <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
+        <div class="d-flex flex-column justify-content-evenly p-3 ml-4">
       <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
             <% if ex.difficulty_string == "easy"  %>
               <p class="mb-0 lw-text-header text-center  text-primary" data-toggle="tooltip" title="Difficulty ">
@@ -47,7 +24,7 @@
             <% end %>
             <% if ex.difficulty_string == "intermediate" %>
               <p class="mb-0 lw-text-header text-center  text-success" data-toggle="tooltip" title="Difficulty">
-                Intermediate
+                Inter
               </p>
             <% end %>
             <% if ex.difficulty_string == "hard" %>
