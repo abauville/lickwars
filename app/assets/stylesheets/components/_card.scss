@@ -59,8 +59,11 @@
   border-radius: 16px;
   background-color: #ededed;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+  transition: 0.2s;
   &:hover {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
+    transform: scale(1.02);
+    color: black;
   }
 }
 
@@ -106,4 +109,9 @@
 
 .card-review p {
   font-size: $font-size-base;
+}
+
+.remove-link-style {
+  text-decoration: none;
+  color: black;
 }
