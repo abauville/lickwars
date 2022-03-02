@@ -1,5 +1,5 @@
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: [:edit, :update, :destroy]
+  before_action :set_exercise, only: %i[edit update destroy]
   def index
     @exercises = @restaurants = policy_scope(Exercise)
   end
@@ -14,11 +14,22 @@ class ExercisesController < ApplicationController
     authorize @exercise
 
     if @exercise.save
-      redirect_to exercises_path
+      redirect_to "/exercises/#{@exercise.id}"
     else
       render :new
     end
   end
+
+  # def create
+  #   @studio = Studio.new(studio_params)
+  #   @studio.user = current_user
+  #   authorize @studio
+  #   if @studio.save
+  #     redirect_to "/studios/#{@studio.id}"
+  #   else
+  #     render :new
+  #   end
+  # end
 
   def edit
   end
