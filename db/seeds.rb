@@ -12,7 +12,6 @@ require 'faker'
 
 User.destroy_all
 
-
 # == Power users =============================
 tom = User.new(email: "tom@lickwars.com", password: "123456", name: "Tom")
 sarah = User.new(email: "sarah@lickwars.com", password: "123456", name: "Sarah")
@@ -42,20 +41,15 @@ johann.save
 ladygogo.save
 # ========================
 
-
 # Faker users ============
 50.times do
   name = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
   name.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
-                          filename: "#{name}_profile_pic.png", content_type: 'image/png')
+                              filename: "#{name}_profile_pic.png", content_type: 'image/png')
 end
 # ========================
 
-<<<<<<< HEAD
-=======
-
 # Exercises made by power users ==========================
->>>>>>> d0ca6ae9d6cf318fe09665c70ccdaa96d59ddffd
 11.times do |i_exercise|
   Exercise.create(
     difficulty: rand(0.0..10.0),
@@ -100,7 +94,6 @@ progs = ["vi - IV - I - V"]
 end
 # ====================================
 
-
 ### Music
 # ===================
 Music.create(
@@ -116,7 +109,6 @@ Music.create(
   exercise: Exercise.first
 )
 # ====================================
-
 
 ### Reviews
 # ===================
