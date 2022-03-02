@@ -1,3 +1,14 @@
-<% @exercises.each do |exercise| %>
-  <%= render "teacher_exercise_card", {exercise: exercise} %>
-<% end %>
+<div class="d-flex">
+  <div class="flex-grow-1">
+    <h1 class="text-center mt-4">Uploaded Exercises</h1>
+    <% @exercises.each do |exercise| %>
+      <%= render "teacher_exercise_card", {exercise: exercise} %>
+    <% end %>
+  </div>
+  <div id="button-container">
+    <div id="teacher-ex-card-button-add">
+      <p class="teacher-ex-card-button ms-3">Add new exercise</p>
+    </div>
+  </div>
+
+</div>
