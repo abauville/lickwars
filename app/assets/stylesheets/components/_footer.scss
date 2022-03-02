@@ -3,33 +3,36 @@
   display: flex;
   align-items: center;
   position: relative;
-  justify-content: space-between;
-  height: 150px;
   width: 100%;
-  padding: 0px 100px;
+  // justify-content: space-between;
+  // padding: 0px 100px;
   color: rgb(237, 237, 237);
   bottom: 0;
   z-index: 2030;
 }
 .footer-links {
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .footer-links a {
   color: rgb(237, 237, 237);
   opacity: 1;
   text-decoration: none;
   font-size: 24px;
-  padding: 0px 10px;
 }
 .footer-links a:hover {
   color: $primary;
 }
 
-.footer-forrow > p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  left: 9px;
-  position: relative;
-  top: 5px;
+.footer-follow > p {
+  // margin-top: 0;
+  // margin-bottom: 1rem;
+  // position: relative;
+}
+
+.more-margin {
+  margin-left: 30px;
+  margin-right: 30px;
 }
