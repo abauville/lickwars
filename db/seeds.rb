@@ -43,9 +43,15 @@ ladygogo.save
 
 # Faker users ============
 50.times do
+<<<<<<< HEAD
+  name = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
+  name.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
+                              filename: "#{name}_profile_pic.png", content_type: 'image/png')
+=======
   user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
   user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
                               filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
+>>>>>>> 7b50bda89cc4a13c78c433496239c904bd0a26a6
 end
 # ========================
 
