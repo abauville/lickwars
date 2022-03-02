@@ -49,6 +49,12 @@ ladygogo.save
 end
 # ========================
 
+<<<<<<< HEAD
+=======
+
+# Exercises made by power users ==========================
+
+>>>>>>> 6466c6fdec12e2cef5751d84918b6ce379b37c8c
 11.times do |i_exercise|
   Exercise.create(
     difficulty: rand(0.0..10.0),
@@ -112,8 +118,23 @@ Music.create(
 ### Reviews
 # ===================
 puts "Now creating reviews:"
+<<<<<<< HEAD
 comments = ["Nice exercise", "good", "It's difficult", "I like this melody", "You are genius", "great practice",
             "I don't like this", "Good..", "it brings me back to childhood"]
+=======
+comments = ["Nice exercise", "Good", "It was difficult",
+            "I like this melody", "You are a genius", "Great practice",
+            "It brings me back to my childhood", "The third bar was really tricky",
+            "The end has nice twist!", "Very Mozartian!", "Man, that #11 was spicy!",
+            "Nice melody, not too hard", "A bit too easy", "Classical harmony with a twist",
+            "Can't get wrong with those chords", "That melody was just classic (in a jazzy way)",
+            "Good drills", "Now, I realize I need to practice more those basic progressions",
+            "The final suspension was the cherry on the cake", "It started easy and then... are you insane!",
+            "Just what you would expect", "Does the job", "Perfect drill during my commute",
+            "Just the exercise I needed", "I always find it difficult to distinguish 4 and 2. This series of exercise is really what I needed",
+            "That melody! I almost cried.", "I need more of those", "Meeeeh...", "It didn't disappoint",
+            "Vibes of Chopin anyone?", "I see someone likes Bach", "Popping and hopping!", "It pumped me up"]
+>>>>>>> 6466c6fdec12e2cef5751d84918b6ce379b37c8c
 Exercise.all.each do |exercise|
   users = User.all.reject { |usr| usr == exercise.user }.sample(rand(3..15))
   users.each do |user|
