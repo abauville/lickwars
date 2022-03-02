@@ -1,7 +1,7 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: [:edit, :update, :destroy]
   def index
-    @exercises = @restaurants = policy_scope(Exercise)
+    @exercises = policy_scope(Exercise)
   end
 
   def new
