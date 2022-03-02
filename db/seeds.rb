@@ -45,9 +45,9 @@ ladygogo.save
 
 # Faker users ============
 50.times do
-  name = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
-  name.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
-                          filename: "#{name}_profile_pic.png", content_type: 'image/png')
+  user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
+  user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
+                          filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
 end
 # ========================
 
@@ -119,13 +119,14 @@ Music.create(
 ### Reviews
 # ===================
 puts "Now creating reviews:"
-Exercise.all do |exercise|
-  users = Users.all.reject { |usr| usr == exercise.user }.sample(rand(3..15))
+comments = ["Nice exercise", "good", "It's difficult", "I like this melody", "You are genius", "great practice", "I don't like this", "Good..", "it brings me back to childhood"]
+Exercise.all.each do |exercise|
+  users = User.all.reject { |usr| usr == exercise.user }.sample(rand(3..15))
   users.each do |user|
     Review.create(
       exercise: exercise,
       user: user,
-      content: "it's good exercise",
+      content: comments.sample,
       vote: rand(0..1)
     )
   end
