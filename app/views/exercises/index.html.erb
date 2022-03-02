@@ -6,11 +6,13 @@
   <% @exercises.each do |ex| %>
     <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
 
-      <div class="teacher-exercise-card p-3 m-5">
+      <div class="teacher-exercise-card m-5">
+        <i class="fas fa-circle fa-3x d-flex align-items-center"></i>
         <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-          <p class="mb-0 lw-text-header"> <%=ex.name %></p>
-          <p class="mb-0 lw-text-header"><%= ex.chord_progression %></p>
+          <p class="mb-0 lw-text-header prog-realign"><%= ex.chord_progression %></p>
         </div>
+          <p class="mb-0 lw-text-header name-realign"> <%=ex.name %></p>
+
         <div class="d-flex flex-grow-1 align-items-center justify-content-end me-5">
           <%#<p class="teacher-ex-card-button me-5">View Comment</p>%>
           <%# <p class="teacher-ex-card-button">Edit</p> %>
