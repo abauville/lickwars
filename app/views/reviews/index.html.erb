@@ -1,1 +1,9 @@
-#Show reviews
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <p><%= review.content %></p>
+      <p><%= review.user.name %></p>
+      <p><%= review.exercise.name %></p>
+    </li>
+  <% end %>
+</ul>

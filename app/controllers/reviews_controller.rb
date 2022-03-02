@@ -10,7 +10,8 @@ class ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = policy_scope(Exercise)
+    exercise = Exercise.find(params[:exercise_id])
+    @reviews = policy_scope(Review).where(exercise: exercise)
   end
 
   def show
