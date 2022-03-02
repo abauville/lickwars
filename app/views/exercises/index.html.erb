@@ -23,14 +23,13 @@
 
 
 
-        <a href="" id="popover" data-trigger="hover">hey</a>
 
 <ul>
   <% @exercises.each do |ex| %>
     <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
 
       <div class="teacher-exercise-card m-5">
-        <i class="fas fa-circle fa-3x  d-flex align-items-center"></i>
+        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="popover" title="Popover title" data-content="A larger popover to demonstrate the max-width of the Bootstrap popover."></i>
         <div class="d-flex flex-column justify-content-center p-3 ms-4">
         <div class="d-flex flex-column justify-content-end p-3 ms-4">
         </div>
