@@ -8,8 +8,11 @@
 # User.destroy_all
 # Exercise.destroy_all
 require "open-uri"
+require 'faker'
 
 User.destroy_all
+
+# == Power users =============================
 tom = User.new(email: "tom@lickwars.com", password: "123456", name: "Tom")
 sarah = User.new(email: "sarah@lickwars.com", password: "123456", name: "Sarah")
 hiromi = User.new(email: "hiromi@lickwars.com", password: "123456", name: "Hiromi")
@@ -36,7 +39,23 @@ sarah.save
 hiromi.save
 johann.save
 ladygogo.save
+# ========================
 
+# Faker users ============
+50.times do
+<<<<<<< HEAD
+  name = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
+  name.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
+                              filename: "#{name}_profile_pic.png", content_type: 'image/png')
+=======
+  user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
+  user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/'),
+                              filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
+>>>>>>> 7b50bda89cc4a13c78c433496239c904bd0a26a6
+end
+# ========================
+
+# Exercises made by power users ==========================
 11.times do |i_exercise|
   Exercise.create(
     difficulty: rand(0.0..10.0),
@@ -79,7 +98,10 @@ progs = ["vi - IV - I - V"]
     user: ladygogo
   )
 end
+# ====================================
 
+### Music
+# ===================
 Music.create(
   bpm: 80,
   key_signature: 2,
@@ -92,3 +114,32 @@ Music.create(
   status: 0,
   exercise: Exercise.first
 )
+# ====================================
+
+### Reviews
+# ===================
+puts "Now creating reviews:"
+comments = ["Nice exercise", "Good", "It was difficult",
+            "I like this melody", "You are a genius", "Great practice",
+            "It brings me back to my childhood", "The third bar was really tricky",
+            "The end has nice twist!", "Very Mozartian!", "Man, that #11 was spicy!",
+            "Nice melody, not too hard", "A bit too easy", "Classical harmony with a twist",
+            "Can't get wrong with those chords", "That melody was just classic (in a jazzy way)",
+            "Good drills", "Now, I realize I need to practice more those basic progressions",
+            "The final suspension was the cherry on the cake", "It started easy and then... are you insane!",
+            "Just what you would expect", "Does the job", "Perfect drill during my commute",
+            "Just the exercise I needed", "I always find it difficult to distinguish 4 and 2. This series of exercise is really what I needed",
+            "That melody! I almost cried.", "I need more of those", "Meeeeh...", "It didn't disappoint",
+            "Vibes of Chopin anyone?", "I see someone likes Bach", "Popping and hopping!", "It pumped me up"]
+Exercise.all.each do |exercise|
+  users = User.all.reject { |usr| usr == exercise.user }.sample(rand(3..15))
+  users.each do |user|
+    Review.create(
+      exercise: exercise,
+      user: user,
+      content: comments.sample,
+      vote: rand(0..1)
+    )
+  end
+end
+# ====================================
