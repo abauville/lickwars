@@ -29,34 +29,34 @@
     <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
 
       <div class="teacher-exercise-card m-5">
-        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="popover" title="Popover title" data-content="A larger popover to demonstrate the max-width of the Bootstrap popover."></i>
+        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="popover" title="In progress"></i>
         <div class="d-flex flex-column justify-content-center p-3 ms-4">
         <div class="d-flex flex-column justify-content-end p-3 ms-4">
         </div>
         </div>
         <div class="d-flex flex-grow-1 align-items-center justify-content-evenly me-5 ">
-         <p class="mb-0 lw-text-header prog-realign mr-5"><%= ex.chord_progression %></p>
+         <p class="mb-0 lw-text-header prog-realign mr-5" data-toggle="popover" title="Chord progression"><%= ex.chord_progression %></p>
           <p class="ml-5 mb-0 lw-text-header"> <%=ex.name %></p>
         </div>
         <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
       <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
             <% if ex.difficulty_string == "easy"  %>
-              <p class="mb-0 lw-text-header text-center  text-primary ">
+              <p class="mb-0 lw-text-header text-center  text-primary data-toggle="popover" title="Difficulty "">
                 Easy
               </p>
             <% end %>
             <% if ex.difficulty_string == "intermediate" %>
-              <p class="mb-0 lw-text-header text-center  text-success">
+              <p class="mb-0 lw-text-header text-center  text-success data-toggle="popover" title="Difficulty ">
                 Intermediate
               </p>
             <% end %>
             <% if ex.difficulty_string == "hard" %>
-              <p class="mb-0 lw-text-header text-center  text-danger">
+              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="popover" title="Difficulty "
                 Hard
               </p>
             <% end %>
             <% if ex.difficulty_string == "insane" %>
-              <p class="mb-0 lw-text-header text-center  text-danger">
+              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="popover" title="Difficulty "
                 Insane
               </p>
             <% end %>
