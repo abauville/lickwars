@@ -50,7 +50,7 @@ end
 # ========================
 
 # Exercises made by power users ==========================
-\11.times do |i_exercise|
+11.times do |i_exercise|
   Exercise.create(
     difficulty: rand(0.0..10.0),
     name: "Exploring the I - V relation ##{i_exercise + 1}",
