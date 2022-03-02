@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-
   background-color: #83b7b5;
   color: rgb(238, 238, 238);
   font-weight: 600;
@@ -14,10 +13,11 @@
   max-height: 80px;
   margin-bottom: 0;
   padding: 12px 32px;
-
+  text-decoration: none;
   cursor: pointer;
   &:hover {
     background-color: #7c9b9a;
+    color: rgb(238, 238, 238);
   }
 }
 

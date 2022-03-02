@@ -1,1 +1,3 @@
-<h1>I'm the teacher's exercise index page</h1>
+<% @exercises.each do |exercise| %>
+  <%= render "teacher_exercise_card", {exercise: exercise} %>
+<% end %>
