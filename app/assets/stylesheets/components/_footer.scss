@@ -25,3 +25,11 @@
 .footer-links a:hover {
   color: $primary;
 }
+
+.footer-forrow > p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  left: 9px;
+  position: relative;
+  top: 5px;
+}
