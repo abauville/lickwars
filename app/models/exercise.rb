@@ -9,17 +9,15 @@ class Exercise < ApplicationRecord
     musics.where(user: user)
   end
 
-  def diff_level
-    @exercises = Exercise.all
-    @exercises.each do |exercise|
-      if exercise.difficulty.between?(1, 4)
-        @answer = "easy"
-      elsif exercise.difficulty.between?(4, 7)
-        @answer = "medium"
-      else
-        @answer = "hard"
-      end
-    end
-    @answer
+  def difficulty_string
+    min_diff = 0
+    max_diff = 10
+    string = ["easy", "intermediate", "hard", "insane"]
+
+    return string[-1] if difficulty > max_diff
+
+
+    index = ((difficulty - min_diff) / (max_diff - min_diff) * (string.length - 1)).floor
+    string[index]
   end
 end

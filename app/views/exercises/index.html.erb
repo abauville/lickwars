@@ -15,8 +15,8 @@
       <p class="teacher-ex-card-button">Edit</p>
     </div>
         <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-      <p class="mb-0 lw-text-header">Difficulty:</p>
-      <p class="mb-0 lw-text-description text-center"><%= ex.difficulty.round %></p>
+      <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
+      <p class="mb-0 lw-text-description text-center"><%= ex.difficulty_string.capitalize %></p>
     </div>
   </div>
   <% end %>
