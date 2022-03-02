@@ -16,7 +16,26 @@
     </div>
         <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
       <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
-      <p class="mb-0 lw-text-description text-center"><%= ex.difficulty_string.capitalize %></p>
+        <% if ex.difficulty_string == "easy"  %>
+          <p class="mb-0 lw-text-description text-center text-primary">
+            Easy
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "intermediate" %>
+          <p class="mb-0 lw-text-description text-center text-success">
+            Intermediate
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "hard" %>
+          <p class="mb-0 lw-text-description text-center text-warning">
+            Intermediate
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "insane" %>
+          <p class="mb-0 lw-text-description text-center text-danger">
+            Insane
+          </p>
+        <% end %>
     </div>
   </div>
   <% end %>
