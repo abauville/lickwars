@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.references :exercise, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
       t.text :content
-      t.integer :vote, null: false, default: true
+      t.integer :vote, null: false, default: 0
 
       t.timestamps
     end
