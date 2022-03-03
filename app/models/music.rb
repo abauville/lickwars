@@ -10,8 +10,8 @@ class Music < ApplicationRecord
     scope: %i[exercise is_question]
   }
 
-  enum key_signature: {
-    unfinished: 0,
+  enum status: {
+    in_progress: 0,
     finished: 1
   }
 
