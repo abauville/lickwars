@@ -25,6 +25,7 @@ class ExercisesController < ApplicationController
 
   def show
     authorize @exercise
+    @music = get_music_from_exercise(@exercise)
   end
 
   def update
@@ -49,5 +50,9 @@ class ExercisesController < ApplicationController
   def set_exercise
     @exercise = Exercise.find(params[:id])
     authorize @exercise
+  end
+
+  def get_music_from_exercise(exercise)
+    Music.where(exercise_id: exercise.id).first # TODO: fix the music association? double check if music has many exercises
   end
 end
