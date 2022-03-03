@@ -1,0 +1,20 @@
+sssss
+
+<button class="btn" >hey</button>
+
+<script language="text/javascript">
+
+import * as Tone from "tone";
+
+const synth = new Tone.Synth().toDestination();
+
+//play a middle 'C' for the duration of an 8th note
+
+const button = document.querySelector("button");
+button.addEventListener((event) => {
+    console.log("hey")
+    synth.triggerAttackRelease("C4", "8n");
+
+})
+
+</script>
