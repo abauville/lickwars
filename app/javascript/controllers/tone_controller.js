@@ -11,7 +11,6 @@ import * as Tone from "tone";
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["output"];
   log(params) {
     console.log("test?");
     //create a synth and connect it to the main output (your speakers)
@@ -21,7 +20,9 @@ export default class extends Controller {
     //play a middle 'C' for the duration of an 8th note
     synth.triggerAttackRelease("C4", "8n");
   }
-  connect() {
-    this.outputTarget.textContent = "Hello, Stimulus!";
-  }
+
+  // static targets = ["output"];
+  // connect() {
+  //   this.outputTarget.textContent = "Hello, Stimulus!";
+  // }
 }
