@@ -49,6 +49,6 @@ class ExercisesController < ApplicationController
 
   def set_exercise
     @exercise = Exercise.find(params[:id])
-    # authorize @exercise
+    authorize @exercise
   end
 end
