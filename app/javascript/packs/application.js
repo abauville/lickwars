@@ -14,10 +14,3 @@ import "components";
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
-<<<<<<< HEAD
-
-$(document).ready(function () {
-  $('[data-toggle="tooltip"]').tooltip();
-});
-=======
->>>>>>> 09e1a80106171d19b9eb92285de7ad1fe64d0d09
