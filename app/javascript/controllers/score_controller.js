@@ -13,8 +13,6 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [ "output" ]
 
-  static targets = [ "output" ]
-
   connect() {
     this.init_converters();
     this.currentSelection = null;
