@@ -94,22 +94,6 @@ progs = ["vi - IV - I - V"]
 end
 # ====================================
 
-### Music
-# ===================
-Music.create(
-  bpm: 80,
-  key_signature: 2,
-  notes: "C D E G",
-  note_values: "4 4 4 4",
-  chords: "C",
-  chord_values: "1",
-  user: sarah,
-  is_question: true,
-  status: 0,
-  exercise: Exercise.first
-)
-# ====================================
-
 ### Reviews
 # ===================
 puts "Now creating reviews:"
@@ -133,6 +117,38 @@ Exercise.all.each do |exercise|
       user: user,
       content: comments.sample,
       vote: rand(0..1)
+    )
+  end
+end
+# ====================================
+
+### Music
+# ===================
+Exercise.all.each do |exercise|
+  Music.create(
+    bpm: 80,
+    key_signature: 2,
+    notes: "C D E G",
+    note_values: "4 4 4 4",
+    chords: "C",
+    chord_values: "1",
+    user: exercise.user,
+    is_question: true,
+    status: 1,
+    exercise: Exercise.first
+  )
+  User.all.sample(rand(3..15)).each do |user|
+    Music.create(
+      bpm: 80,
+      key_signature: 2,
+      notes: "C D E G",
+      note_values: "4 4 4 4",
+      chords: "C",
+      chord_values: "1",
+      user: user,
+      is_question: false,
+      status: rand(0..1),
+      exercise: Exercise.first
     )
   end
 end
