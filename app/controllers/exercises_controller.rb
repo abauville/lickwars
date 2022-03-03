@@ -24,7 +24,8 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    authorize @exercise
+    @music = current_user.musics.find_or_create_by(exercise: @exercise, is_question: false)
+    @action = @music.id ? { path: music_path(@music), method: :patch } : { path: exercise_musics_path(@exercise), method: :post }
   end
 
   def update
@@ -48,6 +49,6 @@ class ExercisesController < ApplicationController
 
   def set_exercise
     @exercise = Exercise.find(params[:id])
-    authorize @exercise
+    # authorize @exercise
   end
 end
