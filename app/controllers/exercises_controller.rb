@@ -24,7 +24,7 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    @music = current_user.musics.find_or_create_by(exercise: @exercise, is_question: false)
+    @music = current_user.musics.find_or_initialize_by(exercise: @exercise, is_question: false)
     @action = @music.id ? { path: music_path(@music), method: :patch } : { path: exercise_musics_path(@exercise), method: :post }
   end
 
