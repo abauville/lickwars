@@ -1,5 +1,5 @@
 class ExercisesController < ApplicationController
-  before_action :set_exercise, only: [:edit, :update, :destroy]
+  before_action :set_exercise, only: %i[edit update show destroy]
   def index
     @exercises = policy_scope(Exercise)
   end
@@ -21,6 +21,10 @@ class ExercisesController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
+    authorize @exercise
   end
 
   def update
