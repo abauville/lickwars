@@ -7,7 +7,8 @@
       <%# vvvv left this in hear for future reference vvvv %>
       <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#show_notes" >yoooo</p> %>
       <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Check</p>
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Submit</p>
+
+      <p class="lw-button lw-btn-sm text-center mb-0 mx-2" href=""  data-bs-toggle="modal" data-bs-target="#commentModal">Submit</p>
     </div>
     <div class="d-flex justify-content-around">
       <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/whole-note_chdou4.jpg" %>
@@ -27,3 +28,5 @@
       <%= image_tag "placeholder.jpeg", class: "music-sheet-placeholder mx-auto mt-4" %>
   </div>
 </div>
+
+<%= render partial: "results_card"%>
