@@ -38,20 +38,30 @@
   text-decoration: none;
 }
 
-.submit-button{
+.lw-button {
   background-color: $primary;
   color: white;
   font-weight: 600;
-  min-height: 20px;
-  min-width: 90px;
-  font-size: 16px;
   border-radius: 16px;
-  max-height: 80px;
   margin-bottom: 0;
   padding: 8px 16px;
   border: none;
-  width: 160px;
   &:hover {
     background-color: #7c9b9a;
   }
+}
+
+.lw-btn-sm {
+  min-height: 20px;
+  min-width: 80px;
+  font-size: 16px;
+  max-height: 80px;
+  width: 124px;
+}
+
+.lw-btn-lg {
+  min-height: 20px;
+  min-width: 90px;
+  max-height: 80px;
+  width: 160px;
 }
