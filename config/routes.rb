@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/test", to: 'pages#test'
   resources :exercises, only: %i[index new create edit update delete show] do
     resources :reviews, only: %i[index create update]
+    resources :musics, only: %i[new create]
   end
   namespace :teacher do
     resources :exercises, only: :index
