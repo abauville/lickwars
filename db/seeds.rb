@@ -135,7 +135,7 @@ Exercise.all.each do |exercise|
     user: exercise.user,
     is_question: true,
     status: 1,
-    exercise: Exercise.first
+    exercise: exercise
   )
   User.all.sample(rand(3..15)).each do |user|
     Music.create(
@@ -148,7 +148,7 @@ Exercise.all.each do |exercise|
       user: user,
       is_question: false,
       status: rand(0..1),
-      exercise: Exercise.first
+      exercise: exercise
     )
   end
 end
