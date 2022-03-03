@@ -1,8 +1,10 @@
 <div class="m-3">
   <h1 class="text-center"><%= @exercise.name %></h1>
   <div class="player_card shadow p-5">
-    <div class="d-flex justify-content-end">
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Play Melody</p>
+    <div class="d-flex justify-content-end" data-controller="tone" data-tone-notes-value="<%= @music.notes %>">
+      <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#log">Play Melody</p>
+      <%# vvvv left this in hear for future reference vvvv %>
+      <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#show_notes" >yoooo</p> %>
       <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Check</p>
       <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Submit</p>
     </div>
