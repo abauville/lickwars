@@ -5,7 +5,7 @@ class MusicsController < ApplicationController
 
   def create
     exercise = Exercise.find(params[:exercise_id])
-    @music = Music.new(music_params)
+    @music = current_user.musics.new(music_params)
     @music.exercise = exercise
     if @music.save
       redirect_to excercises_path
@@ -17,7 +17,6 @@ class MusicsController < ApplicationController
   private
 
   def music_params
-    # may need to delete unnecessary one
     params.require(:music).permit(
       :bpm,
       :key_signature,
@@ -25,9 +24,7 @@ class MusicsController < ApplicationController
       :notes,
       :chords,
       :note_values,
-      :chord_values,
-      :user_id,
-      :status
+      :chord_values
     )
   end
 end
