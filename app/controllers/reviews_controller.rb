@@ -1,10 +1,7 @@
 class ReviewsController < ApplicationController
   def create
     exercise = Exercise.find(params[:exercise_id])
-    @review = Review.new(user: current_user, exercise: exercise)
-
-    @review.vote = params[:review][:vote] if params[:review][:vote]
-    @review.content = params[:review][:content] if params[:review][:content]
+    @review = Review.new(review_params)
     authorize @review
 
     @review.save
@@ -27,12 +24,19 @@ class ReviewsController < ApplicationController
   def update
     exercise = Exercise.find(params[:exercise_id])
     @review = Review.find_by(user: current_user, exercise: exercise)
-
-    @review.vote = params[:review][:vote] if params[:review][:vote]
-    @review.content = params[:review][:content] if params[:review][:content]
+    @review.update(review_params)
     authorize @review
 
     @review.save
     redirect_to exercise_reviews_path(exercise)
+  end
+
+  private
+
+  def review_params
+    params[:review][:exercise_id] = params[:exercise_id]
+    params[:review][:user_id] = current_user.id
+
+    params.require(:review).permit(:user_id, :exercise_id, :vote, :content)
   end
 end
