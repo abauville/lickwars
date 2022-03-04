@@ -1,6 +1,6 @@
 <div class="card-review mx-5 my-4 px-5 py-4">
   <div class="card-review-infos mx-5">
-    <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-review-user avatar-bordered" />
+      <%= cl_image_tag review.user.profile_picture.key, crop: :fill, class: "card-review-user avatar-bordered", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
     <div>
       <h2>@<%= review.user.name %></h2>
       <p><%= review.user.created_at%></p>
