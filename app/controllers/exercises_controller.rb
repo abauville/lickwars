@@ -27,6 +27,8 @@ class ExercisesController < ApplicationController
     authorize @exercise
     @question_music = @exercise.question_music
     @attempt_music = @exercise.attempt_music(current_user)
+    @review = Review.new
+    @action = @music.id ? { path: music_path(@music), method: :patch } : { path: exercise_musics_path(@exercise), method: :post }
   end
 
   def update
