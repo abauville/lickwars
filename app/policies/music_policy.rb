@@ -5,4 +5,22 @@ class MusicPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def new
+    true
+  end
+
+  def create?
+    true
+  end
+
+  def update?
+    the_teacher?
+  end
+
+  private
+
+  def the_teacher?
+    record.exercise.user == user
+  end
 end
