@@ -1,0 +1,20 @@
+div#score {
+  // background-color: $body-color;
+
+}
+.vf-stavenote:hover path {
+  stroke:rgb(36, 80, 255);
+  fill: rgb(36, 80, 255);
+  filter: drop-shadow(0 0 0.1rem rgba(36, 80, 255, 0.8));
+}
+
+.vf-stavenote.selected path{
+  stroke:red;
+  fill: red;
+}
+
+.vf-stavenote:focus{
+  stroke:red;
+  fill: red;
+  outline: none;
+}
