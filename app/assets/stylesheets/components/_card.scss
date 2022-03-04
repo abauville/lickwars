@@ -116,6 +116,15 @@
   color: black;
 }
 
+.remove-link-style:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.teacher-exercise-card > i {
+  position: relative;
+  left: 48px;
+
 .player-card{
   border-radius: 16px;
   min-height: 250px;

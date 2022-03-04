@@ -1,63 +1,47 @@
 <h1>Exercises#index</h1>
 <p>Find me in app/views/exercises/index.html.erb</p>
 
-
 <ul>
   <% @exercises.each do |ex| %>
     <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
-
-      <div class="teacher-exercise-card p-3 m-5">
-        <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-          <p class="mb-0 lw-text-header"> <%=ex.name %></p>
-          <p class="mb-0 lw-text-header"><%= ex.chord_progression %></p>
+    <div class="row justify-content-center">
+      <div class="teacher-exercise-card m-5 col-12 col-lg-8">
+        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress"></i>
+        <div class="d-flex flex-column justify-content-center p-3 ms-4">
+        <div class="d-flex flex-column justify-content-end p-3 ms-4">
         </div>
-        <div class="d-flex flex-grow-1 align-items-center justify-content-end me-5">
-          <%#<p class="teacher-ex-card-button me-5">View Comment</p>%>
-          <%# <p class="teacher-ex-card-button">Edit</p> %>
         </div>
-        <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
+        <div class="d-flex flex-grow-1 align-items-center justify-content-evenly me-5 ">
+         <p class="mb-0 lw-text-header prog-realign mr-5" data-toggle="tooltip" title="Chord progression"><%= ex.chord_progression %></p>
+          <p class="pl-4 ml-5 mb-0 lw-text-header fw-bold"> <%=ex.name %></p>
+        </div>
+        <div class="d-flex flex-column justify-content-evenly p-3 ml-4">
       <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
             <% if ex.difficulty_string == "easy"  %>
-              <p class="mb-0 lw-text-header text-center  text-primary ">
+              <p class="mb-0 lw-text-header text-center  text-primary" data-toggle="tooltip" title="Difficulty ">
                 Easy
               </p>
             <% end %>
             <% if ex.difficulty_string == "intermediate" %>
-              <p class="mb-0 lw-text-header text-center  text-success">
-                Intermediate
+              <p class="mb-0 lw-text-header text-center  text-success" data-toggle="tooltip" title="Difficulty">
+                Inter
               </p>
             <% end %>
             <% if ex.difficulty_string == "hard" %>
-              <p class="mb-0 lw-text-header text-center  text-warning">
+              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
                 Hard
               </p>
             <% end %>
             <% if ex.difficulty_string == "insane" %>
-              <p class="mb-0 lw-text-header text-center  text-danger">
+              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
                 Insane
               </p>
             <% end %>
-
         </div>
       </div>
-    <% end %>
+    </div>
+          <% end %>
+
 
   <% end %>
-</ul>
-
-
-<%= link_to exercises_path(@exercises), class: "teacher-exercise-card p-3 m-5" do %>
-<ul>
-  <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-    <p class="mb-0 lw-text-header"> </p>
-    <p class="mb-0 lw-text-header"></p>
-  </div>
-  <div class="d-flex flex-grow-1 align-items-center justify-content-end me-5">
-    <%#<p class="teacher-ex-card-button me-5">View Comment</p>%>
-    <%# <p class="teacher-ex-card-button">Edit</p> %>
-  </div>
-  <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-  <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
-  </div>
-<% end %>
 </ul>

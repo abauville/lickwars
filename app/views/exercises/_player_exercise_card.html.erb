@@ -1,12 +1,30 @@
 <div class="m-3">
   <h1 class="text-center"><%= @exercise.name %></h1>
   <div class="player_card shadow p-5">
-    <div class="d-flex justify-content-end">
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Play Melody</p>
+    <div class="d-flex justify-content-center" data-controller="tone" data-tone-notes-value="<%= @music.notes %>">
+      <i class="fas fa-play-circle play-button fa-2x mt-1 mx-2"></i>
+      <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#log">Play Melody</p>
+      <%# vvvv left this in hear for future reference vvvv %>
+      <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#show_notes" >yoooo</p> %>
       <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Check</p>
       <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Submit</p>
        <%# example of how it can work %>
       <%#= link_to "submit", @action[:path], method: @action[:method] %>
+    </div>
+    <div class="d-flex justify-content-around">
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/whole-note_chdou4.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/half-note_uk6aeu.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/quarter-note_wbzr40.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/eighth-note_erdzte.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/sixteenth-note_unwb9y.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/dotted-half-note_qlqktb.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/dotted-quarter-note_wv55sq.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/dotted-eighth-note_zajwoa.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/whole-rest_bazdxs.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/half-rest_mr1gxf.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/quarter-rest_hhno82.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/eighth-rest_n9qjev.jpg" %>
+      <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/sixteenth-rest_tc2vpz.jpg" %>
     </div>
       <%= image_tag "placeholder.jpeg", class: "music-sheet-placeholder mx-auto mt-4" %>
   </div>
