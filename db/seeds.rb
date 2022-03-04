@@ -137,6 +137,20 @@ Exercise.all.each do |exercise|
     status: 1,
     exercise: exercise
   )
+
+  Music.create(
+    bpm: 80,
+    key_signature: 2,
+    notes: "C C G G A A G", # twinkle little star
+    note_values: "4 4 4 4",
+    chords: "C",
+    chord_values: "1",
+    user: exercise.user,
+    is_question: true,
+    status: 1,
+    exercise: exercise
+  )
+
   User.all.sample(rand(3..15)).each do |user|
     Music.create(
       bpm: 80,

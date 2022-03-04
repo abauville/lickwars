@@ -25,8 +25,14 @@ class ExercisesController < ApplicationController
 
   def show
     @review = Review.new
+    @question = get_question_from_exercise(@exercise)
     @music = current_user.musics.find_or_initialize_by(exercise: @exercise, is_question: false)
-    @action = @music.id ? { path: music_path(@music), method: :patch } : { path: exercise_musics_path(@exercise), method: :post }
+    @action = if @music.id
+                { path: music_path(@music),
+                  method: :patch }
+              else
+                { path: exercise_musics_path(@exercise), method: :post }
+              end
   end
 
   def update
@@ -53,7 +59,7 @@ class ExercisesController < ApplicationController
     authorize @exercise
   end
 
-  def get_music_from_exercise(exercise)
-    Music.where(exercise_id: exercise.id).first # TODO: fix the music association? double check if music has many exercises
+  def get_question_from_exercise(exercise)
+    Music.where(exercise_id: exercise.id, is_question: true).first # TODO: fix the music association? double check if music has many exercises
   end
 end
