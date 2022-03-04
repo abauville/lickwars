@@ -6,7 +6,16 @@
     <%= link_to exercise_path(ex), class: "remove-link-style" do %>
     <div class="row justify-content-center">
       <div class="teacher-exercise-card m-5 col-12 col-lg-8">
-        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress"></i>
+        <% if ex.musics.first.status == "finished"%>
+          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:green"></i>
+        <% end %>
+
+        <% if ex.musics.first.status == "in_progress"%>
+          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:yellow"></i>
+
+        <% end %>
+
+
         <div class="d-flex flex-column justify-content-center p-3 ms-4">
         <div class="d-flex flex-column justify-content-end p-3 ms-4">
         </div>
@@ -40,8 +49,6 @@
         </div>
       </div>
     </div>
-          <% end %>
-
-
+    <% end %>
   <% end %>
 </ul>
