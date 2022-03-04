@@ -141,7 +141,7 @@ Exercise.all.each do |exercise|
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "C D E G",
+      notes: "C4 D4 E4 G4",
       note_values: "4 4 4 4",
       chords: "C",
       chord_values: "1",
