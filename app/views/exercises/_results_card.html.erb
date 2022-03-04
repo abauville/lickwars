@@ -16,7 +16,7 @@
         </h1>
         <%= simple_form_for [@exercise,@review] do |form| %>
         Share your thoughts:
-        <%= form.input :content, class: "form-control ", placeholder: "Your thoughts" %>
+        <%= form.input :content, label: false, class: "form-control", placeholder: "Your thoughts" %>
       <h6 class="mt-4">Previous comments on this exercise:</h6>
       <div class="d-flex justify-content-center">
         <%= form.submit 'Submit', class: "lw-button lw-btn-lg" %>
