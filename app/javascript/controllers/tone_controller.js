@@ -12,7 +12,8 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static values = {
-    notes: String,
+    question: String,
+    attempt: String,
   };
 
   connect() {
@@ -23,15 +24,23 @@ export default class extends Controller {
     console.log(this.notesValue);
   }
 
-  log(params) {
-    const splitNotesArray = this.notesValue.split(" ");
+  play(note_string) {
+    const splitNotesArray = note_string.split(" ");
     console.log(splitNotesArray);
     const synth = new Tone.Synth().toDestination();
     const now = Tone.now();
-    synth.triggerAttackRelease(`${splitNotesArray[0]}4`, "8n", now);
-    synth.triggerAttackRelease(`${splitNotesArray[1]}4`, "8n", now + 0.5);
-    synth.triggerAttackRelease(`${splitNotesArray[2]}4`, "8n", now + 1);
-    synth.triggerAttackRelease(`${splitNotesArray[3]}4`, "8n", now + 1.5);
+    synth.triggerAttackRelease(`${splitNotesArray[0]}`, "8n", now);
+    synth.triggerAttackRelease(`${splitNotesArray[1]}`, "8n", now + 0.5);
+    synth.triggerAttackRelease(`${splitNotesArray[2]}`, "8n", now + 1);
+    synth.triggerAttackRelease(`${splitNotesArray[3]}`, "8n", now + 1.5);
+  }
+
+  play_question(event) {
+    this.play(this.questionValue)
+  }
+
+  play_attempt(event) {
+    this.play(this.attemptValue)
   }
 
   // static targets = ["output"];

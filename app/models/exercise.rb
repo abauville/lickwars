@@ -6,8 +6,12 @@ class Exercise < ApplicationRecord
   validates :difficulty, numericality: { greater_than_or_equal_to: 0 }
   validates :name, presence: true, length: { minimum: 3 }
 
-  def reference_music
-    musics.where(user: user)
+  def question_music
+    Music.find_by(is_question: true)
+  end
+
+  def attempt_music(user)
+    Music.find_by(is_question: false, user: user)
   end
 
   def difficulty_string
