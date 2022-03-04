@@ -1,4 +1,6 @@
-<div data-controller="score" id="score-controller">
+<% puts "===============\n\n" %>
+<% p @music.notes %>
+<div data-controller="score" id="score-controller" data-score-notes-value="<%= @music.notes %>" data-score-lengths-value="<%= @music.note_values %>">
   <div id="score" data-score-target="score"></div>
-  <p data-score-target="output"></p>
+  <p data-score-target="output"><%= @music.notes %></p>
 </div>

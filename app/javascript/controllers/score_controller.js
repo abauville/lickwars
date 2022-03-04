@@ -12,18 +12,27 @@ import { Controller } from "stimulus"
 
 export default class extends Controller {
   static targets = [ "output" ]
+  static values = {
+    notes: String,
+    lengths: String,
+  };
 
   connect() {
     this.init_converters();
     this.currentSelection = null;
     const VF = Vex.Flow;
-    this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}});
-    this.note_name_list = ["C#5", "B4", "A4", "G#4"];
-    this.note_length_list = ["q", "q", "q", "q"];
+    this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
+    // this.note_name_list = ["C#5", "B4", "A4", "G#4"];
+    // this.note_length_list = ["q", "q", "q", "q"];
+    console.log("notes", this.notesValue)
+    console.log("lengths", this.lengthsValue)
+
+    this.note_name_list   = this.notesValue.split(' ')
+    this.note_length_list = this.lengthsValue.split(' ')
+
+    console.log("lengths_list", this.note_length_list);
 
     this.draw();
-
-
   }
 
   init_converters() {
