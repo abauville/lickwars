@@ -48,6 +48,7 @@
   border: none;
   &:hover {
     background-color: #7c9b9a;
+    cursor: pointer;
   }
 }
 
@@ -70,5 +71,6 @@
   color: $primary;
   &:hover {
     color: #7c9b9a;
+    cursor: pointer;
   }
 }
