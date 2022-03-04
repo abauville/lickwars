@@ -1,4 +1,43 @@
-def presentation_exercise
+def first_presentation_exercise
+  sarah = User.find_by(email: "sarah@lickwars.com")
+  twinkle = Exercise.create(
+    difficulty: 2.0,
+    name: "Warmup melody",
+    description: "Let's start easy",
+    chord_progression: "I",
+    user: sarah
+  )
+  # Question
+  Music.create(
+    bpm: 80,
+    key_signature: 2,
+    notes: "C4 D4 E4 G4",
+    note_values: "4 4 4 4",
+    chords: "(C3 E3 G3)",
+    chord_values: "1",
+    user: twinkle.user,
+    is_question: true,
+    status: 1,
+    exercise: twinkle
+  )
+  # Attempts
+  User.all.sample(rand(3..15)).each do |user|
+    Music.create(
+      bpm: 80,
+      key_signature: 2,
+      notes: "C4 D4 E4 Ab4",
+      note_values: "4 4 4 4",
+      chords: "(C3 E3 G3)",
+      chord_values: "1",
+      user: user,
+      is_question: false,
+      status: rand(0..1),
+      exercise: twinkle
+    )
+  end
+end
+
+def twinkle_exercise
   sarah = User.find_by(email: "sarah@lickwars.com")
   twinkle = Exercise.create(
     difficulty: 2.0,
