@@ -10,6 +10,9 @@ class Exercise < ApplicationRecord
     Music.find_by(is_question: true)
   end
 
+  def attempt_music(user)
+    Music.find_by(is_question: false, user: user)
+  end
 
   def difficulty_string
     min_diff = 0
