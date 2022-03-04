@@ -14,24 +14,19 @@
               </svg>
             </button>
           </h1>
-          <div class="form-group ">
-            <%= form_with  do |form| %>
-              Share your thoughts:
-              <%= form.text_field :title, class: "form-control ", placeholder: "Your thoughts" %>
-            <% end %>
-          </div>
-          <div class="d-flex justify-content-center pt-4">
-            <a href="/exercises" style="text-decoration: none">
-              <p class="teacher-ex-card-button">Submit</p>
-            </a>
-          </div>
+          <%= simple_form_for [@exercise,@review] do |form| %>
+            Share your thoughts:
+            <%= form.input :content, label: false, class: "form-control", placeholder: "Your thoughts" %>
+            <div class="d-flex justify-content-center">
+              <%= form.submit 'Submit', class: "lw-button lw-btn-lg" %>
+            </div>
+          <% end %>
           <h6 class="mt-4">Previous comments on this exercise:</h6>
-          <div class="h-50 pb-5 overflow-scroll">
+          <div class="h-50 pb-3 overflow-scroll">
             <% @exercise.reviews.each do |review| %>
               <%= render 'shared/review_card', {review: review} %>
             <% end %>
           </div>
-
         </div>
       </div>
     </div>
