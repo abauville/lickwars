@@ -19,20 +19,20 @@ hiromi = User.new(email: "hiromi@lickwars.com", password: "123456", name: "Hirom
 johann = User.new(email: "johann@lickwars.com", password: "123456", name: "Johann")
 ladygogo = User.new(email: "ladygogo@lickwars.com", password: "123456", name: "LadyGogo")
 
-# tom.profile_picture.attach(io: URI.open('https://m.media-amazon.com/images/M/MV5BMTU5M2Y5M2QtYmQ3Yi00YjBhLTgyNzEtNDhlMGNiZDRkOTgzXkEyXkFqcGdeQXVyNjc3NDgwNzU@._V1_.jpg'),
-#                           filename: "Tom_profile_pic.png", content_type: 'image/png')
+tom.profile_picture.attach(io: URI.open('https://m.media-amazon.com/images/M/MV5BMTU5M2Y5M2QtYmQ3Yi00YjBhLTgyNzEtNDhlMGNiZDRkOTgzXkEyXkFqcGdeQXVyNjc3NDgwNzU@._V1_.jpg'),
+                          filename: "Tom_profile_pic.png", content_type: 'image/png')
 
-# sarah.profile_picture.attach(io: URI.open('http://www.anomalypodcast.com/wp-content/uploads/2016/05/Terminator_Feature1.jpg'),
-#                             filename: "Sarah_profile_pic.png", content_type: 'image/png')
+sarah.profile_picture.attach(io: URI.open('http://www.anomalypodcast.com/wp-content/uploads/2016/05/Terminator_Feature1.jpg'),
+                            filename: "Sarah_profile_pic.png", content_type: 'image/png')
 
-# hiromi.profile_picture.attach(io: URI.open('https://www.eventworld.co/blob/images/pg/hiromi-uehara_1b95b097d3_1000.jpg'),
-#                              filename: "Hiromi_profile_pic.png", content_type: 'image/png')
+hiromi.profile_picture.attach(io: URI.open('https://www.eventworld.co/blob/images/pg/hiromi-uehara_1b95b097d3_1000.jpg'),
+                             filename: "Hiromi_profile_pic.png", content_type: 'image/png')
 
-# johann.profile_picture.attach(io: URI.open('https://www.bach-cantatas.com/thefaceofbach/Pic-FOB/1760-08-wdheq-if-300.jpg'),
-#                              filename: "Johann_profile_pic.png", content_type: 'image/png')
+johann.profile_picture.attach(io: URI.open('https://www.bach-cantatas.com/thefaceofbach/Pic-FOB/1760-08-wdheq-if-300.jpg'),
+                             filename: "Johann_profile_pic.png", content_type: 'image/png')
 
-# ladygogo.profile_picture.attach(io: URI.open('https://cdn.trendhunterstatic.com/phpthumbnails/69/69406/69406_1_600.jpeg'),
-#                                filename: "LadyGogo_profile_pic.png", content_type: 'image/png')
+ladygogo.profile_picture.attach(io: URI.open('https://cdn.trendhunterstatic.com/phpthumbnails/69/69406/69406_1_600.jpeg'),
+                               filename: "LadyGogo_profile_pic.png", content_type: 'image/png')
 
 tom.save
 sarah.save
