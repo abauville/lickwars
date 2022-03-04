@@ -24,6 +24,7 @@ class ExercisesController < ApplicationController
   end
 
   def show
+    @review = Review.new
     authorize @exercise
     @music = get_music_from_exercise(@exercise)
   end
