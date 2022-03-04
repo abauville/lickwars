@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <% exercise.reviews.each do |review| %>
-          <%= render "review_card", {review: review} %>
+          <%= render "shared/review_card", {review: review} %>
         <% end %>
       </div>
     </div>
