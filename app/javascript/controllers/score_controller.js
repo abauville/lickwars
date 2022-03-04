@@ -29,10 +29,12 @@ export default class extends Controller {
 
     this.note_name_list   = this.notesValue.split(' ')
     this.note_length_list = this.lengthsValue.split(' ')
-
+    this.note_name_list = this.note_name_list.slice(0,4)
+    this.note_length_list = this.note_length_list.slice(0,4)
     console.log("lengths_list", this.note_length_list);
 
     this.draw();
+    this.update_attempt_string_playback();
   }
 
   init_converters() {
@@ -56,7 +58,6 @@ export default class extends Controller {
     }
   }
 
-
   draw(event) {
     if (event) {
       event.preventDefault();
@@ -70,6 +71,8 @@ export default class extends Controller {
     this.note_name_list.forEach((note, i) => {
       note_event_list.push(`${note}/${this.note_length_list[i]}`);
     });
+
+
     console.log("note_event_list", note_event_list);
     system.addStave({
       voices: [score.voice(score.notes(note_event_list.join(", ")))]
@@ -122,7 +125,8 @@ export default class extends Controller {
       this.note_name_list[ind] = this.midiNum2NoteNameFlat[midiNum-1];
     }
     console.log(this.note_name_list[ind]);
-    this.draw();
+    this.draw(event);
+    this.update_attempt_string_playback(event);
   }
 
   note_name_index(svgNote) {
@@ -134,7 +138,6 @@ export default class extends Controller {
       }
     }
   }
-
 
   toggleNoteSelection(event) {
     if (this.currentSelection) {
@@ -148,6 +151,12 @@ export default class extends Controller {
     } else {
       this.currentSelection = null;
     }
+  }
+
+  update_attempt_string_playback(event) {
+    const tone_controller = document.querySelector("#tone-controller");
+    tone_controller.dataset.toneAttemptValue = this.note_name_list.join(' ')
+    console.log("tone_controller dataset:", tone_controller.dataset);
   }
 
 }
