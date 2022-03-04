@@ -5,6 +5,5 @@ class PagesController < ApplicationController
   end
 
   def test
-    redirect_to exercise_reviews_path(Exercise.first)
   end
 end

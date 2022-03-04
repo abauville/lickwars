@@ -5,7 +5,10 @@ class ReviewsController < ApplicationController
     authorize @review
 
     @review.save
-    redirect_to exercise_reviews_path(exercise)
+    redirect_to exercises_path
+    flash[:notice] = 'Feedback Submitted'
+    # redirect_to exercise_reviews_path(exercise)
+    # originally this ^ but form info submits but redirects to index page for presentation purposes
   end
 
   def index

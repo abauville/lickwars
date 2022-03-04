@@ -3,7 +3,6 @@
   background: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  max-width: 70%;
 }
 
 .card-result > img {
@@ -124,8 +123,9 @@
 .teacher-exercise-card > i {
   position: relative;
   left: 48px;
+}
 
-.player-card{
+.player-card {
   border-radius: 16px;
   min-height: 250px;
   min-width: 500px;

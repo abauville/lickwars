@@ -3,7 +3,7 @@
 
 <ul>
   <% @exercises.each do |ex| %>
-    <%= link_to exercises_path(@exercises), class: "remove-link-style" do %>
+    <%= link_to exercise_path(ex), class: "remove-link-style" do %>
     <div class="row justify-content-center">
       <div class="teacher-exercise-card m-5 col-12 col-lg-8">
         <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress"></i>
