@@ -9,9 +9,8 @@ class User < ApplicationRecord
 
   has_many :musics, dependent: :destroy
   has_many :exercises, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
-  has_many :musics, dependent: :destroy
-  has_many :exercises, dependent: :destroy
 
   def default_values
     self.name ||= self.email[...self.email.index('@')]
