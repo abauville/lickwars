@@ -19,7 +19,7 @@ exercises
 
 
 # Faker users ============
-1.times do
+40.times do
   user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
   user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/image'),
                               filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
