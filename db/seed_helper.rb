@@ -25,13 +25,13 @@ def first_presentation_exercise
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "C4 D4 E4 Ab4",
+      notes: "C4 D4 E4 Gb4",
       note_values: "4 4 4 4",
       chords: "(C3 E3 G3)",
       chord_values: "1",
       user: user,
       is_question: false,
-      status: rand(0..1),
+      status: 0,
       exercise: twinkle
     )
   end
@@ -195,7 +195,7 @@ def musics
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "C4 D4 E4 G4",
+      notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
       note_values: "4 4 4 4",
       chords: "C",
       chord_values: "1",
@@ -208,7 +208,7 @@ def musics
       Music.create(
         bpm: 80,
         key_signature: 2,
-        notes: "C4 D4 F4 G4",
+        notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
         note_values: "4 4 4 4",
         chords: "C",
         chord_values: "1",
