@@ -14,7 +14,7 @@
               </svg>
             </button>
           </h1>
-          <%= simple_form_for [@exercise,@review] do |form| %>
+          <%= simple_form_for([@exercise,@review], remote: true) do |form| %>
             Share your thoughts:
             <%= form.input :content, label: false, class: "form-control", placeholder: "Your thoughts" %>
             <div class="d-flex justify-content-center">

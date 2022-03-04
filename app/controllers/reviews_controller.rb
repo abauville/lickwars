@@ -1,14 +1,18 @@
 class ReviewsController < ApplicationController
   def create
-    exercise = Exercise.find(params[:exercise_id])
+    @exercise = Exercise.find(params[:exercise_id])
     @review = Review.new(review_params)
     authorize @review
 
-    @review.save
-    redirect_to exercises_path
-    flash[:notice] = 'Feedback Submitted'
-    # redirect_to exercise_reviews_path(exercise)
-    # originally this ^ but form info submits but redirects to index page for presentation purposes
+    if @review.save
+      # redirect_to exercise_path(@exercise, anchor: "review-#{@review.id}")
+      # originally this ^ but form info submits but redirects to index page for presentation purposes
+      redirect_to exercises_path
+      flash[:notice] = 'Feedback Submitted'
+    else
+      redirect_to exercise_path(@exercise)
+      flash[:notice] = 'Unable to submit more than one comment!'
+    end
   end
 
   def index
