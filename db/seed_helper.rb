@@ -195,7 +195,7 @@ def musics
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
+      notes: (0..3).map { "#{('A'..'G').to_a.sample}4" }.join(" "),
       note_values: "4 4 4 4",
       chords: "C",
       chord_values: "1",
@@ -208,7 +208,7 @@ def musics
       Music.create(
         bpm: 80,
         key_signature: 2,
-        notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
+        notes: (0..3).map { "#{('A'..'G').to_a.sample}4" }.join(" "),
         note_values: "4 4 4 4",
         chords: "C",
         chord_values: "1",

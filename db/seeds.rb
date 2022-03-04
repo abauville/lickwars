@@ -14,8 +14,8 @@ require_relative 'seed_helper'
 User.destroy_all
 
 power_users
-first_presentation_exercise
 exercises
+first_presentation_exercise
 
 # Faker users ============
 40.times do
