@@ -108,23 +108,31 @@ export default class extends Controller {
     let index = this.noteNameIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
     switch (event.code) {
-      case 'ArrowUp':
+      case 'ArrowUp': // move note up
         newMidiNum = event.metaKey ? midiNum+12 : midiNum+1
         svgNote = this.updateNote(event, index, newMidiNum);
         break;
-      case 'ArrowDown':
+      case 'ArrowDown': // move note down
         newMidiNum = event.metaKey ? midiNum-12 : midiNum-1
         svgNote = this.updateNote(event, index, newMidiNum);
         break;
-      case 'ArrowLeft':
-          index = Math.max(index - 1, 0)
-          svgNote = this.changeSelection(event, index, svgNote)
-          break;
-      case 'ArrowRight':
-        index = Math.min(index + 1, this.noteNameList.length-1)
-        svgNote = this.changeSelection(event, index, svgNote)
+      case 'ArrowLeft': // select the previous note
+        this.selectPreviousNote(event, index, svgNote)
+        break;
+      case 'ArrowRight': // select the next note
+        this.selectNextNote(event, index, svgNote)
         break;
     }
+  }
+
+  selectPreviousNote(event, index, svgNote) {
+    index = Math.max(index - 1, 0)
+    return this.changeSelection(event, index, svgNote)
+  }
+
+  selectNextNote(event, index, svgNote) {
+    index = Math.min(index + 1, this.noteNameList.length-1)
+    return this.changeSelection(event, index, svgNote)
   }
 
   changeSelection(event, index, svgNote) {
