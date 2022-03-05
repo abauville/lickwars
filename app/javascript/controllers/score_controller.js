@@ -110,13 +110,11 @@ export default class extends Controller {
     switch (event.code) {
       case 'ArrowUp':
         newMidiNum = event.metaKey ? midiNum+12 : midiNum+1
-        this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
-        svgNote = this.updateNote(event, index);
+        svgNote = this.updateNote(event, index, newMidiNum);
         break;
       case 'ArrowDown':
         newMidiNum = event.metaKey ? midiNum-12 : midiNum-1
-        this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
-        svgNote = this.updateNote(event, index);
+        svgNote = this.updateNote(event, index, newMidiNum);
         break;
       case 'ArrowLeft':
           index = Math.max(index - 1, 0)
@@ -137,7 +135,8 @@ export default class extends Controller {
     return svgNote
   }
 
-  updateNote(event, index) {
+  updateNote(event, index, newMidiNum) {
+    this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
     this.draw(event);
     this.updateAttemptStringPlayback(event);
     const svgNote = this.getSvgNoteFromIndex(index);
