@@ -103,26 +103,45 @@ export default class extends Controller {
 
   keyDownOnNote(event) {
     console.log("keydown",event.code, event);
-    const svgNote = event.currentTarget;
-    const index = this.noteNameIndex(svgNote);
-    this.changeNoteBasedOnKeyInput(event, index);
-    this.draw(event);
-    this.updateAttemptStringPlayback(event);
-    const target = this.getSvgNoteFromIndex(index);
-    this.toggleNoteSelection(target);
-    this.currentSelection.focus();
-  }
-
-    changeNoteBasedOnKeyInput(event, index) {
+    let svgNote = event.currentTarget;
+    let index = this.noteNameIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
     switch (event.code) {
       case 'ArrowUp':
         this.noteNameList[index] = this.midiNum2NoteNameSharp[midiNum+1];
+        svgNote = this.updateNote(event, index);
         break;
       case 'ArrowDown':
         this.noteNameList[index] = this.midiNum2NoteNameFlat[midiNum-1];
+        svgNote = this.updateNote(event, index);
+        break;
+      case 'ArrowLeft':
+          index = Math.max(index - 1, 0)
+          svgNote = this.changeSelection(event, index, svgNote)
+          break;
+      case 'ArrowRight':
+        index = Math.min(index + 1, this.noteNameList.length-1)
+        svgNote = this.changeSelection(event, index, svgNote)
         break;
     }
+
+  }
+
+  changeSelection(event, index, svgNote) {
+    this.toggleNoteSelection(svgNote);
+    svgNote = this.getSvgNoteFromIndex(index);
+    this.toggleNoteSelection(svgNote);
+    this.currentSelection.focus();
+    return svgNote
+  }
+
+  updateNote(event, index) {
+    this.draw(event);
+    this.updateAttemptStringPlayback(event);
+    const svgNote = this.getSvgNoteFromIndex(index);
+    this.toggleNoteSelection(svgNote);
+    this.currentSelection.focus();
+    return svgNote
   }
 
   noteNameIndex(svgNote) {
