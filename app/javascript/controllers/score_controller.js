@@ -102,17 +102,20 @@ export default class extends Controller {
   }
 
   keyDownOnNote(event) {
-    console.log("keydown",event.code, event);
+    let newMidiNum;
+    console.log("keydown",event.code, event, event.metaKey);
     let svgNote = event.currentTarget;
     let index = this.noteNameIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
     switch (event.code) {
       case 'ArrowUp':
-        this.noteNameList[index] = this.midiNum2NoteNameSharp[midiNum+1];
+        newMidiNum = event.metaKey ? midiNum+12 : midiNum+1
+        this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
         svgNote = this.updateNote(event, index);
         break;
       case 'ArrowDown':
-        this.noteNameList[index] = this.midiNum2NoteNameFlat[midiNum-1];
+        newMidiNum = event.metaKey ? midiNum-12 : midiNum-1
+        this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
         svgNote = this.updateNote(event, index);
         break;
       case 'ArrowLeft':
@@ -124,7 +127,6 @@ export default class extends Controller {
         svgNote = this.changeSelection(event, index, svgNote)
         break;
     }
-
   }
 
   changeSelection(event, index, svgNote) {
