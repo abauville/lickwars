@@ -102,21 +102,44 @@ export default class extends Controller {
   }
 
   keyDownOnNote(event) {
+    let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
     let svgNote = event.currentTarget;
     let index = this.noteNameIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
+    const refMidiNums = {
+      'KeyC': 12,
+      'KeyD': 14,
+      'KeyE': 16,
+      'KeyF': 17,
+      'KeyG': 19,
+      'KeyA': 21,
+      'KeyB': 23,
+    }
     switch (event.code) {
       case 'ArrowUp': // move note up
-        this.updateNote(event, index, event.metaKey ? midiNum+12 : midiNum+1);
+        this.updateNote(event, index, '#', event.metaKey ? midiNum+12 : midiNum+1);
         break;
       case 'ArrowDown': // move note down
-        this.updateNote(event, index, event.metaKey ? midiNum-12 : midiNum-1);
+        this.updateNote(event, index, 'b', event.metaKey ? midiNum-12 : midiNum-1);
         break;
       case 'ArrowLeft': // select the previous note
         this.selectPreviousNote(event, index, svgNote)
         break;
       case 'ArrowRight': // select the next note
+        this.selectNextNote(event, index, svgNote)
+        break;
+      case 'KeyC':
+      case 'KeyD':
+      case 'KeyE':
+      case 'KeyF':
+      case 'KeyG':
+      case 'KeyA':
+      case 'KeyB':
+        const below = - ((midiNum - refMidiNums[event.code] ) % 12)
+        const above = below + 12
+        newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
+        svgNote = this.updateNote(event, index, 'b', newMidiNum);
         this.selectNextNote(event, index, svgNote)
         break;
     }
@@ -140,8 +163,15 @@ export default class extends Controller {
     return svgNote
   }
 
-  updateNote(event, index, newMidiNum) {
-    this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
+  updateNote(event, index, accidental,newMidiNum) {
+    if (accidental == '#') {
+      this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
+    } else if (accidental == 'b') {
+      this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
+    } else {
+      throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
+    }
+
     this.draw(event);
     this.updateAttemptStringPlayback(event);
     const svgNote = this.getSvgNoteFromIndex(index);
