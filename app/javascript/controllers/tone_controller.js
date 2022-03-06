@@ -30,9 +30,7 @@ export default class extends Controller {
     Array.isArray(note[0]) && note[0][0] == 'r'
   }
 
-  play(note_string) {
-    Tone.start();
-    console.log("Play ?!");
+  playbackArrays(note_string) {
     const bpm  = 80; // should be read from DB
     const wholeToneLength = 4.0 * 60.0/bpm;
 
@@ -47,18 +45,25 @@ export default class extends Controller {
       }
       time += 1.0/note[1] * wholeToneLength;
     })
+    return [noteSequence, noteLengths]
+  }
+
+  play(note_string) {
+    Tone.start();
+
+    const playbackArrays = this.playbackArrays(note_string)
+    const noteSequence = playbackArrays[0]
+    const noteLengths = playbackArrays[1]
 
     let counter = 0;
     const seq = new Tone.Part(
       (time, note) => {
-          console.log(note, noteLengths[counter], time);
           this.synth.triggerAttackRelease(note, noteLengths[counter], time);
           counter++;
         },
         noteSequence,
     ).start();
     Tone.Transport.start();
-    console.log(Tone.Transport.state);
   }
 
   play_question(event) {
