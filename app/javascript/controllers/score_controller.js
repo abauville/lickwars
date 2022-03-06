@@ -58,7 +58,7 @@ export default class extends Controller {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
     let svgNote = event.currentTarget;
-    let index = this.score.noteIndex(svgNote);
+    let index = this.score.getNoteIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.music.notes[index][0]]
     const refMidiNums = {
       'KeyC': 12,
@@ -120,12 +120,11 @@ export default class extends Controller {
 
   changeSelection(event, index, svgNote) {
     this.toggleNoteSelection(svgNote);
-    svgNote = this.getSvgNoteFromIndex(index);
+    svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
   }
-
 
   updateNote(event, index, accidental, newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
@@ -141,18 +140,10 @@ export default class extends Controller {
 
     this.score.draw(event);
     this.updateAttemptStringPlayback(event);
-    const svgNote = this.getSvgNoteFromIndex(index);
+    const svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
-  }
-
-
-
-  getSvgNoteFromIndex(index) {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    return notes[index]
   }
 
   toggleNoteSelection(target) {
@@ -173,5 +164,4 @@ export default class extends Controller {
     const toneController = document.querySelector("#tone-controller");
     toneController.dataset.toneAttemptValue = JSON.stringify(this.music.notes)
   }
-
 }

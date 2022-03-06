@@ -36,7 +36,7 @@ export class Score {
     notes.forEach((note) => {note.setAttribute("tabindex", "0")});
   }
 
-  noteIndex(svgNote) {
+  getNoteIndex(svgNote) {
     const svg = document.querySelector("svg");
     const svgNotes = svg.querySelectorAll(".vf-stavenote");
     for (let i = 0; i < svgNotes.length; i += 1) {
@@ -44,5 +44,11 @@ export class Score {
         return i;
       }
     }
+  }
+
+  getSvgNote(index) {
+    const svg = document.querySelector("svg");
+    const svgNotes = svg.querySelectorAll(".vf-stavenote");
+    return svgNotes[index]
   }
 }
