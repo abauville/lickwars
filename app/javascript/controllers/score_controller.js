@@ -118,9 +118,10 @@ export default class extends Controller {
   keyDownOnNote(event) {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
+    console.log("before, note events:", this.noteEvents);
     let svgNote = event.currentTarget;
-    let index = this.noteNameIndex(svgNote);
-    const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
+    let index = this.noteIndex(svgNote);
+    const midiNum = this.noteName2MidiNum[this.noteEvents[index][0]]
     const refMidiNums = {
       'KeyC': 12,
       'KeyD': 14,
@@ -187,14 +188,26 @@ export default class extends Controller {
     return svgNote
   }
 
+  isRest(index) {
+    Array.isArray(this.noteEvents[index][0]) && Array.isArray(this.noteEvents[index][-1])
+  }
+
+
   updateNote(event, index, accidental,newMidiNum) {
-    if (accidental == '#') {
-      this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
-    } else if (accidental == 'b') {
-      this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
-    } else {
-      throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
+    // Note: works only for single notes. Doesn't handle chords
+    console.log("updateNote -----------");
+    console.log("before, note events:", this.noteEvents[index][0]);
+    if (!this.isRest(index)) {
+      if (accidental == '#') {
+        this.noteEvents[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
+      } else if (accidental == 'b' || accidental == 'n') {
+        this.noteEvents[index][0] = this.midiNum2NoteNameFlat[newMidiNum];
+      } else {
+        throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
+      }
     }
+    console.log("after, note events:", this.noteEvents);
+    console.log("----------");
 
     this.draw(event);
     this.updateAttemptStringPlayback(event);
@@ -202,9 +215,10 @@ export default class extends Controller {
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
+
   }
 
-  noteNameIndex(svgNote) {
+  noteIndex(svgNote) {
     const svg = document.querySelector("svg");
     const notes = svg.querySelectorAll(".vf-stavenote");
     for (let i = 0; i < notes.length; i += 1) {
@@ -236,7 +250,7 @@ export default class extends Controller {
 
   updateAttemptStringPlayback(event) {
     const toneController = document.querySelector("#tone-controller");
-    toneController.dataset.toneAttemptValue = this.noteNameList.join(' ')
+    toneController.dataset.toneAttemptValue = JSON.stringify(this.noteEvents)
     console.log("toneController dataset:", toneController.dataset);
   }
 
