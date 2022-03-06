@@ -57,7 +57,7 @@ def twinkle_exercise
               ['E3', 'G3', 'C4'], 2],
               ['F3', 'A3', 'C4', 'D4'], 4],
               ['G3', 'B3', 'D4'], 4],
-              ['C3', 'E3', G3', 2]]"
+              ['C3', 'E3', G3', 2]]",
     user: twinkle.user,
     is_question: true,
     status: 1,
@@ -79,7 +79,7 @@ def twinkle_exercise
                 ['E3', 'G3', 'C4'], 2],
                 ['F3', 'A3', 'C4', 'D4'], 4],
                 ['G3', 'B3', 'D4'], 4],
-                ['C3', 'E3', G3', 2]]"
+                ['C3', 'E3', G3', 2]]",
       user: user,
       is_question: false,
       status: rand(0..1),
