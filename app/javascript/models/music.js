@@ -24,4 +24,19 @@ export class Music {
     Array.isArray(note[0]) && note[0][0] == 'r'
   }
 
+  getVexString() {
+    const vexEvents = []
+    this.notes.forEach((note, i) => {
+      if (Array.isArray(note[0])) {
+        if (note[0][0] == 'r') { // rest
+          vexEvents.push(`(${note[0][1]})/r${note[1]}`);
+        } else { //chord
+          vexEvents.push(`(${note[0].join(' ')})/${note[1]}`);
+        }
+      } else { // single note
+        vexEvents.push(`${note[0]}/${note[1]}`);
+      }
+    });
+    return vexEvents.join(', ')
+  }
 }
