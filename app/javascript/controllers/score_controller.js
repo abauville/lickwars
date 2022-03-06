@@ -142,6 +142,16 @@ export default class extends Controller {
         svgNote = this.updateNote(event, index, 'b', newMidiNum);
         this.selectNextNote(event, index, svgNote)
         break;
+      case 'Digit4': // 8th note
+        // break both list
+        console.log("Bef, 8th note", this.noteNameList)
+        this.noteNameList.splice(index,0,"A4/r8")
+        console.log("Aft, 8th note", this.noteNameList)
+        // insert a new rest
+        // change the note durations
+        // update display
+        break;
+
     }
   }
 
