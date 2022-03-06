@@ -18,26 +18,26 @@ export default class extends Controller {
   };
 
   connect() {
-    this.init_converters();
+    this.initConverters();
     this.currentSelection = null;
     const VF = Vex.Flow;
     this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
-    // this.note_name_list = ["C#5", "B4", "A4", "G#4"];
-    // this.note_length_list = ["q", "q", "q", "q"];
+    // this.noteNameList = ["C#5", "B4", "A4", "G#4"];
+    // this.noteLengthList = ["q", "q", "q", "q"];
     console.log("notes", this.notesValue)
     console.log("lengths", this.lengthsValue)
 
-    this.note_name_list   = this.notesValue.split(' ')
-    this.note_length_list = this.lengthsValue.split(' ')
-    this.note_name_list = this.note_name_list.slice(0,4)
-    this.note_length_list = this.note_length_list.slice(0,4)
-    console.log("lengths_list", this.note_length_list);
+    this.noteNameList   = this.notesValue.split(' ')
+    this.noteLengthList = this.lengthsValue.split(' ')
+    this.noteNameList = this.noteNameList.slice(0,4)
+    this.noteLengthList = this.noteLengthList.slice(0,4)
+    console.log("lengths list", this.noteLengthList);
 
     this.draw();
-    this.update_attempt_string_playback();
+    this.updateAttemptStringPlayback();
   }
 
-  init_converters() {
+  initConverters() {
     // Dictionaries
     // =====================================
     this.midiNum2NoteNameSharp = {}
@@ -67,69 +67,130 @@ export default class extends Controller {
     const score = this.vf.EasyScore();
     const system = this.vf.System();
     console.log(this.counter);
-    const note_event_list = [];
-    this.note_name_list.forEach((note, i) => {
-      note_event_list.push(`${note}/${this.note_length_list[i]}`);
+    const noteEventList = [];
+    this.noteNameList.forEach((note, i) => {
+      noteEventList.push(`${note}/${this.noteLengthList[i]}`);
     });
 
 
-    console.log("note_event_list", note_event_list);
+    console.log("noteEventList", noteEventList);
     system.addStave({
-      voices: [score.voice(score.notes(note_event_list.join(", ")))]
+      voices: [score.voice(score.notes(noteEventList.join(", ")))]
     }).addClef('treble').addTimeSignature('4/4');
 
     console.log("redraw");
     this.vf.draw();
 
-    this.add_action_to_notes()
-    this.add_tabindex_to_notes();
+    this.addActionToNotes()
+    this.addTabIndexToNotes();
   }
 
-  add_action_to_notes() {
+  addActionToNotes() {
     const svg = document.querySelector("svg");
     const notes = svg.querySelectorAll(".vf-stavenote");
     notes.forEach((note) => {note.setAttribute("data-action", "click->score#clickNote")});
   }
 
-  add_tabindex_to_notes() {
+  addTabIndexToNotes() {
     const svg = document.querySelector("svg");
     const notes = svg.querySelectorAll(".vf-stavenote");
     notes.forEach((note) => {note.setAttribute("tabindex", "0")});
   }
 
   clickNote(event) {
-    console.log("note clicked");
-    this.toggleNoteSelection(event);
-    console.log("currentSelection", this.currentSelection);
-    // this.toggleNoteAction(event);
-    if (this.currentSelection) {
-      this.currentSelection.focus();
+    this.toggleNoteSelection(event.currentTarget);
+  }
+
+  keyDownOnNote(event) {
+    let newMidiNum;
+    console.log("keydown", event.code, event, event.metaKey);
+    let svgNote = event.currentTarget;
+    let index = this.noteNameIndex(svgNote);
+    const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
+    const refMidiNums = {
+      'KeyC': 12,
+      'KeyD': 14,
+      'KeyE': 16,
+      'KeyF': 17,
+      'KeyG': 19,
+      'KeyA': 21,
+      'KeyB': 23,
+    }
+    switch (event.code) {
+      case 'ArrowUp': // move note up
+        this.updateNote(event, index, '#', event.metaKey ? midiNum+12 : midiNum+1);
+        break;
+      case 'ArrowDown': // move note down
+        this.updateNote(event, index, 'b', event.metaKey ? midiNum-12 : midiNum-1);
+        break;
+      case 'ArrowLeft': // select the previous note
+        this.selectPreviousNote(event, index, svgNote)
+        break;
+      case 'ArrowRight': // select the next note
+        this.selectNextNote(event, index, svgNote)
+        break;
+      case 'KeyC':
+      case 'KeyD':
+      case 'KeyE':
+      case 'KeyF':
+      case 'KeyG':
+      case 'KeyA':
+      case 'KeyB':
+        const below = - ((midiNum - refMidiNums[event.code] ) % 12)
+        const above = below + 12
+        newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
+        svgNote = this.updateNote(event, index, 'b', newMidiNum);
+        this.selectNextNote(event, index, svgNote)
+        break;
+      case 'Digit4': // 8th note
+        // break both list
+        console.log("Bef, 8th note", this.noteNameList)
+        this.noteNameList.splice(index,0,"A4/r8")
+        console.log("Aft, 8th note", this.noteNameList)
+        // insert a new rest
+        // change the note durations
+        // update display
+        break;
+
     }
   }
 
-  keyUpOnNote(event) {
-    console.log("keyup",event.code, event);
-    const svgNote = event.currentTarget;
-    console.log(this.note_name_index(svgNote));
-    const ind = this.note_name_index(svgNote);
-    console.log("index", ind);
-    const midiNum = this.noteName2MidiNum[this.note_name_list[ind]]
-    console.log("midiNum", midiNum);
-    console.log("midiNum2NoteNameSharp", this.midiNum2NoteNameSharp);
-    console.log("noteName2MidiNum", this.noteName2MidiNum);
-    if (event.code === "ArrowUp") {
-      console.log("ArrowUp");
-      this.note_name_list[ind] = this.midiNum2NoteNameSharp[midiNum+1];
-    } else if (event.code === "ArrowDown") {
-      console.log("ArrowDown");
-      this.note_name_list[ind] = this.midiNum2NoteNameFlat[midiNum-1];
+  selectPreviousNote(event, index, svgNote) {
+    index = Math.max(index - 1, 0)
+    return this.changeSelection(event, index, svgNote)
+  }
+
+  selectNextNote(event, index, svgNote) {
+    index = Math.min(index + 1, this.noteNameList.length-1)
+    return this.changeSelection(event, index, svgNote)
+  }
+
+  changeSelection(event, index, svgNote) {
+    this.toggleNoteSelection(svgNote);
+    svgNote = this.getSvgNoteFromIndex(index);
+    this.toggleNoteSelection(svgNote);
+    this.currentSelection.focus();
+    return svgNote
+  }
+
+  updateNote(event, index, accidental,newMidiNum) {
+    if (accidental == '#') {
+      this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
+    } else if (accidental == 'b') {
+      this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
+    } else {
+      throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
     }
-    console.log(this.note_name_list[ind]);
+
     this.draw(event);
-    this.update_attempt_string_playback(event);
+    this.updateAttemptStringPlayback(event);
+    const svgNote = this.getSvgNoteFromIndex(index);
+    this.toggleNoteSelection(svgNote);
+    this.currentSelection.focus();
+    return svgNote
   }
 
-  note_name_index(svgNote) {
+  noteNameIndex(svgNote) {
     const svg = document.querySelector("svg");
     const notes = svg.querySelectorAll(".vf-stavenote");
     for (let i = 0; i < notes.length; i += 1) {
@@ -139,24 +200,30 @@ export default class extends Controller {
     }
   }
 
-  toggleNoteSelection(event) {
+  getSvgNoteFromIndex(index) {
+    const svg = document.querySelector("svg");
+    const notes = svg.querySelectorAll(".vf-stavenote");
+    return notes[index]
+  }
+
+  toggleNoteSelection(target) {
     if (this.currentSelection) {
       this.currentSelection.classList.remove("selected");
       this.currentSelection.setAttribute("data-action", "click->score#clickNote"); // vanilla
     }
-    if (this.currentSelection !== event.currentTarget) {
-      this.currentSelection = event.currentTarget;
+    if (this.currentSelection !== target) {
+      this.currentSelection = target;
       this.currentSelection.classList.add("selected");
-      this.currentSelection.setAttribute("data-action", "click->score#clickNote keyup->score#keyUpOnNote"); // add keyup
+      this.currentSelection.setAttribute("data-action", "click->score#clickNote keydown->score#keyDownOnNote"); // add keydown
     } else {
       this.currentSelection = null;
     }
   }
 
-  update_attempt_string_playback(event) {
-    const tone_controller = document.querySelector("#tone-controller");
-    tone_controller.dataset.toneAttemptValue = this.note_name_list.join(' ')
-    console.log("tone_controller dataset:", tone_controller.dataset);
+  updateAttemptStringPlayback(event) {
+    const toneController = document.querySelector("#tone-controller");
+    toneController.dataset.toneAttemptValue = this.noteNameList.join(' ')
+    console.log("toneController dataset:", toneController.dataset);
   }
 
 }
