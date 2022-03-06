@@ -23,8 +23,6 @@ export default class extends Controller {
     this.currentSelection = null;
     const VF = Vex.Flow;
     this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
-    console.log("notes", this.notesValue)
-    console.log("lengths list", this.noteLengthList);
 
     this.draw();
     this.updateAttemptStringPlayback();
@@ -58,13 +56,11 @@ export default class extends Controller {
     this.vf.context.clear();
     const score = this.vf.EasyScore();
     const system = this.vf.System();
-    console.log(this.counter);
 
     system.addStave({
       voices: [score.voice(score.notes(this.music.getVexString()))]
     }).addClef('treble').addTimeSignature('4/4');
 
-    console.log("redraw");
     this.vf.draw();
 
     this.addActionToNotes()
@@ -90,7 +86,6 @@ export default class extends Controller {
   keyDownOnNote(event) {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
-    console.log("before, note events:", this.music.notes);
     let svgNote = event.currentTarget;
     let index = this.noteIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.music.notes[index][0]]
@@ -149,8 +144,6 @@ export default class extends Controller {
 
   selectNextNote(event, index, svgNote) {
     index = Math.min(index + 1, this.music.notes.length-1)
-    console.log("svgNote", svgNote);
-    console.log("index", svgNote);
     return this.changeSelection(event, index, svgNote)
   }
 
@@ -167,8 +160,6 @@ export default class extends Controller {
 
   updateNote(event, index, accidental,newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
-    console.log("updateNote -----------");
-    console.log("before, note events:", this.music.notes[index][0]);
     if (!this.music.isRestIndex(index)) {
       if (accidental == '#') {
         this.music.notes[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
@@ -178,8 +169,6 @@ export default class extends Controller {
         throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
       }
     }
-    console.log("after, note events:", this.music.notes);
-    console.log("----------");
 
     this.draw(event);
     this.updateAttemptStringPlayback(event);
@@ -223,7 +212,6 @@ export default class extends Controller {
   updateAttemptStringPlayback(event) {
     const toneController = document.querySelector("#tone-controller");
     toneController.dataset.toneAttemptValue = JSON.stringify(this.music.notes)
-    console.log("toneController dataset:", toneController.dataset);
   }
 
 }
