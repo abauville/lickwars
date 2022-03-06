@@ -21,16 +21,9 @@ export default class extends Controller {
     this.currentSelection = null;
     const VF = Vex.Flow;
     this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
-    // this.noteNameList = ["C#5", "B4", "A4", "G#4"];
-    // this.noteLengthList = ["q", "q", "q", "q"];
     console.log("notes", this.notesValue)
 
     this.noteEvents = JSON.parse(this.notesValue);
-
-    // this.noteNameList   = this.notesValue.split(' ')
-    // this.noteLengthList = this.lengthsValue.split(' ')
-    // this.noteNameList = this.noteNameList.slice(0,4)
-    // this.noteLengthList = this.noteLengthList.slice(0,4)
     console.log("lengths list", this.noteLengthList);
 
     this.draw();
@@ -159,9 +152,9 @@ export default class extends Controller {
         break;
       case 'Digit4': // 8th note
         // break both list
-        console.log("Bef, 8th note", this.noteNameList)
-        this.noteNameList.splice(index,0,"A4/r8")
-        console.log("Aft, 8th note", this.noteNameList)
+        console.log("Bef, 8th note", this.noteEvents)
+        this.noteEvents.splice(index,0,[['r', 'A4'], 8])
+        console.log("Aft, 8th note", this.noteEvents)
         // insert a new rest
         // change the note durations
         // update display
@@ -176,7 +169,9 @@ export default class extends Controller {
   }
 
   selectNextNote(event, index, svgNote) {
-    index = Math.min(index + 1, this.noteNameList.length-1)
+    index = Math.min(index + 1, this.noteEvents.length-1)
+    console.log("svgNote", svgNote);
+    console.log("index", svgNote);
     return this.changeSelection(event, index, svgNote)
   }
 
@@ -189,7 +184,7 @@ export default class extends Controller {
   }
 
   isRest(index) {
-    Array.isArray(this.noteEvents[index][0]) && Array.isArray(this.noteEvents[index][-1])
+    Array.isArray(this.noteEvents[index][0]) && Array.isArray(this.noteEvents[index][0])
   }
 
 
