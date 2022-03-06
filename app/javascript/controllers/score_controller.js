@@ -14,7 +14,6 @@ export default class extends Controller {
   static targets = [ "output" ]
   static values = {
     notes: String,
-    lengths: String,
   };
 
   connect() {
@@ -25,12 +24,13 @@ export default class extends Controller {
     // this.noteNameList = ["C#5", "B4", "A4", "G#4"];
     // this.noteLengthList = ["q", "q", "q", "q"];
     console.log("notes", this.notesValue)
-    console.log("lengths", this.lengthsValue)
 
-    this.noteNameList   = this.notesValue.split(' ')
-    this.noteLengthList = this.lengthsValue.split(' ')
-    this.noteNameList = this.noteNameList.slice(0,4)
-    this.noteLengthList = this.noteLengthList.slice(0,4)
+    this.noteEvents = JSON.parse(this.notesValue);
+
+    // this.noteNameList   = this.notesValue.split(' ')
+    // this.noteLengthList = this.lengthsValue.split(' ')
+    // this.noteNameList = this.noteNameList.slice(0,4)
+    // this.noteLengthList = this.noteLengthList.slice(0,4)
     console.log("lengths list", this.noteLengthList);
 
     this.draw();
@@ -58,6 +58,23 @@ export default class extends Controller {
     }
   }
 
+
+  getVexString() {
+    const vexEvents = []
+    this.noteEvents.forEach((note, i) => {
+      if (Array.isArray(note[0])) {
+        if (note[0][0] == 'r') { // rest
+          vexEvents.push(`(${note[0][1]})/r${note[1]}`);
+        } else { //chord
+          vexEvents.push(`(${note[0].join(' ')})/${note[1]}`);
+        }
+      } else { // single note
+        vexEvents.push(`${note[0]}/${note[1]}`);
+      }
+    });
+    return vexEvents.join(', ')
+  }
+
   draw(event) {
     if (event) {
       event.preventDefault();
@@ -67,15 +84,12 @@ export default class extends Controller {
     const score = this.vf.EasyScore();
     const system = this.vf.System();
     console.log(this.counter);
-    const noteEventList = [];
-    this.noteNameList.forEach((note, i) => {
-      noteEventList.push(`${note}/${this.noteLengthList[i]}`);
-    });
 
+    const vexString = this.getVexString();
 
-    console.log("noteEventList", noteEventList);
+    console.log("vexString", vexString);
     system.addStave({
-      voices: [score.voice(score.notes(noteEventList.join(", ")))]
+      voices: [score.voice(score.notes(vexString))]
     }).addClef('treble').addTimeSignature('4/4');
 
     console.log("redraw");
