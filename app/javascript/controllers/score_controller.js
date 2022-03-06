@@ -58,7 +58,7 @@ export default class extends Controller {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
     let svgNote = event.currentTarget;
-    let index = this.noteIndex(svgNote);
+    let index = this.score.noteIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.music.notes[index][0]]
     const refMidiNums = {
       'KeyC': 12,
@@ -127,9 +127,7 @@ export default class extends Controller {
   }
 
 
-
-
-  updateNote(event, index, accidental,newMidiNum) {
+  updateNote(event, index, accidental, newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
     if (!this.music.isRestIndex(index)) {
       if (accidental == '#') {
@@ -147,18 +145,9 @@ export default class extends Controller {
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
-
   }
 
-  noteIndex(svgNote) {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    for (let i = 0; i < notes.length; i += 1) {
-      if (notes[i].id === svgNote.id) {
-        return i;
-      }
-    }
-  }
+
 
   getSvgNoteFromIndex(index) {
     const svg = document.querySelector("svg");

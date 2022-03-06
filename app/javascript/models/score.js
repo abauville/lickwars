@@ -35,4 +35,14 @@ export class Score {
     const notes = svg.querySelectorAll(".vf-stavenote");
     notes.forEach((note) => {note.setAttribute("tabindex", "0")});
   }
+
+  noteIndex(svgNote) {
+    const svg = document.querySelector("svg");
+    const svgNotes = svg.querySelectorAll(".vf-stavenote");
+    for (let i = 0; i < svgNotes.length; i += 1) {
+      if (svgNotes[i].id === svgNote.id) {
+        return i;
+      }
+    }
+  }
 }
