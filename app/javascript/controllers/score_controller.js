@@ -51,14 +51,10 @@ export default class extends Controller {
     }
   }
 
-
-
-
   draw(event) {
     if (event) {
       event.preventDefault();
     }
-    // const this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}});
     this.vf.context.clear();
     const score = this.vf.EasyScore();
     const system = this.vf.System();
@@ -166,16 +162,14 @@ export default class extends Controller {
     return svgNote
   }
 
-  isRest(index) {
-    Array.isArray(this.music.notes[index][0]) && Array.isArray(this.music.notes[index][0])
-  }
+
 
 
   updateNote(event, index, accidental,newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
     console.log("updateNote -----------");
     console.log("before, note events:", this.music.notes[index][0]);
-    if (!this.isRest(index)) {
+    if (!this.music.isRestIndex(index)) {
       if (accidental == '#') {
         this.music.notes[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
       } else if (accidental == 'b' || accidental == 'n') {

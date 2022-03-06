@@ -24,6 +24,10 @@ export class Music {
     Array.isArray(note[0]) && note[0][0] == 'r'
   }
 
+  isRestIndex(index) {
+    Array.isArray(this.notes[index][0]) && Array.isArray(this.notes[index][0])
+  }
+
   getVexString() {
     const vexEvents = []
     this.notes.forEach((note, i) => {
