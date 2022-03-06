@@ -1,6 +1,8 @@
-def first_presentation_exercise
+require 'json'
+
+def warmup_exercise
   sarah = User.find_by(email: "sarah@lickwars.com")
-  twinkle = Exercise.create(
+  warmup = Exercise.create(
     difficulty: 2.0,
     name: "Warmup melody",
     description: "Let's start easy",
@@ -11,24 +13,24 @@ def first_presentation_exercise
   Music.create(
     bpm: 80,
     key_signature: 2,
-    notes: "[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]",
-    chords: "[(C3 E3 G3), 1]",
-    user: twinkle.user,
+    notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['A4', 4]]],
+    chords: JSON[[['C3', 'E3', 'A3'], 1]],
+    user: warmup.user,
     is_question: true,
     status: 1,
-    exercise: twinkle
+    exercise: warmup
   )
   # Attempts
   User.all.sample(rand(3..15)).each do |user|
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]",
-      chords: "[['C3', 'E3', 'G3'], 1]",
+      notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['B4', 4]]],
+      chords: JSON[[['C3', 'E3', 'G3'], 1]],
       user: user,
       is_question: false,
       status: 0,
-      exercise: twinkle
+      exercise: warmup
     )
   end
 end
@@ -46,18 +48,18 @@ def twinkle_exercise
   Music.create(
     bpm: 80,
     key_signature: 2,
-    notes: "[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
-             ['A4', 4], ['A4', 4], ['G4', 2],
-             ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
-             ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]",
-    chords: "[['C3', 'E3', 'G3'], 1],
-              ['C3', 'F3', 'A3'], 2],
-              ['C3', 'E3', 'G3'], 2],
-              ['D3', 'F3', 'G3', 'B3], 2],
-              ['E3', 'G3', 'C4'], 2],
-              ['F3', 'A3', 'C4', 'D4'], 4],
-              ['G3', 'B3', 'D4'], 4],
-              ['C3', 'E3', G3', 2]]",
+    notes: JSON[[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
+                 ['A4', 4], ['A4', 4], ['G4', 2],
+                 ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
+                 ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]],
+    chords: JSON[[[['C3', 'E3', 'G3'], 1],
+                  [['C3', 'F3', 'A3'], 2],
+                  [['C3', 'E3', 'G3'], 2],
+                  [['D3', 'F3', 'G3', 'B3'], 2],
+                  [['E3', 'G3', 'C4'], 2],
+                  [['F3', 'A3', 'C4', 'D4'], 4],
+                  [['G3', 'B3', 'D4'], 4],
+                  [['C3', 'E3', 'G3'], 2]]],
     user: twinkle.user,
     is_question: true,
     status: 1,
@@ -68,18 +70,18 @@ def twinkle_exercise
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
-             ['A4', 4], ['A4', 4], ['G4', 2],
-             ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
-             ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]",
-      chords: "[['C3', 'E3', 'G3'], 1],
-                ['C3', 'F3', 'A3'], 2],
-                ['C3', 'E3', 'G3'], 2],
-                ['D3', 'F3', 'G3', 'B3], 2],
-                ['E3', 'G3', 'C4'], 2],
-                ['F3', 'A3', 'C4', 'D4'], 4],
-                ['G3', 'B3', 'D4'], 4],
-                ['C3', 'E3', G3', 2]]",
+      notes: JSON[[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
+                   ['A4', 4], ['A4', 4], ['G4', 2],
+                   ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
+                   ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]],
+      chords: JSON[[[['C3', 'E3', 'G3'], 1],
+                    [['C3', 'F3', 'A3'], 2],
+                    [['C3', 'E3', 'G3'], 2],
+                    [['D3', 'F3', 'G3', 'B3'], 2],
+                    [['E3', 'G3', 'C4'], 2],
+                    [['F3', 'A3', 'C4', 'D4'], 4],
+                    [['G3', 'B3', 'D4'], 4],
+                    [['C3', 'E3', 'G3'], 2]]],
       user: user,
       is_question: false,
       status: rand(0..1),
@@ -207,8 +209,8 @@ def musics
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]",
-      chords: "[['C3', 'E3', 'G3'], 1]",
+      notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
+      chords: JSON[[['C3', 'E3', 'G3'], 1]],
       user: exercise.user,
       is_question: true,
       status: 1,
@@ -218,8 +220,8 @@ def musics
       Music.create(
         bpm: 80,
         key_signature: 2,
-        notes: "[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]",
-        chords: "[['C3', 'E3', 'G3'], 1]",
+        notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
+        chords: JSON[[['C3', 'E3', 'G3'], 1]],
         user: user,
         is_question: false,
         status: rand(0..1),

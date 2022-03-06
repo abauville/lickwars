@@ -14,11 +14,12 @@ require_relative 'seed_helper'
 User.destroy_all
 
 power_users
-first_presentation_exercise
+warmup_exercise
+twinkle_exercise
 exercises
 
 # Faker users ============
-10.times do
+25.times do
   user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
   user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/image'),
                               filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
