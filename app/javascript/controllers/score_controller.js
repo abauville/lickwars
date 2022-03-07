@@ -14,7 +14,6 @@ export default class extends Controller {
   static targets = [ "output" ]
   static values = {
     notes: String,
-    lengths: String,
   };
 
   connect() {
@@ -22,15 +21,9 @@ export default class extends Controller {
     this.currentSelection = null;
     const VF = Vex.Flow;
     this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
-    // this.noteNameList = ["C#5", "B4", "A4", "G#4"];
-    // this.noteLengthList = ["q", "q", "q", "q"];
     console.log("notes", this.notesValue)
-    console.log("lengths", this.lengthsValue)
 
-    this.noteNameList   = this.notesValue.split(' ')
-    this.noteLengthList = this.lengthsValue.split(' ')
-    this.noteNameList = this.noteNameList.slice(0,4)
-    this.noteLengthList = this.noteLengthList.slice(0,4)
+    this.noteEvents = JSON.parse(this.notesValue);
     console.log("lengths list", this.noteLengthList);
 
     this.draw();
@@ -58,6 +51,23 @@ export default class extends Controller {
     }
   }
 
+
+  getVexString() {
+    const vexEvents = []
+    this.noteEvents.forEach((note, i) => {
+      if (Array.isArray(note[0])) {
+        if (note[0][0] == 'r') { // rest
+          vexEvents.push(`(${note[0][1]})/r${note[1]}`);
+        } else { //chord
+          vexEvents.push(`(${note[0].join(' ')})/${note[1]}`);
+        }
+      } else { // single note
+        vexEvents.push(`${note[0]}/${note[1]}`);
+      }
+    });
+    return vexEvents.join(', ')
+  }
+
   draw(event) {
     if (event) {
       event.preventDefault();
@@ -67,15 +77,12 @@ export default class extends Controller {
     const score = this.vf.EasyScore();
     const system = this.vf.System();
     console.log(this.counter);
-    const noteEventList = [];
-    this.noteNameList.forEach((note, i) => {
-      noteEventList.push(`${note}/${this.noteLengthList[i]}`);
-    });
 
+    const vexString = this.getVexString();
 
-    console.log("noteEventList", noteEventList);
+    console.log("vexString", vexString);
     system.addStave({
-      voices: [score.voice(score.notes(noteEventList.join(", ")))]
+      voices: [score.voice(score.notes(vexString))]
     }).addClef('treble').addTimeSignature('4/4');
 
     console.log("redraw");
@@ -104,9 +111,10 @@ export default class extends Controller {
   keyDownOnNote(event) {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
+    console.log("before, note events:", this.noteEvents);
     let svgNote = event.currentTarget;
-    let index = this.noteNameIndex(svgNote);
-    const midiNum = this.noteName2MidiNum[this.noteNameList[index]]
+    let index = this.noteIndex(svgNote);
+    const midiNum = this.noteName2MidiNum[this.noteEvents[index][0]]
     const refMidiNums = {
       'KeyC': 12,
       'KeyD': 14,
@@ -144,9 +152,9 @@ export default class extends Controller {
         break;
       case 'Digit4': // 8th note
         // break both list
-        console.log("Bef, 8th note", this.noteNameList)
-        this.noteNameList.splice(index,0,"A4/r8")
-        console.log("Aft, 8th note", this.noteNameList)
+        console.log("Bef, 8th note", this.noteEvents)
+        this.noteEvents.splice(index,0,[['r', 'A4'], 8])
+        console.log("Aft, 8th note", this.noteEvents)
         // insert a new rest
         // change the note durations
         // update display
@@ -161,7 +169,9 @@ export default class extends Controller {
   }
 
   selectNextNote(event, index, svgNote) {
-    index = Math.min(index + 1, this.noteNameList.length-1)
+    index = Math.min(index + 1, this.noteEvents.length-1)
+    console.log("svgNote", svgNote);
+    console.log("index", svgNote);
     return this.changeSelection(event, index, svgNote)
   }
 
@@ -173,14 +183,26 @@ export default class extends Controller {
     return svgNote
   }
 
+  isRest(index) {
+    Array.isArray(this.noteEvents[index][0]) && Array.isArray(this.noteEvents[index][0])
+  }
+
+
   updateNote(event, index, accidental,newMidiNum) {
-    if (accidental == '#') {
-      this.noteNameList[index] = this.midiNum2NoteNameSharp[newMidiNum];
-    } else if (accidental == 'b') {
-      this.noteNameList[index] = this.midiNum2NoteNameFlat[newMidiNum];
-    } else {
-      throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
+    // Note: works only for single notes. Doesn't handle chords
+    console.log("updateNote -----------");
+    console.log("before, note events:", this.noteEvents[index][0]);
+    if (!this.isRest(index)) {
+      if (accidental == '#') {
+        this.noteEvents[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
+      } else if (accidental == 'b' || accidental == 'n') {
+        this.noteEvents[index][0] = this.midiNum2NoteNameFlat[newMidiNum];
+      } else {
+        throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
+      }
     }
+    console.log("after, note events:", this.noteEvents);
+    console.log("----------");
 
     this.draw(event);
     this.updateAttemptStringPlayback(event);
@@ -188,9 +210,10 @@ export default class extends Controller {
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
+
   }
 
-  noteNameIndex(svgNote) {
+  noteIndex(svgNote) {
     const svg = document.querySelector("svg");
     const notes = svg.querySelectorAll(".vf-stavenote");
     for (let i = 0; i < notes.length; i += 1) {
@@ -222,7 +245,7 @@ export default class extends Controller {
 
   updateAttemptStringPlayback(event) {
     const toneController = document.querySelector("#tone-controller");
-    toneController.dataset.toneAttemptValue = this.noteNameList.join(' ')
+    toneController.dataset.toneAttemptValue = JSON.stringify(this.noteEvents)
     console.log("toneController dataset:", toneController.dataset);
   }
 

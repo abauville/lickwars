@@ -1,6 +1,8 @@
-def first_presentation_exercise
+require 'json'
+
+def warmup_exercise
   sarah = User.find_by(email: "sarah@lickwars.com")
-  twinkle = Exercise.create(
+  warmup = Exercise.create(
     difficulty: 2.0,
     name: "Warmup melody",
     description: "Let's start easy",
@@ -11,28 +13,24 @@ def first_presentation_exercise
   Music.create(
     bpm: 80,
     key_signature: 2,
-    notes: "C4 D4 E4 G4",
-    note_values: "4 4 4 4",
-    chords: "(C3 E3 G3)",
-    chord_values: "1",
-    user: twinkle.user,
+    notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['A4', 4]]],
+    chords: JSON[[['C3', 'E3', 'A3'], 1]],
+    user: warmup.user,
     is_question: true,
     status: 1,
-    exercise: twinkle
+    exercise: warmup
   )
   # Attempts
   User.all.sample(rand(3..15)).each do |user|
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "C4 D4 E4 Gb4",
-      note_values: "4 4 4 4",
-      chords: "(C3 E3 G3)",
-      chord_values: "1",
+      notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['B4', 4]]],
+      chords: JSON[[['C3', 'E3', 'G3'], 1]],
       user: user,
       is_question: false,
       status: 0,
-      exercise: twinkle
+      exercise: warmup
     )
   end
 end
@@ -50,24 +48,40 @@ def twinkle_exercise
   Music.create(
     bpm: 80,
     key_signature: 2,
-    notes: "C4 C4 G4 G4 A4 A4 G4 F4 F4 E4 E4 D4 E4 F4 D4 C4",
-    note_values: "4 4 4 4 4 4 2 4 4 4 4 8 8 8 8 2",
-    chords: "(C3 E3 G3) (C3 F3 A3) (C3 E3 G3) (D3 F3 G3 B3) (E3 G3 C4) (F3 A3 C4 D4) (G3 B3 D4) '(C3 E3 G3)",
-    chord_values: "1 2 2 2 2 4 4 2",
+    notes: JSON[[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
+                 ['A4', 4], ['A4', 4], ['G4', 2],
+                 ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
+                 ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]],
+    chords: JSON[[[['C3', 'E3', 'G3'], 1],
+                  [['C3', 'F3', 'A3'], 2],
+                  [['C3', 'E3', 'G3'], 2],
+                  [['D3', 'F3', 'G3', 'B3'], 2],
+                  [['E3', 'G3', 'C4'], 2],
+                  [['F3', 'A3', 'C4', 'D4'], 4],
+                  [['G3', 'B3', 'D4'], 4],
+                  [['C3', 'E3', 'G3'], 2]]],
     user: twinkle.user,
     is_question: true,
     status: 1,
     exercise: twinkle
   )
   # Attempts
-  User.all.sample(rand(3..15)).each do |user|
+  User.all.sample(rand(3..8)).each do |user|
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: "C4 C4 G4 G4 A#4 A#4 G4 F4 F4 E4 E4 D4 E4 F4 D4 C4",
-      note_values: "4 4 4 4 4 4 2 4 4 4 4 8 8 8 8 2",
-      chords: "(C3 E3 G3) (C3 F3 A3) (C3 E3 G3) (D3 F3 G3 B3) (E3 G3 C4) (F3 A3 C4 D4) (G3 B3 D4) '(C3 E3 G3)",
-      chord_values: "1 2 2 2 2 4 4 2",
+      notes: JSON[[['C4', 4], ['C4', 4], ['G4', 4], ['G4', 4],
+                   ['A4', 4], ['A4', 4], ['G4', 2],
+                   ['F4', 4], ['F4', 4], ['E4', 4], ['E4', 4],
+                   ['D4', 8], ['E4', 8], ['F4', 8], ['D4', 8], ['C4', 2]]],
+      chords: JSON[[[['C3', 'E3', 'G3'], 1],
+                    [['C3', 'F3', 'A3'], 2],
+                    [['C3', 'E3', 'G3'], 2],
+                    [['D3', 'F3', 'G3', 'B3'], 2],
+                    [['E3', 'G3', 'C4'], 2],
+                    [['F3', 'A3', 'C4', 'D4'], 4],
+                    [['G3', 'B3', 'D4'], 4],
+                    [['C3', 'E3', 'G3'], 2]]],
       user: user,
       is_question: false,
       status: rand(0..1),
@@ -195,10 +209,8 @@ def musics
     Music.create(
       bpm: 80,
       key_signature: 2,
-      notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
-      note_values: "4 4 4 4",
-      chords: "C",
-      chord_values: "1",
+      notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
+      chords: JSON[[['C3', 'E3', 'G3'], 1]],
       user: exercise.user,
       is_question: true,
       status: 1,
@@ -208,10 +220,8 @@ def musics
       Music.create(
         bpm: 80,
         key_signature: 2,
-        notes: (0..3).map { ('A'..'G').to_a.sample }.join(" "),
-        note_values: "4 4 4 4",
-        chords: "C",
-        chord_values: "1",
+        notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
+        chords: JSON[[['C3', 'E3', 'G3'], 1]],
         user: user,
         is_question: false,
         status: rand(0..1),

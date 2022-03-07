@@ -7,11 +7,11 @@ class Exercise < ApplicationRecord
   validates :name, presence: true, length: { minimum: 3 }
 
   def question_music
-    Music.find_by(is_question: true)
+    musics.find_by(is_question: true)
   end
 
   def attempt_music(user)
-    Music.find_by(is_question: false, user: user)
+    musics.find_by(is_question: false, user: user)
   end
 
   def difficulty_string
