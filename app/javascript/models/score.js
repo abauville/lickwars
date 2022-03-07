@@ -3,23 +3,74 @@ import Vex from 'vexflow'
 export class Score {
   constructor(music) {
     this.music = music
-    this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
+    const VF = Vex.Flow
+    // this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
+    this.div = document.getElementById("score")
+    this.renderer = new VF.Renderer(this.div, VF.Renderer.Backends.SVG);
+
+    // Size our SVG:
+
+
+
+
+    // And get a drawing context:
+    this.context = this.renderer.getContext();
   }
 
   draw(event) {
+    let x = 0
+    let stave
+    const context = this.context
+
+    const VF = Vex.Flow
     if (event) {
       event.preventDefault()
     }
-    this.vf.context.clear()
-    const score = this.vf.EasyScore()
-    const system = this.vf.System()
 
-    system.addStave({
-      voices: [score.voice(score.notes(this.music.getVexString()))]
-    }).addClef('treble').addTimeSignature('4/4');
 
-    this.vf.draw();
 
+    const measure_width = 200
+    const key_time_signature_width = 50
+
+    const allMeasureStaveNotes = this.music.staveNotes()
+    const total_width = allMeasureStaveNotes.length * measure_width + key_time_signature_width
+    console.log("total_width", total_width);
+    this.renderer.resize(total_width+15, 200);
+    this.context.clear()
+
+
+
+    allMeasureStaveNotes.forEach((thisMeasureStaveNotes, index) => {
+
+      if (index === 0) {
+        // leave space for the key and time signature
+        stave = new VF.Stave(x + 10, 40, measure_width + key_time_signature_width);
+        stave.addClef("treble").addTimeSignature("4/4")
+        x += key_time_signature_width
+      } else {
+        stave = new VF.Stave(x + 10, 40, measure_width)
+      }
+      if (index === allMeasureStaveNotes.length - 1) {
+        stave.setEndBarType(VF.Barline.type.END);
+      }
+
+      const voice = new VF.Voice({num_beats: 4,  beat_value: 4});
+      voice.addTickables(thisMeasureStaveNotes);
+
+      var beams = VF.Beam.generateBeams(thisMeasureStaveNotes);
+
+
+      const formatter = new VF.Formatter({ softmaxFactor: 20 }).joinVoices([voice]).format([voice], measure_width);
+      stave.setContext(context).draw();
+      voice.draw(context, stave);
+
+      beams.forEach(function(b) {b.setContext(context).draw()})
+
+      x += measure_width
+    })
+
+
+    // document.querySelector("svg").style.overflow = "scroll";
     this.addActionToNotes()
     this.addTabIndexToNotes()
   }
