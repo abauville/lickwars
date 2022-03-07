@@ -43,7 +43,7 @@ export class Music {
   }
 
   keysForSingleNote(note) {
-    return [`${note[0].slice(0,-1)}/${note[-1]}`]
+    return [`${note[0].slice(0,-1)}/${note[note.length-1]}`]
   }
 
   staveNotes() {
@@ -51,7 +51,6 @@ export class Music {
     const VF = Vex.Flow
     let staveNote;
     this.notes.forEach((note) => {
-      console.log("singleNote?", this.isSingleNote(note), note);
       if (this.isSingleNote(note)) {
         staveNote = new VF.StaveNote({clef: "treble", keys: this.keysForSingleNote(note), duration: `${note[1]}` })
 	      if (this.hasAccidental(note)) {

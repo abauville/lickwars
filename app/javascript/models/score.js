@@ -7,6 +7,7 @@ export class Score {
   }
 
   draw(event) {
+    const VF = Vex.Flow
     if (event) {
       event.preventDefault()
     }
@@ -16,11 +17,16 @@ export class Score {
     console.log("staveNotes ==============");
     console.log(this.music.staveNotes())
     console.log("============== staveNotes");
-    system.addStave({
-      voices: [score.voice(score.notes(this.music.getVexString()))]
-    }).addClef('treble').addTimeSignature('4/4');
 
-    this.vf.draw();
+    const stave = new VF.Stave(10, 40, 400);
+
+    stave.addClef("treble").addTimeSignature("4/4");
+    var voice = new VF.Voice({num_beats: 4,  beat_value: 4});
+    voice.addTickables(this.music.staveNotes());
+    var formatter = new VF.Formatter().joinVoices([voice]).format([voice], 350);
+
+    stave.setContext(this.vf.context).draw();
+    voice.draw(this.vf.context, stave);
 
     this.addActionToNotes()
     this.addTabIndexToNotes()
