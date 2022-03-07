@@ -1,0 +1,17 @@
+.w-70 {
+  min-width: 70%;
+}
+
+.progress-bar-container {
+  position: sticky;
+  top: 40px;
+  // background-color: rgb(200, 200, 200);
+  background-image: linear-gradient(226deg, rgba(31, 31, 31, 0.02) 0%, rgba(31, 31, 31, 0.02) 50%,rgba(164, 164, 164, 0.02) 50%, rgba(164, 164, 164, 0.02) 100%),linear-gradient(190deg, rgba(120, 120, 120, 0.01) 0%, rgba(120, 120, 120, 0.01) 50%,rgba(117, 117, 117, 0.01) 50%, rgba(117, 117, 117, 0.01) 100%),linear-gradient(34deg, rgba(159, 159, 159, 0.02) 0%, rgba(159, 159, 159, 0.02) 50%,rgba(205, 205, 205, 0.02) 50%, rgba(205, 205, 205, 0.02) 100%),linear-gradient(190deg, rgba(206, 206, 206, 0.01) 0%, rgba(206, 206, 206, 0.01) 50%,rgba(141, 141, 141, 0.01) 50%, rgba(141, 141, 141, 0.01) 100%),linear-gradient(341deg, rgba(233, 233, 233, 0.03) 0%, rgba(233, 233, 233, 0.03) 50%,rgba(125, 125, 125, 0.03) 50%, rgba(125, 125, 125, 0.03) 100%),linear-gradient(148deg, rgba(250, 250, 250, 0.03) 0%, rgba(250, 250, 250, 0.03) 50%,rgba(23, 23, 23, 0.03) 50%, rgba(23, 23, 23, 0.03) 100%),linear-gradient(147deg, rgba(253, 253, 253, 0.02) 0%, rgba(253, 253, 253, 0.02) 50%,rgba(171, 171, 171, 0.02) 50%, rgba(171, 171, 171, 0.02) 100%),linear-gradient(90deg, rgb(63,61,86),rgb(58,36,145));
+  padding: 16px;
+  border-radius: 8px;
+  color: white;
+}
+
+.progress-bar-bg {
+  background-image: linear-gradient(135deg, rgba(107, 107, 107,0.06) 0%, rgba(107, 107, 107,0.06) 50%,rgba(202, 202, 202,0.06) 50%, rgba(202, 202, 202,0.06) 100%),linear-gradient(90deg, rgb(20,20,20),rgb(20,20,20)); background-size: 30px 30px;
+}

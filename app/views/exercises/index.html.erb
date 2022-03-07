@@ -1,6 +1,20 @@
 <h1 class="text-center mt-5">Exercises</h1>
-<ul>
-  <% @exercises.each do |ex| %>
-    <%= render "exercise_index_card", {ex: ex} %>
-  <% end %>
-</ul>
+
+<div class="d-flex px-5">
+  <div class="pe-5 w-70">
+    <% @exercises.each do |ex| %>
+      <%= render "exercise_index_card", {ex: ex} %>
+    <% end %>
+  </div>
+
+  <div class="d-flex flex-grow-1 justify-content-center text-center">
+    <div class="w-100">
+      <div class="progress-bar-container mt-5">
+      <%= render "progress_bar", {title: "Daily Progress", stat: @daily_stat, max: Music::DAILY_TARGET} %>
+      <%= render "progress_bar", {title: "Weekly Progress", stat: @weekly_stat, max: Music::WEEKLY_TARGET} %>
+      <p>Your challenges by difficulty!</p>
+      <%= pie_chart @exercise_pie, colors: ["#2e2d88", "#198854", "#b34d00", "#a21116"], legend: "bottom", library: { color: "#fff" }, dataset: {borderWidth: 1, paddingBotton: "10px"}%>
+      </div>
+    </div>
+  </div>
+</div>
