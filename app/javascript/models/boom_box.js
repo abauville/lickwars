@@ -3,15 +3,27 @@ import * as Tone from "tone";
 export class BoomBox {
   constructor() {
     this.synth = new Tone.Synth({
-      noise: {
-        type: "pink",
-        playbackRate: 0.1,
+      oscillator: {
+        type: "square",
+      },
+      filter: {
+        Q: 2,
+        type: "lowpass",
+        rolloff: -12,
       },
       envelope: {
-        attack: 0.5,
-        decay: 2,
-        sustain: 0.5,
+        attack: 0.005,
+        decay: 3,
+        sustain: 0,
+        release: 0.45,
+      },
+      filterEnvelope: {
+        attack: 0.001,
+        decay: 0.32,
+        sustain: 0.9,
         release: 3,
+        baseFrequency: 700,
+        octaves: 2.3,
       },
     }).toDestination();
   }
