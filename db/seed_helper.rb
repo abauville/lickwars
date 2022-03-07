@@ -99,10 +99,10 @@ def power_users
   ladygogo = User.new(email: "ladygogo@lickwars.com", password: "123456", name: "LadyGogo")
 
   tom.profile_picture.attach(io: URI.open('https://m.media-amazon.com/images/M/MV5BMTU5M2Y5M2QtYmQ3Yi00YjBhLTgyNzEtNDhlMGNiZDRkOTgzXkEyXkFqcGdeQXVyNjc3NDgwNzU@._V1_.jpg'),
-                            filename: "Tom_profile_pic.png", content_type: 'image/png')
+                             filename: "Tom_profile_pic.png", content_type: 'image/png')
 
   sarah.profile_picture.attach(io: URI.open('http://www.anomalypodcast.com/wp-content/uploads/2016/05/Terminator_Feature1.jpg'),
-                              filename: "Sarah_profile_pic.png", content_type: 'image/png')
+                               filename: "Sarah_profile_pic.png", content_type: 'image/png')
 
   hiromi.profile_picture.attach(io: URI.open('https://www.eventworld.co/blob/images/pg/hiromi-uehara_1b95b097d3_1000.jpg'),
                                 filename: "Hiromi_profile_pic.png", content_type: 'image/png')
@@ -213,7 +213,7 @@ def musics
       chords: JSON[[['C3', 'E3', 'G3'], 1]],
       user: exercise.user,
       is_question: true,
-      status: 1,
+      status: 0,
       exercise: exercise
     )
     User.all.sample(rand(3..15)).each do |user|
@@ -224,7 +224,7 @@ def musics
         chords: JSON[[['C3', 'E3', 'G3'], 1]],
         user: user,
         is_question: false,
-        status: rand(0..1),
+        status: 0,
         exercise: exercise
       )
     end
