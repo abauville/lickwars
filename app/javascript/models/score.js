@@ -20,6 +20,7 @@ export class Score {
   draw(event) {
     let x = 0
     let stave
+    const context = this.context
 
     const VF = Vex.Flow
     if (event) {
@@ -28,13 +29,13 @@ export class Score {
 
 
 
-    const measure_width = 250
+    const measure_width = 200
     const key_time_signature_width = 50
 
     const allMeasureStaveNotes = this.music.staveNotes()
     const total_width = allMeasureStaveNotes.length * measure_width + key_time_signature_width
     console.log("total_width", total_width);
-    this.renderer.resize(total_width+10, 200);
+    this.renderer.resize(total_width+15, 200);
     this.context.clear()
 
 
@@ -56,11 +57,15 @@ export class Score {
       const voice = new VF.Voice({num_beats: 4,  beat_value: 4});
       voice.addTickables(thisMeasureStaveNotes);
 
+      var beams = VF.Beam.generateBeams(thisMeasureStaveNotes);
 
 
-      stave.setContext(this.context).draw();
+      const formatter = new VF.Formatter({ softmaxFactor: 20 }).joinVoices([voice]).format([voice], measure_width);
+      stave.setContext(context).draw();
+      voice.draw(context, stave);
 
-      Vex.Flow.Formatter.FormatAndDraw(this.context, stave, thisMeasureStaveNotes, true);
+      beams.forEach(function(b) {b.setContext(context).draw()})
+
       x += measure_width
     })
 
