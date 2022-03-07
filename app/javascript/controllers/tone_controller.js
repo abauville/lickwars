@@ -6,13 +6,14 @@ export default class extends Controller {
   static values = {
     question: String,
     attempt: String,
+    chords: String,
     bpm: Number
   };
 
   connect() {
     console.log("bpm", this.bpmValue);
     this.boomBox = new BoomBox();
-    this.question = new Music(this.questionValue, this.bpmValue)
+    this.question = new Music(this.questionValue, this.chordsValue, this.bpmValue)
   }
 
   play_question(event) {
@@ -22,5 +23,12 @@ export default class extends Controller {
   play_attempt(event) {
     const attempt = new Music(this.attemptValue, this.bpmValue)
     this.boomBox.play(attempt)
+  }
+
+  stopPlayback(event) {
+    this.boomBox.breakLoop = true;
+    setTimeout(() => {
+      this.boomBox.breakLoop = true;
+    }, 100);
   }
 }
