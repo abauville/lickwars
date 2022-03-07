@@ -1,18 +1,14 @@
 <h1 class="text-center mt-5">Exercises</h1>
-
+<% colors = ["color:gray", "color:yellow", "color:green"] %>
 <ul>
   <% @exercises.each do |ex| %>
     <%= link_to exercise_path(ex), class: "remove-link-style" do %>
     <div class="row justify-content-center">
       <div class="teacher-exercise-card m-5 col-12 col-lg-8">
-        <% if ex.musics.any? && ex.musics.first.finished?%>
-          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:green"></i>
-        <% end %>
+        <% status = ex.attempt_music(current_user) ? Music.statuses[ex.attempt_music(current_user).status] : 2 %>
 
-        <% if ex.musics.any? && ex.musics.first.in_progress?%>
-          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:yellow"></i>
+        <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style=<%= colors[status] %>></i>
 
-        <% end %>
 
 
         <div class="d-flex flex-column justify-content-center p-3 ms-4">
