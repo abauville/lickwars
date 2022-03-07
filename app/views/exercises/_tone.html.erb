@@ -4,8 +4,8 @@
       data-tone-question-value="<%= @question_music.notes %>"
       data-tone-attempt-value=""
       data-tone-bpm-value="<%= @question_music.bpm %>">
-  <i class="fas fa-play-circle play-button fa-2x mt-1 mx-2"
-      data-action="click->tone#play_attempt"></i>
+    <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-action="click->tone#play_attempt"><i class="far fa-play-circle play-button fa-1x"
+      ></i> Attempt</p>
   <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-action="click->tone#play_question">Play Melody</p>
   <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Check</p>
   <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-bs-toggle="modal" data-bs-target="#commentModal">Submit</p>
