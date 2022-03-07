@@ -1,5 +1,4 @@
 class MusicsController < ApplicationController
-
   def create
     @music = Music.new(music_params)
     @music.save
@@ -10,6 +9,12 @@ class MusicsController < ApplicationController
   def update
     @music = Music.find(params[:id])
     @music.update(music_params)
+    @success = nil
+    if @music.notes == @music.exercise.question_music.notes
+      flash[:notice] = "Great job!"
+    else
+      flash[:alert] = "It was incorrect! Try again!"
+    end
     authorize @music
     redirect_to exercise_path(@music.exercise)
   end
