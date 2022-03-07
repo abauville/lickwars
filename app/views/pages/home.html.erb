@@ -1,14 +1,11 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1593698054590-a5b3a19565a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80);">
+  <div class="container">
+    <h1 class="navbar-brand">Melodict</h1>
+    <p>Challenge yourself, make music together.</p>
 
-<h1 class="text-center mt-4">Uploaded Exercise</h1>
-
-<div class="container">
-  <%#= render partial: "results_card" %>
-  <%#= render partial: "results_card" %>
-  <%#= render partial: "results_card" %>
-  <%#= render partial: "results_card" %>
-  <%#= render partial: "results_card" %>
-</div>
-
-<div class="teacher-ex-card-button-add">
-  <p class="teacher-ex-card-button">Add new exercise</p>
+  <div class="justify-content-center col-12">
+     <%# <p class="exercise-button col-3 text-center">See Exercises!</p> %>
+     <%= link_to "See Exercises", exercises_path, class: "exercise-button col-3 text-center" %>
+  </div>
+  </div>
 </div>

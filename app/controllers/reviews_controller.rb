@@ -35,7 +35,8 @@ class ReviewsController < ApplicationController
     authorize @review
 
     @review.save
-    redirect_to exercise_reviews_path(exercise)
+    # redirect_to exercise_reviews_path(exercise)
+    redirect_to exercises_path
   end
 
   private
