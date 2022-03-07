@@ -13,7 +13,9 @@ export class Score {
     this.vf.context.clear()
     const score = this.vf.EasyScore()
     const system = this.vf.System()
-
+    console.log("staveNotes ==============");
+    console.log(this.music.staveNotes())
+    console.log("============== staveNotes");
     system.addStave({
       voices: [score.voice(score.notes(this.music.getVexString()))]
     }).addClef('treble').addTimeSignature('4/4');

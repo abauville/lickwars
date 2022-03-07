@@ -1,3 +1,5 @@
+import Vex from "vexflow";
+
 export class Music {
   constructor(notes, bpm) {
     this.notes = JSON.parse(notes);
@@ -21,12 +23,50 @@ export class Music {
   }
 
   isRest(note) {
-    Array.isArray(note[0]) && note[0][0] == 'r'
+    return Array.isArray(note[0]) && note[0][0] == 'r'
   }
 
   isRestIndex(index) {
-    Array.isArray(this.notes[index][0]) && Array.isArray(this.notes[index][0])
+    return Array.isArray(this.notes[index][0]) && Array.isArray(this.notes[index][0])
   }
+
+  isSingleNote(note) {
+    return (typeof note[0] === 'string' || note[0] instanceof String)
+  }
+
+  accidental(note) {
+    return note[0].slice(1,-1)
+  }
+
+  hasAccidental(note) {
+    return this.accidental(note).length > 0
+  }
+
+  keysForSingleNote(note) {
+    return [`${note[0].slice(0,-1)}/${note[-1]}`]
+  }
+
+  staveNotes() {
+    const out = []
+    const VF = Vex.Flow
+    let staveNote;
+    this.notes.forEach((note) => {
+      console.log("singleNote?", this.isSingleNote(note), note);
+      if (this.isSingleNote(note)) {
+        staveNote = new VF.StaveNote({clef: "treble", keys: this.keysForSingleNote(note), duration: `${note[1]}` })
+	      if (this.hasAccidental(note)) {
+          staveNote.addAccidental(0, new VF.Accidental(this.accidental(note)))
+        }
+      } else if (this.isRest(note)) {
+        staveNote = new VF.StaveNote({clef: "treble", keys: this.keysForSingleNote(note), duration: `${note[1]}r` })
+      } else { // chords or mistakes
+        throw new Error(`Your melody includes a chord or something not handled by the score yet: ${note}`)
+      }
+      out.push(staveNote)
+    });
+    return out;
+  }
+
 
   getVexString() {
     const vexEvents = []
