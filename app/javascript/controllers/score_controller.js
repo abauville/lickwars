@@ -7,8 +7,10 @@
 //   <h1 data-target="hello.output"></h1>
 // </div>
 
-import Vex from 'vexflow'
+
 import { Controller } from "stimulus"
+import { Music } from "../models/music"
+import { Score } from "../models/score"
 
 export default class extends Controller {
   static targets = [ "output" ]
@@ -17,16 +19,13 @@ export default class extends Controller {
   };
 
   connect() {
+    this.music = new Music(this.notesValue, 0)
+    this.score = new Score(this.music)
     this.initConverters();
     this.currentSelection = null;
-    const VF = Vex.Flow;
-    this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
-    console.log("notes", this.notesValue)
 
-    this.noteEvents = JSON.parse(this.notesValue);
-    console.log("lengths list", this.noteLengthList);
 
-    this.draw();
+    this.score.draw();
     this.updateAttemptStringPlayback();
   }
 
@@ -51,59 +50,6 @@ export default class extends Controller {
     }
   }
 
-
-  getVexString() {
-    const vexEvents = []
-    this.noteEvents.forEach((note, i) => {
-      if (Array.isArray(note[0])) {
-        if (note[0][0] == 'r') { // rest
-          vexEvents.push(`(${note[0][1]})/r${note[1]}`);
-        } else { //chord
-          vexEvents.push(`(${note[0].join(' ')})/${note[1]}`);
-        }
-      } else { // single note
-        vexEvents.push(`${note[0]}/${note[1]}`);
-      }
-    });
-    return vexEvents.join(', ')
-  }
-
-  draw(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    // const this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}});
-    this.vf.context.clear();
-    const score = this.vf.EasyScore();
-    const system = this.vf.System();
-    console.log(this.counter);
-
-    const vexString = this.getVexString();
-
-    console.log("vexString", vexString);
-    system.addStave({
-      voices: [score.voice(score.notes(vexString))]
-    }).addClef('treble').addTimeSignature('4/4');
-
-    console.log("redraw");
-    this.vf.draw();
-
-    this.addActionToNotes()
-    this.addTabIndexToNotes();
-  }
-
-  addActionToNotes() {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    notes.forEach((note) => {note.setAttribute("data-action", "click->score#clickNote")});
-  }
-
-  addTabIndexToNotes() {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    notes.forEach((note) => {note.setAttribute("tabindex", "0")});
-  }
-
   clickNote(event) {
     this.toggleNoteSelection(event.currentTarget);
   }
@@ -111,10 +57,9 @@ export default class extends Controller {
   keyDownOnNote(event) {
     let newMidiNum;
     console.log("keydown", event.code, event, event.metaKey);
-    console.log("before, note events:", this.noteEvents);
     let svgNote = event.currentTarget;
-    let index = this.noteIndex(svgNote);
-    const midiNum = this.noteName2MidiNum[this.noteEvents[index][0]]
+    let index = this.score.getNoteIndex(svgNote);
+    const midiNum = this.noteName2MidiNum[this.music.notes[index][0]]
     const refMidiNums = {
       'KeyC': 12,
       'KeyD': 14,
@@ -152,9 +97,9 @@ export default class extends Controller {
         break;
       case 'Digit4': // 8th note
         // break both list
-        console.log("Bef, 8th note", this.noteEvents)
-        this.noteEvents.splice(index,0,[['r', 'A4'], 8])
-        console.log("Aft, 8th note", this.noteEvents)
+        console.log("Bef, 8th note", this.music.notes)
+        this.music.notes.splice(index,0,[['r', 'A4'], 8])
+        console.log("Aft, 8th note", this.music.notes)
         // insert a new rest
         // change the note durations
         // update display
@@ -169,64 +114,36 @@ export default class extends Controller {
   }
 
   selectNextNote(event, index, svgNote) {
-    index = Math.min(index + 1, this.noteEvents.length-1)
-    console.log("svgNote", svgNote);
-    console.log("index", svgNote);
+    index = Math.min(index + 1, this.music.notes.length-1)
     return this.changeSelection(event, index, svgNote)
   }
 
   changeSelection(event, index, svgNote) {
     this.toggleNoteSelection(svgNote);
-    svgNote = this.getSvgNoteFromIndex(index);
+    svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
   }
 
-  isRest(index) {
-    Array.isArray(this.noteEvents[index][0]) && Array.isArray(this.noteEvents[index][0])
-  }
-
-
-  updateNote(event, index, accidental,newMidiNum) {
+  updateNote(event, index, accidental, newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
-    console.log("updateNote -----------");
-    console.log("before, note events:", this.noteEvents[index][0]);
-    if (!this.isRest(index)) {
+    if (!this.music.isRestIndex(index)) {
       if (accidental == '#') {
-        this.noteEvents[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
+        this.music.notes[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
       } else if (accidental == 'b' || accidental == 'n') {
-        this.noteEvents[index][0] = this.midiNum2NoteNameFlat[newMidiNum];
+        this.music.notes[index][0] = this.midiNum2NoteNameFlat[newMidiNum];
       } else {
         throw new Error(`Unknown accidental: ${accidental}. Accepted values are '#' and 'b'.`)
       }
     }
-    console.log("after, note events:", this.noteEvents);
-    console.log("----------");
 
-    this.draw(event);
+    this.score.draw(event);
     this.updateAttemptStringPlayback(event);
-    const svgNote = this.getSvgNoteFromIndex(index);
+    const svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote);
     this.currentSelection.focus();
     return svgNote
-
-  }
-
-  noteIndex(svgNote) {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    for (let i = 0; i < notes.length; i += 1) {
-      if (notes[i].id === svgNote.id) {
-        return i;
-      }
-    }
-  }
-
-  getSvgNoteFromIndex(index) {
-    const svg = document.querySelector("svg");
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    return notes[index]
   }
 
   toggleNoteSelection(target) {
@@ -245,8 +162,6 @@ export default class extends Controller {
 
   updateAttemptStringPlayback(event) {
     const toneController = document.querySelector("#tone-controller");
-    toneController.dataset.toneAttemptValue = JSON.stringify(this.noteEvents)
-    console.log("toneController dataset:", toneController.dataset);
+    toneController.dataset.toneAttemptValue = JSON.stringify(this.music.notes)
   }
-
 }
