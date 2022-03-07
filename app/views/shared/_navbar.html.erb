@@ -15,7 +15,8 @@
           <li class="nav-item">
           </li>
           <li class="nav-item dropdown ms-3">
-            <%= cl_image_tag current_user.profile_picture.key, crop: :fill, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+            <% default_pic = "https://res.cloudinary.com/dto6yv11m/image/upload/v1646629326/profile_default_xhktvv.jpg" %>
+            <%= cl_image_tag current_user.profile_picture.key.present? ? current_user.profile_picture.key : default_pic, crop: :fill, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { bs_toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "View Profile", "#", class: "dropdown-item" %>
               <%= link_to "My exercises", "/exercises", class: "dropdown-item" %>
