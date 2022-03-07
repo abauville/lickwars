@@ -1,6 +1,6 @@
 div#score {
   // background-color: $body-color;
-
+  overflow: scroll;
 }
 .vf-stavenote:hover path {
   stroke:rgb(36, 80, 255);
