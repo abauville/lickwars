@@ -48,8 +48,10 @@ export class Music {
 
   staveNotes() {
     const out = []
+    let group = []
     const VF = Vex.Flow
     let staveNote;
+    let time = 0
     this.notes.forEach((note) => {
       if (this.isSingleNote(note)) {
         staveNote = new VF.StaveNote({clef: "treble", keys: this.keysForSingleNote(note), duration: `${note[1]}` })
@@ -61,7 +63,15 @@ export class Music {
       } else { // chords or mistakes
         throw new Error(`Your melody includes a chord or something not handled by the score yet: ${note}`)
       }
-      out.push(staveNote)
+      group.push(staveNote)
+      time += 4.0/note[1]
+      if (time >= 4) { // handles filling bars /!\ hard coded to 4/4 time signature
+        time = 0
+        out.push(group)
+        group = []
+      }
+
+
     });
     return out;
   }

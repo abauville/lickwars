@@ -3,7 +3,18 @@ import Vex from 'vexflow'
 export class Score {
   constructor(music) {
     this.music = music
-    this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
+    const VF = Vex.Flow
+    // this.vf = new Vex.Flow.Factory({renderer: {elementId: 'score'}})
+    this.div = document.getElementById("score")
+    const renderer = new VF.Renderer(this.div, VF.Renderer.Backends.SVG);
+
+    // Size our SVG:
+    renderer.resize(3000, 200);
+
+
+
+    // And get a drawing context:
+    this.context = renderer.getContext();
   }
 
   draw(event) {
@@ -11,23 +22,35 @@ export class Score {
     if (event) {
       event.preventDefault()
     }
-    this.vf.context.clear()
-    const score = this.vf.EasyScore()
-    const system = this.vf.System()
+    this.context.clear()
+    // const score = this.vf.EasyScore()
+    // const system = this.vf.System()
     console.log("staveNotes ==============");
     console.log(this.music.staveNotes())
     console.log("============== staveNotes");
+    let x = 10
+    const measure_width = 400
+    this.music.staveNotes().forEach((thisMeasureStaveNotes, index) => {
+      const stave = new VF.Stave(x, 40, measure_width);
+      if (index == 0) {
+        stave.addClef("treble").addTimeSignature("4/4");
+      }
 
-    const stave = new VF.Stave(10, 40, 400);
+      const voice = new VF.Voice({num_beats: 4,  beat_value: 4});
+      voice.addTickables(thisMeasureStaveNotes);
 
-    stave.addClef("treble").addTimeSignature("4/4");
-    var voice = new VF.Voice({num_beats: 4,  beat_value: 4});
-    voice.addTickables(this.music.staveNotes());
-    var formatter = new VF.Formatter().joinVoices([voice]).format([voice], 350);
+      if (index == 0) {
+        // format and leave space for the key and time signature
+        const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width-50);
+      } else {
+        const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width);
+      }
+      stave.setContext(this.context).draw();
+      voice.draw(this.context, stave);
+      x += measure_width
+    })
 
-    stave.setContext(this.vf.context).draw();
-    voice.draw(this.vf.context, stave);
-
+    // document.querySelector("svg").style.overflow = "scroll";
     this.addActionToNotes()
     this.addTabIndexToNotes()
   }
