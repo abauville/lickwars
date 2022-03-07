@@ -23,11 +23,6 @@ export class Score {
       event.preventDefault()
     }
     this.context.clear()
-    // const score = this.vf.EasyScore()
-    // const system = this.vf.System()
-    console.log("staveNotes ==============");
-    console.log(this.music.staveNotes())
-    console.log("============== staveNotes");
     let x = 10
     const measure_width = 250
     let stave
@@ -40,7 +35,6 @@ export class Score {
       } else {
         stave = new VF.Stave(x, 40, measure_width);
       }
-      // const stave = new VF.Stave(x, 40, measure_width);
       if (index == 0) {
         stave.addClef("treble").addTimeSignature("4/4");
       }
@@ -48,14 +42,8 @@ export class Score {
       const voice = new VF.Voice({num_beats: 4,  beat_value: 4});
       voice.addTickables(thisMeasureStaveNotes);
 
-
-      // format and leave space for the key and time signature
-      // const formatter = new VF.Formatter({ softmaxFactor: 15 }).joinVoices([voice]).format([voice], measure_width);
       stave.setContext(this.context).draw();
-      // voice.draw(this.context, stave);
-      // var beams = VF.Beam.generateBeams(thisMeasureStaveNotes);
       Vex.Flow.Formatter.FormatAndDraw(this.context, stave, thisMeasureStaveNotes,true);
-      // beams.forEach(function(b) {b.setContext(this.context).draw()})
       x += measure_width
     })
 
