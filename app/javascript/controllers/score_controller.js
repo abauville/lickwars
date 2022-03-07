@@ -11,6 +11,7 @@
 import { Controller } from "stimulus"
 import { Music } from "../models/music"
 import { Score } from "../models/score"
+import { BoomBox } from "../models/boom_box";
 
 export default class extends Controller {
   static targets = [ "output" ]
@@ -20,6 +21,7 @@ export default class extends Controller {
 
   connect() {
     this.music = new Music(this.notesValue, 0)
+    this.boomBox = new BoomBox();
     this.score = new Score(this.music)
     this.initConverters();
     this.currentSelection = null;
@@ -155,6 +157,7 @@ export default class extends Controller {
       this.currentSelection = target;
       this.currentSelection.classList.add("selected");
       this.currentSelection.setAttribute("data-action", "click->score#clickNote keydown->score#keyDownOnNote"); // add keydown
+      this.boomBox.play(this.music.notes[this.score.getNoteIndex(target)])
     } else {
       this.currentSelection = null;
     }
