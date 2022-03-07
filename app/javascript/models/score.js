@@ -25,11 +25,11 @@ export class Score {
     this.context.clear()
     // const score = this.vf.EasyScore()
     // const system = this.vf.System()
-    // console.log("staveNotes ==============");
-    // console.log(this.music.staveNotes())
-    // console.log("============== staveNotes");
+    console.log("staveNotes ==============");
+    console.log(this.music.staveNotes())
+    console.log("============== staveNotes");
     let x = 10
-    const measure_width = 350
+    const measure_width = 250
     let stave
     this.music.staveNotes().forEach((thisMeasureStaveNotes, index) => {
 
@@ -50,9 +50,12 @@ export class Score {
 
 
       // format and leave space for the key and time signature
-      const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width);
+      // const formatter = new VF.Formatter({ softmaxFactor: 15 }).joinVoices([voice]).format([voice], measure_width);
       stave.setContext(this.context).draw();
-      voice.draw(this.context, stave);
+      // voice.draw(this.context, stave);
+      // var beams = VF.Beam.generateBeams(thisMeasureStaveNotes);
+      Vex.Flow.Formatter.FormatAndDraw(this.context, stave, thisMeasureStaveNotes,true);
+      // beams.forEach(function(b) {b.setContext(this.context).draw()})
       x += measure_width
     })
 

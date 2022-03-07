@@ -53,7 +53,7 @@ export class Music {
     let staveNote;
     let time = 0
     this.notes.forEach((note, index) => {
-      console.log("staveNote:", index, note, this.keysForSingleNote(note))
+      // console.log("staveNote:", index, note, this.keysForSingleNote(note))
       if (this.isSingleNote(note)) {
         staveNote = new VF.StaveNote({clef: "treble", keys: this.keysForSingleNote(note), duration: `${note[1]}` })
 	      if (this.hasAccidental(note)) {
