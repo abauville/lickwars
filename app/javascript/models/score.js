@@ -25,13 +25,22 @@ export class Score {
     this.context.clear()
     // const score = this.vf.EasyScore()
     // const system = this.vf.System()
-    console.log("staveNotes ==============");
-    console.log(this.music.staveNotes())
-    console.log("============== staveNotes");
+    // console.log("staveNotes ==============");
+    // console.log(this.music.staveNotes())
+    // console.log("============== staveNotes");
     let x = 10
-    const measure_width = 400
+    const measure_width = 350
+    let stave
     this.music.staveNotes().forEach((thisMeasureStaveNotes, index) => {
-      const stave = new VF.Stave(x, 40, measure_width);
+
+      if (index == 0) {
+        // leave space for the key and time signature
+        stave = new VF.Stave(x, 40, measure_width + 50);
+        x += 50
+      } else {
+        stave = new VF.Stave(x, 40, measure_width);
+      }
+      // const stave = new VF.Stave(x, 40, measure_width);
       if (index == 0) {
         stave.addClef("treble").addTimeSignature("4/4");
       }
@@ -39,12 +48,9 @@ export class Score {
       const voice = new VF.Voice({num_beats: 4,  beat_value: 4});
       voice.addTickables(thisMeasureStaveNotes);
 
-      if (index == 0) {
-        // format and leave space for the key and time signature
-        const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width-50);
-      } else {
-        const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width);
-      }
+
+      // format and leave space for the key and time signature
+      const formatter = new VF.Formatter().joinVoices([voice]).format([voice], measure_width);
       stave.setContext(this.context).draw();
       voice.draw(this.context, stave);
       x += measure_width
