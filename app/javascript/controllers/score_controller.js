@@ -71,10 +71,10 @@ export default class extends Controller {
     }
     switch (event.code) {
       case 'ArrowUp': // move note up
-        this.updateNote(event, index, '#', event.metaKey ? midiNum+12 : midiNum+1);
+        this.updateNote(event, index, '#', (event.metaKey || event.ctrlKey) ? midiNum+12 : midiNum+1);
         break;
       case 'ArrowDown': // move note down
-        this.updateNote(event, index, 'b', event.metaKey ? midiNum-12 : midiNum-1);
+        this.updateNote(event, index, 'b', (event.metaKey || event.ctrlKey) ? midiNum-12 : midiNum-1);
         break;
       case 'ArrowLeft': // select the previous note
         this.selectPreviousNote(event, index, svgNote)
