@@ -20,7 +20,7 @@
   color: rgb(237, 237, 237);
   opacity: 1;
   text-decoration: none;
-  font-size: 24px;
+  font-size: 21px;
 }
 .footer-links a:hover {
   color: $primary;
@@ -30,4 +30,7 @@
   // margin-top: 0;
   // margin-bottom: 1rem;
   // position: relative;
+}
+.text-center p {
+  margin: 0;
 }
