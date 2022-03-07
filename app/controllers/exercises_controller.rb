@@ -28,9 +28,14 @@ class ExercisesController < ApplicationController
   def show
     authorize @exercise
     @question_music = @exercise.question_music
-    @attempt_music = current_user.musics.find_or_initialize_by(exercise: @exercise, is_question: false)
     @review = Review.find_or_initialize_by(user: current_user, exercise: @exercise)
-    @action = @attempt_music.id ? { path: music_path(@attempt_music), method: :patch } : { path: exercise_musics_path(@exercise), method: :post }
+    @attempt_music = current_user.musics.find_or_initialize_by(exercise: @exercise, is_question: false)
+    @action = if @attempt_music.id
+                { path: music_path(@attempt_music),
+                  method: :patch }
+              else
+                { path: exercise_musics_path(@exercise), method: :post }
+              end
   end
 
   def update
