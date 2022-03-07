@@ -38,10 +38,18 @@ export default class extends Controller {
     piano.load().then(() => {
       console.log("loaded!");
       // now = Piano.now();
-      piano.keyDown({ note: `${splitNotesArray[0]}`, time: "+0" });
-      piano.keyDown({ note: `${splitNotesArray[1]}`, time: "+0.5" });
-      piano.keyDown({ note: `${splitNotesArray[2]}`, time: "+1" });
-      piano.keyDown({ note: `${splitNotesArray[3]}`, time: "+1.5" });
+      piano
+        .keyDown({ note: `${splitNotesArray[0]}`, time: "+0" })
+        .keyUp({ note: `${splitNotesArray[0]}`, time: ".5" });
+      piano
+        .keyDown({ note: `${splitNotesArray[1]}`, time: "+0.5" })
+        .keyUp({ note: `${splitNotesArray[1]}`, time: "1" });
+      piano
+        .keyDown({ note: `${splitNotesArray[2]}`, time: "+1" })
+        .keyUp({ note: `${splitNotesArray[2]}`, time: "1.5" });
+      piano
+        .keyDown({ note: `${splitNotesArray[3]}`, time: "+1.5" })
+        .keyUp({ note: `${splitNotesArray[3]}`, time: "2" });
 
       // piano.triggerAttackRelease(`${splitNotesArray[0]}`, "8n", now);
       // piano.triggerAttackRelease(`${splitNotesArray[1]}`, "8n", now + 0.5);
