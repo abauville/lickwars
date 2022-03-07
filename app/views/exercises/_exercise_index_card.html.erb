@@ -1,0 +1,36 @@
+<%= link_to exercise_path(ex), class: "remove-link-style mt-5 col-10 col-lg-8" do %>
+  <div class="d-flex justify-content-center">
+    <div class="teacher-exercise-card ">
+      <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="<%= color %>"></i>
+      <div class="d-flex flex-column justify-content-center p-3 ms-4">
+      <div class="d-flex flex-column justify-content-end p-3 ms-4">
+      </div>
+      </div>
+      <div class="d-flex flex-grow-1 align-items-center justify-content-evenly me-5 ">
+        <p class="pl-4 ml-5 mb-0 lw-text-header fw-bold"> <%=ex.name %></p>
+      </div>
+      <div class="d-flex flex-column justify-content-evenly p-3 ml-4">
+        <% if ex.difficulty_string == "easy"  %>
+          <p class="mb-0 lw-text-header text-center  text-primary" data-toggle="tooltip" title="Difficulty ">
+            Easy
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "intermediate" %>
+          <p class="mb-0 lw-text-header text-center  text-success" data-toggle="tooltip" title="Difficulty">
+            Inter
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "hard" %>
+          <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
+            Hard
+          </p>
+        <% end %>
+        <% if ex.difficulty_string == "insane" %>
+          <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
+            Insane
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

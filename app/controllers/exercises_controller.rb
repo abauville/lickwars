@@ -1,7 +1,9 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[edit update show destroy]
   def index
-    @exercises = policy_scope(Exercise)
+    # will return only exercises where the user has had an attempt
+    # @user_exercises = Music.user_exercises_with_attempt(current_user)
+    @exercises = policy_scope(Exercise).includes(:musics)
   end
 
   def new
