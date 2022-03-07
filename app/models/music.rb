@@ -1,11 +1,21 @@
 class Music < ApplicationRecord
+  # The format for notes and chords is a list of list in json format:
+  # [[<group 1>], [<group 2>]]
+  # The possible groups are:
+  # Single note: "['<note name><octave number>', <note value>]"
+  #     e.g., "['C4', 4]"
+  # Chord: "[['<note name><octave number>', '<note name><octave number>' ...], <note value>]"
+  #     e.g., "[['C4', 'E4', 'G4', 'C5'], 1]"
+  # rest: "[['r', '<note name><octave number>'], <note value>]".
+  #     e.g., "[['r', 'A4'], 1]". i.e. A rest placed at the location of 'A4'
+
   belongs_to :user
   belongs_to :exercise
 
   validates :bpm, presence: true, numericality: { greater_than: 10, lower_than: 500 }
-  validates :key_signature, :mode, :notes, :chords, :note_values, :chord_values, presence: true
-  validate  :each_note_has_value?
-  validate  :each_chord_has_value?
+  validates :key_signature, :mode, :notes, :chords, presence: true
+  validate  :valid_notes?
+  validate  :valid_chords?
   validates :user, uniqueness: {
     scope: %i[exercise is_question]
   }
@@ -19,7 +29,7 @@ class Music < ApplicationRecord
     '0#': 0, '1#': 1, '2#': 2, '3#': 3,
     '4#': 4, '5#': 5, '6#': 6, '7#': 7,
     '0b': 0, '1b': 1, '2b': 2, '3b': 3,
-    '4b': 4, '5b': 5, '6b': 6, '7b': 7,
+    '4b': 4, '5b': 5, '6b': 6, '7b': 7
   }
 
   enum mode: {
@@ -45,11 +55,20 @@ class Music < ApplicationRecord
     return keys[tonality][key_signature]
   end
 
-  def each_note_has_value?
-    notes.split.length == note_values.split.length
+  def valid_notes?
+    valid_json?(notes)
   end
 
-  def each_chord_has_value?
-    chords.split.length == chord_values.split.length
+  def valid_chords?
+    valid_json?(chords)
+  end
+
+  private
+
+  def valid_json?(string)
+    result = JSON.parse(string)
+    result.is_a?(Hash) || result.is_a?(Array)
+  rescue JSON::ParserError, TypeError
+    false
   end
 end

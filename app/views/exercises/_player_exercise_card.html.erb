@@ -1,21 +1,8 @@
 <div class="m-3">
   <h1 class="text-center"><%= @exercise.name %></h1>
   <div class="player_card shadow p-5">
-    <div class="d-flex justify-content-center"
-         id="tone-controller"
-         data-controller="tone"
-         data-tone-question-value="<%= @question_music.notes %>"
-         data-tone-attempt-value="" >
-      <i class="fas fa-play-circle play-button fa-2x mt-1 mx-2"
-               data-action="click->tone#play_attempt"></i>
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-action="click->tone#play_question">Play Melody</p>
-      <%# vvvv left this in hear for future reference vvvv %>
-      <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2"  data-action="click->tone#show_notes" >yoooo</p> %>
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2">Check</p>
-       <%# example of how it can work %>
-      <%#= link_to "submit", @action[:path], method: @action[:method] %>
-      <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-bs-toggle="modal" data-bs-target="#commentModal">Submit</p>
-    </div>
+    <%= render "tone" %>
+
     <div class="d-flex justify-content-center">
       <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/sixteenth-note_unwb9y.jpg" %>
       <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/eighth-note_erdzte.jpg" %>
@@ -23,7 +10,9 @@
       <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/half-note_uk6aeu.jpg" %>
       <%= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/whole-note_chdou4.jpg" %>
     </div>
-      <div class="text-center"><%= render "score" %></div><%#= image_tag "placeholder.jpeg", class: "music-sheet-placeholder mx-auto mt-4" %>
+      <div class="text-center">
+        <%= render "score" %>
+      </div>
 
   </div>
 </div>

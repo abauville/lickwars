@@ -1,20 +1,13 @@
-// Visit The Stimulus Handbook for more details
-// https://stimulusjs.org/handbook/introduction
-//
-// This example controller works with specially annotated HTML like:
-//
-// <div data-controller="hello">
-//   <h1 data-target="hello.output"></h1>
-// </div>
-import * as Tone from "tone";
-
 import { Controller } from "stimulus";
 import { Piano } from "@tonejs/piano";
+import { Music } from "../models/music";
+import { BoomBox } from "../models/boom_box";
 
 export default class extends Controller {
   static values = {
     question: String,
     attempt: String,
+    bpm: Number,
   };
 
   connect() {
@@ -64,10 +57,17 @@ export default class extends Controller {
 
   play_attempt(event) {
     this.play(this.attemptValue);
+    console.log("bpm", this.bpmValue);
+    this.boomBox = new BoomBox();
+    this.question = new Music(this.questionValue, this.bpmValue);
   }
 
-  // static targets = ["output"];
-  // connect() {
-  //   this.outputTarget.textContent = "Hello, Stimulus!";
-  // }
+  play_question(event) {
+    this.boomBox.play(this.question);
+  }
+
+  play_attempt(event) {
+    const attempt = new Music(this.attemptValue, this.bpmValue);
+    this.boomBox.play(attempt);
+  }
 }
