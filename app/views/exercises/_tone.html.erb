@@ -3,6 +3,7 @@
       data-controller="tone"
       data-tone-question-value="<%= @question_music.notes %>"
       data-tone-attempt-value=""
+      data-tone-chords-value="<%= @question_music.chords %>"
       data-tone-bpm-value="<%= @question_music.bpm %>">
   <i class="fas fa-play-circle play-button fa-2x mt-1 mx-2"
       data-action="click->tone#play_attempt"></i>

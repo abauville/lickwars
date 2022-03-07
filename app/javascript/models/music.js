@@ -1,16 +1,25 @@
 export class Music {
-  constructor(notes, bpm) {
+  constructor(notes, chords, bpm) {
     this.notes = JSON.parse(notes);
+    this.chords = JSON.parse(chords);
     this.bpm = bpm
   }
 
-  playbackArrays() {
+  playbackArrays(arrayName) {
+    let array
+    if (arrayName === "notes") {
+      array = this.notes
+    } else if (arrayName === "chords") {
+      array = this.chords
+    } else {
+      throw new Error(`arrayName should be 'notes' or 'chords', instead got ${arrayName}`)
+    }
     const wholeToneLength = 4.0 * 60.0/this.bpm;
 
     const noteSequence = []
     const noteLengths = []
     let time = 0.0
-    this.notes.forEach((note) => {
+    array.forEach((note) => {
       if (!this.isRest(note)) {
         noteSequence.push([time, note[0]])
         noteLengths.push(wholeToneLength / note[1] * 0.95) // 0.95 is have a bit of separation between notes
