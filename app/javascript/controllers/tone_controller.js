@@ -9,6 +9,7 @@
 import * as Tone from "tone";
 
 import { Controller } from "stimulus";
+import { Piano } from "@tonejs/piano";
 
 export default class extends Controller {
   static values = {
@@ -26,21 +27,31 @@ export default class extends Controller {
 
   play(note_string) {
     const splitNotesArray = note_string.split(" ");
-    console.log(splitNotesArray);
-    const synth = new Tone.Synth().toDestination();
-    const now = Tone.now();
-    synth.triggerAttackRelease(`${splitNotesArray[0]}`, "8n", now);
-    synth.triggerAttackRelease(`${splitNotesArray[1]}`, "8n", now + 0.5);
-    synth.triggerAttackRelease(`${splitNotesArray[2]}`, "8n", now + 1);
-    synth.triggerAttackRelease(`${splitNotesArray[3]}`, "8n", now + 1.5);
+    // console.log(splitNotesArray);
+    // const synth = new Tone.Synth().toDestination();
+    // const now = Tone.now();
+
+    // create the piano and load 5 velocity steps
+    //connect it to the speaker output
+    const piano = new Piano({ velocities: 5 }).toDestination();
+
+    piano.load().then(() => {
+      console.log("loaded!");
+      piano.triggerAttackRelease({ note: "C4", time: "+1" });
+      // now = Tone.now();
+      // piano.triggerAttackRelease(`${splitNotesArray[0]}`, "8n", now);
+      // piano.triggerAttackRelease(`${splitNotesArray[1]}`, "8n", now + 0.5);
+      // piano.triggerAttackRelease(`${splitNotesArray[2]}`, "8n", now + 1);
+      // piano.triggerAttackRelease(`${splitNotesArray[3]}`, "8n", now + 1.5);
+    });
   }
 
   play_question(event) {
-    this.play(this.questionValue)
+    this.play(this.questionValue);
   }
 
   play_attempt(event) {
-    this.play(this.attemptValue)
+    this.play(this.attemptValue);
   }
 
   // static targets = ["output"];

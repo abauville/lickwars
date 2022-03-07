@@ -15,7 +15,7 @@
     "tone": "^14.7.77",
     "turbolinks": "^5.2.0",
     "vexflow": "^3.0.9",
-    "webmidi": "^3.0.15",
+    "webmidi": "^2.5.3",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
