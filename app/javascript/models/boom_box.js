@@ -11,6 +11,19 @@ export class BoomBox {
       const noteSequence = playbackArrays[0];
       const noteLengths = playbackArrays[1];
 
+      const piano = new Piano({ velocities: 5 }).toDestination();
+
+    piano.load().then(() => {
+      console.log("loaded!");
+      // now = Piano.now();
+
+      noteSequence.forEach((note, index) => {
+        piano
+        .keyDown({ note: `${note[0]}`, time: `+${note[1]}` })
+        .keyUp({ note: `${note[0]}`, time: `+${note[1] + noteLengths[index]}` });
+      })
+
+    });
       let counter = 0;
       const seq = new Tone.Part((time, note) => {
         console.log(noteSequence);
