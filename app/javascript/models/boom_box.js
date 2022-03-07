@@ -53,19 +53,17 @@ export class BoomBox {
   playSingleEvent(music_event, value, bpm) {
     const wholeToneLength = 4.0 * 60.0/bpm;
     const duration = wholeToneLength/value
-    const now = Tone.now() + 0.005
     Tone.start()
     if (Array.isArray(music_event)) { // chord
       music_event.forEach((note) => {
         this.piano
-        .keyDown({ note: `${note}`, time: "+0", velocity: 0.7 })
+        .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
         .keyUp({ note: `${note}`, time: `+${duration}`})
       })
     } else { // single note
       const note = music_event
-      console.log(note, duration, now)
       this.piano
-      .keyDown({ note: `${note}`, time: "+0", velocity: 0.7 })
+      .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
       .keyUp({ note: `${note}`, time: `+${duration}` })
     }
   }
