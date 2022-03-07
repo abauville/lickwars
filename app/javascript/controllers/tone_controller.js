@@ -51,10 +51,6 @@ export default class extends Controller {
     });
   }
 
-  play_question(event) {
-    this.play(this.questionValue);
-  }
-
   play_attempt(event) {
     this.play(this.attemptValue);
     console.log("bpm", this.bpmValue);
@@ -64,10 +60,5 @@ export default class extends Controller {
 
   play_question(event) {
     this.boomBox.play(this.question);
-  }
-
-  play_attempt(event) {
-    const attempt = new Music(this.attemptValue, this.bpmValue);
-    this.boomBox.play(attempt);
   }
 }
