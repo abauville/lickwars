@@ -20,7 +20,8 @@ export default class extends Controller {
   };
 
   connect() {
-    this.music = new Music(this.notesValue, 0)
+    this.bpm = 80
+    this.music = new Music(this.notesValue, "[]", this.bpm)
     this.boomBox = new BoomBox();
     this.score = new Score(this.music)
     this.initConverters();
@@ -157,7 +158,8 @@ export default class extends Controller {
       this.currentSelection = target;
       this.currentSelection.classList.add("selected");
       this.currentSelection.setAttribute("data-action", "click->score#clickNote keydown->score#keyDownOnNote"); // add keydown
-      this.boomBox.play(this.music.notes[this.score.getNoteIndex(target)])
+      const note = this.music.notes[this.score.getNoteIndex(target)]
+      this.boomBox.playSingleEvent(note[0], 8, this.bpm)
     } else {
       this.currentSelection = null;
     }
