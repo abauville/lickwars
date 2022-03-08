@@ -108,18 +108,18 @@ export default class extends Controller {
         this.updateScore(event, index)
         break;
       case "Digit5": // 4th note
-        console.log("before", this.music.notes);
-        this.divideNote(index, 4)
-        console.log("after", this.music.notes);
-        // // merge note
-        // const new_value = 8
-        // const old_value = 4
-        // if (new_value > old_value) {
-        //   this.music.notes[index][1] = 4
-        //   this.music.notes.splice(index+1,1)
-        // } else {
-        //   this.divideNote(index, 4)
-        // }
+        // console.log("before", this.music.notes);
+        // this.divideNote(index, 4)
+        // console.log("after", this.music.notes);
+        // merge note
+        const new_value = 8
+        const old_value = 4
+        if (new_value > old_value) {
+          this.divideNote(index, 4)
+        } else {
+          this.music.notes[index][1] = 4
+          this.music.notes.splice(index+1,1)
+        }
 
 
         this.updateScore(event, index)
