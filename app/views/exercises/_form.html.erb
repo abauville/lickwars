@@ -15,7 +15,14 @@
         <%# <%= music.hidden_field :chords %>
         <%# in the music model, needs the field is_question set to true  %>
         <div class="text-center">
-          <%= render "score", music: Music.new(notes: JSON[[['r', 'A4'], 1, ['r', 'A4'], 1, ['r', 'A4'], 1, ['r', 'A4'], 1]], chords: "[]", key_signature: 0, mode: 0, bpm: 80, exercise: @exercise, user: current_user)  %>
+          <%= render "score", music: Music.new(
+            notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
+            chords: "[]",
+            key_signature: 0,
+            mode: 0,
+            bpm: 80,
+            exercise: @exercise,
+            user: current_user)  %>
         </div>
         <div class="d-flex justify-content-center">
           <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
