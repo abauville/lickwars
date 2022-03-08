@@ -6,22 +6,27 @@
       data-tone-chords-value="<%= @question_music.chords %>"
       data-tone-bpm-value="<%= @question_music.bpm %>">
 
-  <div class="form-check">
-    <input class="form-check-input"  type="radio" name="event" id="otherEvent" value="otherEvent"/>
-    <label class="form-check-label" for="flexRadioDefault2">
-      Play Melody &nbsp
-    </label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input"  type="radio" name="event" id="walkEvent" value="walkEvent"/>
-    <label class="form-check-label" for="flexRadioDefault1">
-      Play Attempt &nbsp
-    </label>
-  </div>
-  <div id='place'>
-    <%# <p id='place' name='meeting_or_location' class='lw-button lw-btn-sm  text-center mb-0 mx-2' data-action='click->tone#play_question'>Play Melody</p> %>
-  </div>
+  <div style="text-align: right">
+    <div>
+      <label class="form-check-label" for="radio_question">
+        Question &nbsp
+      </label>
+      <input data-tone-target="play_question" class="form-check-input"  type="radio" name="play" id="radio_question" checked>
+    </div>
 
+    <div>
+      <label class="form-check-label" for="radio_attempt">
+        My melody &nbsp
+      </label>
+      <input data-tone-target="play_attempt" class="form-check-input"  type="radio" name="play" id="radio_attempt">
+    </div>
+  </div>
+  <div id='play_button'>
+    <p class='lw-button w-btn-sm  text-center mb-0 mx-2'
+       data-action='click->tone#play'>
+      <i class='far fa-play-circle'></i>
+    </p>
+  </div>
   <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2 my-0">Check</p> %>
   <%= simple_form_for(@attempt_music) do |f| %>
     <%= f.input :notes, as: :hidden, input_html: {data: {tone_target: "hidden-input"}} %>
