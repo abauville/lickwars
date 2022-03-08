@@ -23,6 +23,10 @@ class Music < ApplicationRecord
   DAILY_TARGET = 10
   WEEKLY_TARGET = 50
 
+  include PgSearch::Model
+  pg_search_scope :search_by_status,
+                  against: [:status]
+
   enum status: {
     in_progress: 0,
     finished: 1
@@ -69,7 +73,11 @@ class Music < ApplicationRecord
   def self.user_exercises_with_attempt(user)
     includes(:exercise).where(user: user, is_question: false).group_by(&:exercise)
   end
-  
+
+  def self.user_exercises_with_attempt_search(status)
+    includes(:exercise).where(is_question: false, status: status).group_by(&:exercise)
+  end
+
   def self.daily_completion_stat(user)
     musics = Music.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, user: user)
     stat = (musics.count / DAILY_TARGET.to_f) * 100
