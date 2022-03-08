@@ -1,0 +1,49 @@
+<% colors = ["color:gray", "color:yellow", "color:green"] %>
+<div class="pe-5 w-70 mb-5">
+    <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex flex-lg-row flex-column">
+          <%=
+            select_tag(
+              :status,
+              options_for_select(
+                [['All', nil], ['In Progress', 0], ['Finished', 1]], params[:status]
+              ),
+              class: "lw-dropdown me-2 mb-2"
+            )
+            %>
+          <%=
+            select_tag(
+              :difficulty,
+              options_for_select([['All', nil], ['Easy', 0], ['Intermediate', 1], ['Hard', 2], ['Insane', 3]], params[:difficulty]
+              ),
+              class: "lw-dropdown"
+            )
+          %>
+        </div>
+        <%= submit_tag "Search", class: "lw-button me-2" %>
+      </div>
+    <% end %>
+    <% if @query && @results %>
+      <% @results.each do |ex| %>
+        <%= render(
+          "exercise_index_card",
+          {
+            ex: ex.first,
+            color: colors[Music.statuses[ex.second.first[:status]]]
+          }
+        )%>
+      <% end %>
+    <% else %>
+      <% @exercises.each do |ex| %>
+        <%= render(
+          "exercise_index_card",
+          {
+            ex: ex,
+            color: ex.attempt_music(current_user) ? colors[Music.statuses[ex.attempt_music(current_user).status]] : colors[2]
+          }
+        )%>
+      <% end %>
+    <% end %>
+
+  </div>
