@@ -2,7 +2,7 @@ class Exercise < ApplicationRecord
   belongs_to :user
   has_many :musics, dependent: :destroy
   has_many :reviews, dependent: :destroy
-
+  accepts_nested_attributes_for :musics
   validates :difficulty, numericality: { greater_than_or_equal_to: 0 }
   validates :name, presence: true, length: { minimum: 3 }
 
