@@ -5,15 +5,15 @@
       data-tone-attempt-value=""
       data-tone-chords-value="<%= @question_music.chords %>"
       data-tone-bpm-value="<%= @question_music.bpm %>">
-  <input type="radio" name="event" id="walkEvent" value="walkEvent"/><label>Walk Event</label>
-  <input type="radio" name="event" id="otherEvent" value="otherEvent"/><label>Other Event
+  <input type="radio" name="event" id="walkEvent" value="walkEvent"/><label>Attempt</label>
+  <input type="radio" name="event" id="otherEvent" value="otherEvent"/><label>Play Melody
   </label>
     <p>
-      <label id="place">Meeting Point / Location: </label>
-      <input type="text" name="meeting_or_location"/>
+      <label id="place"></label>
+
+
     </p>
 
-  <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-action="click->tone#play_question">Play Melody</p>
   <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2 my-0">Check</p> %>
   <%= simple_form_for(@attempt_music) do |f| %>
     <%= f.input :notes, as: :hidden, input_html: {data: {tone_target: "hidden-input"}} %>
