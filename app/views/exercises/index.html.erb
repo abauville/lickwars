@@ -1,11 +1,15 @@
 <h1 class="text-center mt-5">Exercises</h1>
-
-<div class="d-flex px-5">
-  <div class="pe-5 w-70">
-    <% @exercises.each do |ex| %>
-      <%= render "exercise_index_card", {ex: ex} %>
-    <% end %>
-  </div>
+<% colors = ["color:gray", "color:yellow", "color:green"] %>
+<div class="row justify-content-center mb-5">
+  <% @exercises.each do |ex| %>
+    <%= render(
+      "exercise_index_card",
+      {
+        ex: ex,
+        color: ex.attempt_music(current_user) ? colors[Music.statuses[ex.attempt_music(current_user).status]] : colors[2]
+      }
+    )%>
+  <% end %>
 
   <div class="d-flex flex-grow-1 justify-content-center text-center">
     <div class="w-100">
