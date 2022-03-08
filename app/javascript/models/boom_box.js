@@ -21,18 +21,6 @@ export class BoomBox {
     console.log("chord", chordSequence)
     let note, chord
 
-
-    // let index = 0
-    // const now = Tone.now()
-    // const seq = new Tone.Part((time, note) => {
-    //   console.log("playing");
-    //   const downTime = note[0]
-    //   const upTime = (note[0] + noteLengths[index])
-    //   this.piano
-    //   .keyDown(`${note[1]}`, downTime, 0.8 )
-    //   .keyUp(`${note[1]}`, upTime, 0.8 )
-    //   index += 1
-    // }, noteSequence).start(0)
     const now = Tone.now() + 0.1
     console.log(this.piano)
     for (let index = 0; index < noteSequence.length; index += 1) {
@@ -60,7 +48,23 @@ export class BoomBox {
         .pedalUp({time: upTime})
       })
     }
+  }
+
+  playSingleEvent(music_event, value, bpm) {
+    const wholeToneLength = 4.0 * 60.0/bpm;
+    const duration = wholeToneLength/value
     Tone.start()
-    Tone.Transport.start()
+    if (Array.isArray(music_event)) { // chord
+      music_event.forEach((note) => {
+        this.piano
+        .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
+        .keyUp({ note: `${note}`, time: `+${duration}`})
+      })
+    } else { // single note
+      const note = music_event
+      this.piano
+      .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
+      .keyUp({ note: `${note}`, time: `+${duration}` })
+    }
   }
 }
