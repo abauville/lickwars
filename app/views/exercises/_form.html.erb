@@ -12,6 +12,9 @@
         <%= music.hidden_field :notes %>
         <%= music.hidden_field :chords %>
       <% end %>
+       <div class="text-center">
+        <%= render "score" %>
+      </div>
       <div class="d-flex justify-content-center">
         <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
       </div>
