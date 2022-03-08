@@ -14,19 +14,20 @@
               </svg>
             </button>
           </h1>
-          <%= simple_form_for([@exercise,@review]) do |form| %>
-            Share your thoughts:
-            <%= form.input :content, label: false, class: "form-control", placeholder: @review.content %>
-            <div class="d-flex justify-content-center">
+          <%# <%= simple_form_for([@exercise,@review]) do |form| %>
+            <%# Share your thoughts: %>
+            <%#= form.input :content, label: false, class: "form-control", placeholder: @review.content %>
+            <%# <div class="d-flex justify-content-center">
               <%= form.submit 'Submit', class: "lw-button lw-btn-lg" %>
-            </div>
-          <% end %>
-          <h6 class="mt-4">Previous comments on this exercise:</h6>
+            <%# </div> %>
+          <%# end %>
+          <%# <h6 class="mt-4">Previous comments on this exercise:</h6>
           <div class="h-50 pb-3 overflow-scroll">
             <% @exercise.reviews.order(created_at: :asc).each do |review| %>
-              <%= render 'shared/review_card', {review: review} %>
-            <% end %>
-          </div>
+              <%#= render 'shared/review_card', {review: review} %>
+            <%# end %>
+          <%# </div> %>
+      </div>
         </div>
       </div>
     </div>
