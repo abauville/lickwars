@@ -27,7 +27,6 @@ export default class extends Controller {
     this.currentSelection = null;
 
     this.score.draw();
-    this.updateAttemptStringPlayback();
   }
 
   initConverters() {
@@ -173,7 +172,6 @@ export default class extends Controller {
 
   updateScore(event, index, playNote = true) {
     this.score.draw(event);
-    this.updateAttemptStringPlayback(event);
     const svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote, playNote);
     this.currentSelection.focus();
@@ -204,13 +202,15 @@ export default class extends Controller {
     }
   }
 
-  updateAttemptStringPlayback(event) {
-    const toneController = document.querySelector("#tone-controller");
-    toneController.dataset.toneAttemptValue = JSON.stringify(this.music.notes);
-    console.log(JSON.stringify(this.music.notes));
-    document.getElementById("music_notes").value = JSON.stringify(
-      this.music.notes
-    );
+  playAttempt(event) {
+    console.log("playAttempt")
+    this.boomBox.play(this.music);
+    // const toneController = document.querySelector("#attempt-tone-controller");
+    // toneController.dataset.toneNotesValue = JSON.stringify(this.music.notes);
+    // console.log(JSON.stringify(this.music.notes));
+    // document.getElementById("music_notes").value = JSON.stringify(
+    //   this.music.notes
+    // );
   }
   // use this as a model for when writing your score, make new function
   sendAttemptStringToForm() {}
