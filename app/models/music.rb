@@ -66,6 +66,10 @@ class Music < ApplicationRecord
     valid_json?(chords)
   end
 
+  def self.user_exercises_with_attempt(user)
+    includes(:exercise).where(user: user, is_question: false).group_by(&:exercise)
+  end
+  
   def self.daily_completion_stat(user)
     musics = Music.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, user: user)
     stat = (musics.count / DAILY_TARGET.to_f) * 100

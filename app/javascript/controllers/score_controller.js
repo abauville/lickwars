@@ -6,20 +6,24 @@
 // <div data-controller="hello">
 //   <h1 data-target="hello.output"></h1>
 // </div>
+import { Controller } from "stimulus"
+import { Music } from "../models/music"
+import { Score } from "../models/score"
+import { BoomBox } from "../models/boom_box";
 
-import { Controller } from "stimulus";
-import { Music } from "../models/music";
-import { Score } from "../models/score";
 
 export default class extends Controller {
   static targets = ["output"];
   static values = {
     notes: String,
+    bpm: Number
   };
 
   connect() {
-    this.music = new Music(this.notesValue, 0);
-    this.score = new Score(this.music);
+    this.bpm = this.bpmValue
+    this.music = new Music(this.notesValue, "[]", this.bpm)
+    this.boomBox = new BoomBox();
+    this.score = new Score(this.music)
     this.initConverters();
     this.currentSelection = null;
 
@@ -118,19 +122,18 @@ export default class extends Controller {
       case "ArrowRight": // select the next note
         this.selectNextNote(event, index, svgNote);
         break;
-      case "KeyC":
-      case "KeyD":
-      case "KeyE":
-      case "KeyF":
-      case "KeyG":
-      case "KeyA":
-      case "KeyB":
-        const below = -((midiNum - refMidiNums[event.code]) % 12);
-        const above = below + 12;
-        newMidiNum =
-          Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above;
-        svgNote = this.updateNote(event, index, "b", newMidiNum);
-        this.selectNextNote(event, index, svgNote);
+      case 'KeyC':
+      case 'KeyD':
+      case 'KeyE':
+      case 'KeyF':
+      case 'KeyG':
+      case 'KeyA':
+      case 'KeyB':
+        const below = - ((midiNum - refMidiNums[event.code] ) % 12)
+        const above = below + 12
+        newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
+        svgNote = this.updateNote(event, index, 'b', newMidiNum);
+        this.selectNextNote(event, index, svgNote, false)
         break;
       case "Digit4": // 8th note
         // break both list
@@ -144,25 +147,25 @@ export default class extends Controller {
     }
   }
 
-  selectPreviousNote(event, index, svgNote) {
-    index = Math.max(index - 1, 0);
-    return this.changeSelection(event, index, svgNote);
+  selectPreviousNote(event, index, svgNote, playNote = true) {
+    index = Math.max(index - 1, 0)
+    return this.changeSelection(event, index, svgNote, playNote)
   }
 
-  selectNextNote(event, index, svgNote) {
-    index = Math.min(index + 1, this.music.notes.length - 1);
-    return this.changeSelection(event, index, svgNote);
+  selectNextNote(event, index, svgNote, playNote = true) {
+    index = Math.min(index + 1, this.music.notes.length-1)
+    return this.changeSelection(event, index, svgNote, playNote)
   }
 
-  changeSelection(event, index, svgNote) {
-    this.toggleNoteSelection(svgNote);
+  changeSelection(event, index, svgNote, playNote = true) {
+    this.toggleNoteSelection(svgNote, playNote);
     svgNote = this.score.getSvgNote(index);
-    this.toggleNoteSelection(svgNote);
+    this.toggleNoteSelection(svgNote, playNote);
     this.currentSelection.focus();
     return svgNote;
   }
 
-  updateNote(event, index, accidental, newMidiNum) {
+  updateNote(event, index, accidental, newMidiNum, playNote = true) {
     // Note: works only for single notes. Doesn't handle chords
     if (!this.music.isRestIndex(index)) {
       if (accidental == "#") {
@@ -179,12 +182,12 @@ export default class extends Controller {
     this.score.draw(event);
     this.updateAttemptStringPlayback(event);
     const svgNote = this.score.getSvgNote(index);
-    this.toggleNoteSelection(svgNote);
+    this.toggleNoteSelection(svgNote, playNote);
     this.currentSelection.focus();
     return svgNote;
   }
 
-  toggleNoteSelection(target) {
+  toggleNoteSelection(target, playNote = true) {
     if (this.currentSelection) {
       this.currentSelection.classList.remove("selected");
       this.currentSelection.setAttribute(
@@ -195,10 +198,11 @@ export default class extends Controller {
     if (this.currentSelection !== target) {
       this.currentSelection = target;
       this.currentSelection.classList.add("selected");
-      this.currentSelection.setAttribute(
-        "data-action",
-        "click->score#clickNote keydown->score#keyDownOnNote"
-      ); // add keydown
+      this.currentSelection.setAttribute("data-action", "click->score#clickNote keydown->score#keyDownOnNote"); // add keydown
+      if (playNote) {
+        const note = this.music.notes[this.score.getNoteIndex(target)]
+        this.boomBox.playSingleEvent(note[0], 8, this.bpm)
+      }
     } else {
       this.currentSelection = null;
     }

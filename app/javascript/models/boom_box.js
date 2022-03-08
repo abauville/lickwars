@@ -21,18 +21,6 @@ export class BoomBox {
     console.log("chord", chordSequence)
     let note, chord
 
-
-    // let index = 0
-    // const now = Tone.now()
-    // const seq = new Tone.Part((time, note) => {
-    //   console.log("playing");
-    //   const downTime = note[0]
-    //   const upTime = (note[0] + noteLengths[index])
-    //   this.piano
-    //   .keyDown(`${note[1]}`, downTime, 0.8 )
-    //   .keyUp(`${note[1]}`, upTime, 0.8 )
-    //   index += 1
-    // }, noteSequence).start(0)
     const now = Tone.now() + 0.1
     console.log(this.piano)
     for (let index = 0; index < noteSequence.length; index += 1) {
@@ -42,7 +30,7 @@ export class BoomBox {
       // const downTime =`+${note[0]}`
       // const upTime = `+${note[0] + chordLengths[index]}`
       this.piano
-      .keyDown({ note: `${note[1]}`, time: downTime, velocity: 0.7 })
+      .keyDown({ note: `${note[1]}`, time: downTime, velocity: 0.6 })
       .keyUp({ note: `${note[1]}`, time: upTime })
       if (this.breakLoop) {
         break
@@ -54,13 +42,29 @@ export class BoomBox {
         const downTime = now + chord[0]
         const upTime = now + chord[0] + chordLengths[index]
         this.piano
-        .keyDown({ note: `${noteName}`, time: downTime, velocity: 0.4 })
+        .keyDown({ note: `${noteName}`, time: downTime, velocity: 0.35 })
         .keyUp({ note: `${noteName}`, time: upTime })
         .pedalDown({time: downTime})
         .pedalUp({time: upTime})
       })
     }
+  }
+
+  playSingleEvent(music_event, value, bpm) {
+    const wholeToneLength = 4.0 * 60.0/bpm;
+    const duration = wholeToneLength/value
     Tone.start()
-    Tone.Transport.start()
+    if (Array.isArray(music_event)) { // chord
+      music_event.forEach((note) => {
+        this.piano
+        .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
+        .keyUp({ note: `${note}`, time: `+${duration}`})
+      })
+    } else { // single note
+      const note = music_event
+      this.piano
+      .keyDown({ note: `${note}`, time: "+0", velocity: 0.4 })
+      .keyUp({ note: `${note}`, time: `+${duration}` })
+    }
   }
 }
