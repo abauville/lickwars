@@ -21,8 +21,14 @@ class Exercise < ApplicationRecord
 
     return string[-1] if difficulty > max_diff
 
-
     index = ((difficulty - min_diff) / (max_diff - min_diff) * (string.length - 1)).floor
     string[index]
+  end
+
+  def self.user_exercise_pie(user)
+    grouped = Exercise.includes(:musics).where(user: user).group_by do |ex|
+      ex.difficulty_string.capitalize
+    end
+    grouped.map { |k, v| { k => v.count } }.reduce(:merge)
   end
 end
