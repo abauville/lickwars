@@ -54,14 +54,14 @@
   margin-right: 8px;
   flex-grow: 1;
   display: flex;
-  min-height: 80px;
+  min-height: 72px;
   min-width: 40%;
   border-radius: 16px;
   background-color: #ededed;
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+  box-shadow: 3px 0.5rem 0.3rem rgba(0, 0, 0, 0.15);
   transition: 0.2s;
   &:hover {
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0.9rem 0.8rem rgba(0, 0, 0, 0.15);
     transform: scale(1.02);
     color: black;
   }
