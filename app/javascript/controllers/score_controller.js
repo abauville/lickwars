@@ -16,10 +16,11 @@ export default class extends Controller {
   static targets = ["output"];
   static values = {
     notes: String,
+    bpm: Number
   };
 
   connect() {
-    this.bpm = 80
+    this.bpm = this.bpmValue
     this.music = new Music(this.notesValue, "[]", this.bpm)
     this.boomBox = new BoomBox();
     this.score = new Score(this.music)
