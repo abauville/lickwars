@@ -1,7 +1,8 @@
 <div data-controller="score"
      id="score-controller"
-     data-score-notes-value="<%= @attempt_music.notes %>"
-     data-score-bpm-value="<%= @attempt_music.bpm %>">
+       data-score-notes-value="<%= music.notes %>"
+      data-score-bpm-value="<%= music.bpm %>">
+
   <div id="score" data-score-target="score"></div>
   <p data-score-target="output"></p>
 </div>

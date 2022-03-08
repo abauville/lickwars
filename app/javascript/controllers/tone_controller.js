@@ -7,22 +7,26 @@ export default class extends Controller {
     question: String,
     attempt: String,
     chords: String,
-    bpm: Number
+    bpm: Number,
   };
 
   connect() {
     console.log("bpm", this.bpmValue);
     this.boomBox = new BoomBox();
-    this.question = new Music(this.questionValue, this.chordsValue, this.bpmValue)
+    this.question = new Music(
+      this.questionValue,
+      this.chordsValue,
+      this.bpmValue
+    );
   }
 
   play_question(event) {
-    this.boomBox.play(this.question)
+    this.boomBox.play(this.question);
   }
 
   play_attempt(event) {
-    const attempt = new Music(this.attemptValue, "[]", this.bpmValue)
-    this.boomBox.play(attempt)
+    const attempt = new Music(this.attemptValue, "[]", this.bpmValue);
+    this.boomBox.play(attempt);
   }
 
   stopPlayback(event) {
