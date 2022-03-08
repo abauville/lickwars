@@ -21,7 +21,7 @@ export default class extends Controller {
   }
 
   play_attempt(event) {
-    const attempt = new Music(this.attemptValue, this.bpmValue)
+    const attempt = new Music(this.attemptValue, "[]", this.bpmValue)
     this.boomBox.play(attempt)
   }
 
