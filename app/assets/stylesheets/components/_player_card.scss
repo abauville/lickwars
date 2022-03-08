@@ -1,0 +1,27 @@
+.player-card {
+  border-radius: 16px;
+  box-shadow: 2px 2px 4px 4px #4e4c6724;
+  padding: 8px;
+  background-color: #eceaff;
+  margin: 16px;
+
+  .play-button {
+    background-color: $purple;
+    color: white;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $font-size-base*1.5;
+    cursor: pointer;
+    &:hover {
+      background-color:#1a1a63;
+    }
+  }
+  // min-height: 250px;
+  // min-width: 500px;
+  // max-height: 3000px;
+  // max-width: 600px;
+}
