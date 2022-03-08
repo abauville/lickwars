@@ -66,7 +66,13 @@ export default class extends Controller {
     console.log("keydown", event.code, event, event.metaKey);
     let svgNote = event.currentTarget;
     let index = this.score.getNoteIndex(svgNote);
-    const midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
+    let midiNum
+    if (!this.music.isRestIndex(index)) {
+      midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
+    } else {
+      midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]];
+    }
+
     const refMidiNums = {
       KeyC: 12, KeyD: 14, KeyE: 16, KeyF: 17, KeyG: 19, KeyA: 21, KeyB: 23
     };
@@ -99,7 +105,7 @@ export default class extends Controller {
         const below = - ((midiNum - refMidiNums[event.code] ) % 12)
         const above = below + 12
         newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
-        svgNote = this.updateNote(event, index, 'b', newMidiNum);
+        svgNote = this.updateNote(index, 'b', newMidiNum, true);
         this.updateScore(event, index)
         this.selectNextNote(event, index, svgNote, false)
         break;
@@ -150,9 +156,9 @@ export default class extends Controller {
     return svgNote;
   }
 
-  updateNote(index, accidental, newMidiNum) {
+  updateNote(index, accidental, newMidiNum, updateRest = false) {
     // Note: works only for single notes. Doesn't handle chords
-    if (!this.music.isRestIndex(index)) {
+    if (!this.music.isRestIndex(index) || updateRest) {
       if (accidental == "#") {
         this.music.notes[index][0] = this.midiNum2NoteNameSharp[newMidiNum];
       } else if (accidental == "b" || accidental == "n") {
@@ -189,8 +195,8 @@ export default class extends Controller {
         "data-action",
         "click->score#clickNote keydown->score#keyDownOnNote"
       ); // add keydown
-      if (playNote) {
-        const note = this.music.notes[this.score.getNoteIndex(target)];
+      const note = this.music.notes[this.score.getNoteIndex(target)];
+      if (playNote && !this.music.isRest(note)) {
         this.boomBox.playSingleEvent(note[0], 8, this.bpm);
       }
     } else {
