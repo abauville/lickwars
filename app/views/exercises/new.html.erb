@@ -1,15 +1,3 @@
 <h1 class="text-center mt-3">Add new exercise</h1>
 <%= render "form", {exercise: @exercise}%>
 <%# <%= render "new_exercise_card" %>
-
-
-<%= simple_form_for @exercise do |ex| %>
-  <%= ex.simple_fields_for :musics do |music| %>
-    <%= music.input :bpm %>
-      <%= music.input :key_signature %>
-      <%= music.input :mode %>
-      <%= music.input :notes %>
-      <%= music.input :chords %>
-
-  <% end %>
-<% end %>

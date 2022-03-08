@@ -21,20 +21,24 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def show
     authorize @exercise
     @question_music = @exercise.question_music
-    @attempt_music = current_user.musics.find_or_initialize_by(exercise: @exercise, is_question: false)
-    @review = Review.find_or_initialize_by(user: current_user, exercise: @exercise)
-    @action = if @attempt_music.id
-                { path: music_path(@attempt_music),
-                  method: :patch }
-              else
-                { path: exercise_musics_path(@exercise), method: :post }
-              end
+    @attempt_music =
+      current_user.musics.find_or_initialize_by(
+        exercise: @exercise,
+        is_question: false
+      )
+    @review =
+      Review.find_or_initialize_by(user: current_user, exercise: @exercise)
+    @action =
+      if @attempt_music.id
+        { path: music_path(@attempt_music), method: :patch }
+      else
+        { path: exercise_musics_path(@exercise), method: :post }
+      end
   end
 
   def update
@@ -53,7 +57,10 @@ class ExercisesController < ApplicationController
   end
 
   def exercise_params
-    params.require(:exercise).permit(:name, :description, :chord_progression, :user_id, :difficulty)
+    params
+      .require(:exercise)
+      .permit(:name, :description, :chord_progression, :user_id, :difficulty, musics_attributes: %i[bpm key_signature
+                                                                                                    mode notes chords])
   end
 
   def set_exercise

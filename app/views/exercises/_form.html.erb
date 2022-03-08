@@ -5,9 +5,21 @@
       <%= f.input :description %>
       <%= f.input :chord_progression %>
       <%= f.input :difficulty, input_html: { min: 0 } %>
+      <%= f.simple_fields_for :musics do |music| %>
+        <%= music.input :bpm %>
+        <%= music.input :mode %>
+        <%= music.hidden_field :key_signature %>
+        <%= music.hidden_field :notes %>
+        <%= music.hidden_field :chords %>
+      <% end %>
       <div class="d-flex justify-content-center">
         <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
       </div>
     <% end %>
   </div>
 </div>
+
+
+<%= simple_form_for @exercise do |ex| %>
+
+<% end %>
