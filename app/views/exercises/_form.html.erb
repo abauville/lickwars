@@ -5,9 +5,34 @@
       <%= f.input :description %>
       <%= f.input :chord_progression %>
       <%= f.input :difficulty, input_html: { min: 0 } %>
-      <div class="d-flex justify-content-center">
-        <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
-      </div>
+      <%= f.simple_fields_for :musics do |music| %>
+        <%= music.input :bpm %>
+        <%= music.input :mode %>
+        <%= music.hidden_field :key_signature %>
+        <%# need too read the notes from the score to put in the database %>
+        <%# score controller.js needs to write the vlaue of that field>
+        <%= music.hidden_field :notes %>
+        <%# <%= music.hidden_field :chords %>
+        <%# in the music model, needs the field is_question set to true  %>
+        <div class="text-center">
+          <%= render "score", music: Music.new(
+            notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
+            chords: "[]",
+            key_signature: 0,
+            mode: 0,
+            bpm: 80,
+            exercise: @exercise,
+            user: current_user)  %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
+
+
+<%= simple_form_for @exercise do |ex| %>
+
+<% end %>

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # User.destroy_all
 # Exercise.destroy_all
-require "open-uri"
+require 'open-uri'
 require 'faker'
 require_relative 'seed_helper'
 
@@ -20,9 +20,17 @@ exercises
 
 # Faker users ============
 25.times do
-  user = User.create(email: Faker::Internet.email, password: "123456", name: Faker::Name.unique.first_name)
-  user.profile_picture.attach(io: URI.open('https://thispersondoesnotexist.com/image'),
-                              filename: "#{user.name}_profile_pic.png", content_type: 'image/png')
+  user =
+    User.create(
+      email: Faker::Internet.email,
+      password: '123456',
+      name: Faker::Name.unique.first_name
+    )
+  user.profile_picture.attach(
+    io: URI.open('https://thispersondoesnotexist.com/image'),
+    filename: "#{user.name}_profile_pic.png",
+    content_type: 'image/png'
+  )
 end
 # ========================
 

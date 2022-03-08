@@ -12,11 +12,11 @@ class MusicsController < ApplicationController
     flash[:success] = false
     if @music.notes == @music.exercise.question_music.notes
       flash[:success] = true
-      flash[:notice] = "Great job!"
+      flash[:notice] = 'Great job!'
       @music.status = 1
       @music.save
     else
-      flash[:alert] = "It was incorrect! Try again!"
+      flash[:alert] = 'It was incorrect! Try again!'
     end
     authorize @music
     redirect_to exercise_path(@music.exercise)
@@ -25,15 +25,17 @@ class MusicsController < ApplicationController
   private
 
   def music_params
-    params.require(:music).permit(
-      :bpm,
-      :key_signature,
-      :mode,
-      :notes,
-      :chords,
-      :note_values,
-      :chord_values,
-      :status
-    )
+    params
+      .require(:music)
+      .permit(
+        :bpm,
+        :key_signature,
+        :mode,
+        :notes,
+        :chords,
+        :note_values,
+        :chord_values,
+        :status
+      )
   end
 end
