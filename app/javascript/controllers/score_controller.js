@@ -104,40 +104,35 @@ export default class extends Controller {
         this.selectNextNote(event, index, svgNote, false)
         break;
       case "Digit4": // 8th note
-        console.log("Bef, 8th note", this.music.notes);
-        if (this.music.notes[index][1] <= 4) {
-          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
-        }
-        if (this.music.notes[index][1] <= 2) {
-          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
-        }
-        if (this.music.notes[index][1] <= 1) {
-          this.music.notes.splice(index+3, 0, [["r", "A4"], 2]);
-        }
-        const new_value = 8
-        const prev_value = this.music.notes[index][1]
-        for (let i = 0; i < Math.log2(new_value) - Math.log2(prev_value); i++) {
-          this.music.notes.splice(index+1+i, 0, [["r", "A4"], new_value/(Math.pow(2,i))]);
-        }
-
-
-        console.log("Aft, 8th note", this.music.notes);
-        this.music.notes[index][1] = 8
+        this.divideNote(index, 8)
         this.updateScore(event, index)
         break;
       case "Digit5": // 4th note
-        console.log("Bef, 4th note", this.music.notes);
-        if (this.music.notes[index][1] === 2) {
-          this.music.notes.splice(index+1, 0, [["r", "A4"], 4]);
-        } else if (this.music.notes[index][1] === 1) {
-          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
-          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
-        }
-        console.log("Aft, 4th note", this.music.notes);
-        this.music.notes[index][1] = 4
+        console.log("before", this.music.notes);
+        this.divideNote(index, 4)
+        console.log("after", this.music.notes);
+        // // merge note
+        // const new_value = 8
+        // const old_value = 4
+        // if (new_value > old_value) {
+        //   this.music.notes[index][1] = 4
+        //   this.music.notes.splice(index+1,1)
+        // } else {
+        //   this.divideNote(index, 4)
+        // }
+
+
         this.updateScore(event, index)
         break;
     }
+  }
+
+  divideNote(index, new_value) {
+    const prev_value = this.music.notes[index][1]
+    for (let i = 0; i < Math.log2(new_value) - Math.log2(prev_value); i++) {
+      this.music.notes.splice(index+1+i, 0, [["r", "A4"], new_value/(Math.pow(2,i))]);
+    }
+    this.music.notes[index][1] = new_value
   }
 
   selectPreviousNote(event, index, svgNote, playNote = true) {
