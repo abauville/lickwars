@@ -15,12 +15,20 @@ class MusicPolicy < ApplicationPolicy
   end
 
   def update?
-    the_teacher?
+    if record.is_question
+      teacher?
+    else
+      player?
+    end
   end
 
   private
 
-  def the_teacher?
+  def teacher?
     record.exercise.user == user
+  end
+
+  def player?
+    record.user == user
   end
 end
