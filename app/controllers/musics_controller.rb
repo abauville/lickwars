@@ -9,7 +9,6 @@ class MusicsController < ApplicationController
   def update
     @music = Music.find(params[:id])
     @music.update(music_params)
-    flash[:success] = false
     if @music.notes == @music.exercise.question_music.notes
       flash[:success] = true
       flash[:notice] = 'Great job!'

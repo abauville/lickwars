@@ -40,7 +40,8 @@ export class Music {
 
   isRestIndex(index) {
     return (
-      Array.isArray(this.notes[index][0]) && Array.isArray(this.notes[index][0])
+      Array.isArray(this.notes[index][0]) &&
+      this.notes[index][0][0] === 'r'
     );
   }
 
