@@ -32,7 +32,7 @@ export class BoomBox {
       // const downTime =`+${note[0]}`
       // const upTime = `+${note[0] + chordLengths[index]}`
       this.piano
-        .keyDown({ note: `${note[1]}`, time: downTime, velocity: 0.7 })
+        .keyDown({ note: `${note[1]}`, time: downTime, velocity: 0.6 })
         .keyUp({ note: `${note[1]}`, time: upTime });
       if (this.breakLoop) {
         break;
@@ -44,7 +44,7 @@ export class BoomBox {
         const downTime = now + chord[0];
         const upTime = now + chord[0] + chordLengths[index];
         this.piano
-          .keyDown({ note: `${noteName}`, time: downTime, velocity: 0.4 })
+          .keyDown({ note: `${noteName}`, time: downTime, velocity: 0.35 })
           .keyUp({ note: `${noteName}`, time: upTime })
           .pedalDown({ time: downTime })
           .pedalUp({ time: upTime });

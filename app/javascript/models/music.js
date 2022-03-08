@@ -20,9 +20,16 @@ export class Music {
     }
     const wholeToneLength = (4.0 * 60.0) / this.bpm;
 
+<<<<<<< HEAD
     const noteSequence = [];
     const noteLengths = [];
     let time = 0.0;
+=======
+    const noteSequence = []
+    const noteLengths = []
+    let time = 0.0
+    console.log("array", array)
+>>>>>>> 5f278ef417e9e62eb473e9e9e57f87c4bacd4381
     array.forEach((note) => {
       if (!this.isRest(note)) {
         noteSequence.push([time, note[0]]);
