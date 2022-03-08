@@ -9,15 +9,18 @@
         <%= music.input :bpm %>
         <%= music.input :mode %>
         <%= music.hidden_field :key_signature %>
+        <%# need too read the notes from the score to put in the database %>
+        <%# score controller.js needs to write the vlaue of that field>
         <%= music.hidden_field :notes %>
-        <%= music.hidden_field :chords %>
+        <%# <%= music.hidden_field :chords %>
+        <%# in the music model, needs the field is_question set to true  %>
+        <div class="text-center">
+          <%= render "score", music: music %>
+        </div>
+        <div class="d-flex justify-content-center">
+          <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
+        </div>
       <% end %>
-       <div class="text-center">
-        <%= render "score" %>
-      </div>
-      <div class="d-flex justify-content-center">
-        <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
-      </div>
     <% end %>
   </div>
 </div>
