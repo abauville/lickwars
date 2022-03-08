@@ -2,6 +2,9 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[edit update show destroy]
   def index
     @exercises = policy_scope(Exercise)
+    @daily_stat = Music.daily_completion_stat(current_user)
+    @weekly_stat = Music.weekly_completion_stat(current_user)
+    @exercise_pie = Exercise.user_exercise_pie(current_user)
   end
 
   def new

@@ -20,6 +20,9 @@ class Music < ApplicationRecord
     scope: %i[exercise is_question]
   }
 
+  DAILY_TARGET = 10
+  WEEKLY_TARGET = 50
+
   enum status: {
     in_progress: 0,
     finished: 1
@@ -61,6 +64,18 @@ class Music < ApplicationRecord
 
   def valid_chords?
     valid_json?(chords)
+  end
+
+  def self.daily_completion_stat(user)
+    musics = Music.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, user: user)
+    stat = (musics.count / DAILY_TARGET.to_f) * 100
+    stat > 100 ? 100 : stat
+  end
+
+  def self.weekly_completion_stat(user)
+    musics = Music.where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week, user: user)
+    stat = (musics.count / WEEKLY_TARGET.to_f) * 100
+    stat > 100 ? 100 : stat
   end
 
   private

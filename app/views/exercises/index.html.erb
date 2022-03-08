@@ -1,50 +1,20 @@
 <h1 class="text-center mt-5">Exercises</h1>
 
-<ul>
-  <% @exercises.each do |ex| %>
-    <%= link_to exercise_path(ex), class: "remove-link-style" do %>
-    <div class="row justify-content-center">
-      <div class="teacher-exercise-card m-5 col-12 col-lg-8">
-        <% if ex.musics.any? && ex.musics.all?{ |music| music.status == "finished"} %>
-          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:green"></i>
-        <% else %>
-          <i class="fas fa-circle fa-3x  d-flex align-items-center" data-toggle="tooltip" title="In progress" style="color:yellow"></i>
+<div class="d-flex px-5">
+  <div class="pe-5 w-70">
+    <% @exercises.each do |ex| %>
+      <%= render "exercise_index_card", {ex: ex} %>
+    <% end %>
+  </div>
 
-        <% end %>
-
-
-        <div class="d-flex flex-column justify-content-center p-3 ms-4">
-        <div class="d-flex flex-column justify-content-end p-3 ms-4">
-        </div>
-        </div>
-        <div class="d-flex flex-grow-1 align-items-center justify-content-evenly me-5 ">
-          <p class="pl-4 ml-5 mb-0 lw-text-header fw-bold"> <%=ex.name %></p>
-        </div>
-        <div class="d-flex flex-column justify-content-evenly p-3 ml-4">
-      <%# <p class="mb-0 lw-text-header">Difficulty:</p> %>
-            <% if ex.difficulty_string == "easy"  %>
-              <p class="mb-0 lw-text-header text-center  text-primary" data-toggle="tooltip" title="Difficulty ">
-                Easy
-              </p>
-            <% end %>
-            <% if ex.difficulty_string == "intermediate" %>
-              <p class="mb-0 lw-text-header text-center  text-success" data-toggle="tooltip" title="Difficulty">
-                Inter
-              </p>
-            <% end %>
-            <% if ex.difficulty_string == "hard" %>
-              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
-                Hard
-              </p>
-            <% end %>
-            <% if ex.difficulty_string == "insane" %>
-              <p class="mb-0 lw-text-header text-center  text-danger" data-toggle="tooltip" title="Difficulty">
-                Insane
-              </p>
-            <% end %>
-        </div>
+  <div class="d-flex flex-grow-1 justify-content-center text-center">
+    <div class="w-100">
+      <div class="progress-bar-container mt-5">
+      <%= render "progress_bar", {title: "Daily Progress", stat: @daily_stat, max: Music::DAILY_TARGET} %>
+      <%= render "progress_bar", {title: "Weekly Progress", stat: @weekly_stat, max: Music::WEEKLY_TARGET} %>
+      <p>Your challenges by difficulty!</p>
+      <%= pie_chart @exercise_pie, colors: ["#2e2d88", "#198854", "#b34d00", "#a21116"], legend: "bottom", library: { color: "#fff" }, dataset: {borderWidth: 1, paddingBotton: "10px"}%>
       </div>
     </div>
-    <% end %>
-  <% end %>
-</ul>
+  </div>
+</div>
