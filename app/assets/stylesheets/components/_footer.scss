@@ -4,11 +4,10 @@
   align-items: center;
   position: relative;
   width: 100%;
-  // justify-content: space-between;
-  // padding: 0px 100px;
   color: #9a9999;
   bottom: 0;
   z-index: 5;
+  flex-shrink: 0;
 }
 .footer-links {
   // display: flex;
