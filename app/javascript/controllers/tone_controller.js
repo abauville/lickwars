@@ -4,17 +4,15 @@ import { BoomBox } from "../models/boom_box";
 
 export default class extends Controller {
   static values = {
-    question: String,
-    attempt: String,
+    notes: String,
     chords: String,
     bpm: Number,
   };
 
   connect() {
-    console.log("bpm", this.bpmValue);
     this.boomBox = new BoomBox();
-    this.question = new Music(
-      this.questionValue,
+    this.music = new Music(
+      this.notesValue,
       this.chordsValue,
       this.bpmValue
     );
@@ -29,14 +27,10 @@ export default class extends Controller {
     }
   }
 
-  play_question(event) {
-    this.boomBox.play(this.question);
+  play(event) {
+    this.boomBox.play(this.music);
   }
 
-  play_attempt(event) {
-    const attempt = new Music(this.attemptValue, "[]", this.bpmValue);
-    this.boomBox.play(attempt);
-  }
 
   stopPlayback(event) {
     this.boomBox.breakLoop = true;

@@ -1,1 +1,9 @@
-<%= render "player_exercise_card" %>
+<div class="m-3">
+  <div class="d-flex justify-content-between">
+    <h1 class="text-center"><%= @exercise.name %></h1>
+      <%= render "tone" %>
+  </div>
+  <%= render "player_exercise_card" %>
+  <%= render "results_card" %>
+
+</div>
