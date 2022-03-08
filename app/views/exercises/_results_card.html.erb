@@ -1,8 +1,8 @@
 <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog lw-modal-body z-10 modal-dialog-centered">
-    <div class="modal-content h-100">
+  <div class="modal-dialog modal-body z-10 modal-dialog-centered">
+    <div class="modal-content">
       <div class="modal-body h-100 p-0">
-        <div class="card-result h-100 p-5 pb-0">
+        <div class="card-result h-100 p-5">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
           <h1 class="text-center">Congratulations!</h1>
@@ -14,18 +14,21 @@
               </svg>
             </button>
           </h1>
-          <%= simple_form_for([@exercise,@review]) do |form| %>
-            Share your thoughts:
-            <%= form.input :content, label: false, class: "form-control", placeholder: @review.content %>
-            <div class="d-flex justify-content-center">
+          <%# <%= simple_form_for([@exercise,@review]) do |form| %>
+            <%# Share your thoughts: %>
+            <%#= form.input :content, label: false, class: "form-control", placeholder: @review.content %>
+            <%# <div class="d-flex justify-content-center">
               <%= form.submit 'Submit', class: "lw-button lw-btn-lg" %>
-            </div>
-          <% end %>
-          <h6 class="mt-4">Previous comments on this exercise:</h6>
+            <%# </div> %>
+          <%# end %>
+          <%# <h6 class="mt-4">Previous comments on this exercise:</h6>
           <div class="h-50 pb-3 overflow-scroll">
             <% @exercise.reviews.order(created_at: :asc).each do |review| %>
-              <%= render 'shared/review_card', {review: review} %>
-            <% end %>
+              <%#= render 'shared/review_card', {review: review} %>
+            <%# end %>
+          <%# </div> %>
+          <div class="text-center mt-5">
+            <%= link_to "Find next exercise", exercises_path, class: "exercise-button" %>
           </div>
         </div>
       </div>
