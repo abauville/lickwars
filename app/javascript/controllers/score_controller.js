@@ -69,30 +69,20 @@ export default class extends Controller {
     let index = this.score.getNoteIndex(svgNote);
     const midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
     const refMidiNums = {
-      KeyC: 12,
-      KeyD: 14,
-      KeyE: 16,
-      KeyF: 17,
-      KeyG: 19,
-      KeyA: 21,
-      KeyB: 23,
+      KeyC: 12, KeyD: 14, KeyE: 16, KeyF: 17, KeyG: 19, KeyA: 21, KeyB: 23
     };
     switch (event.code) {
       case "ArrowUp": // move note up
         this.updateNote(
-          event,
-          index,
-          "#",
-          event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1
+          index, "#", event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1
         );
+        this.updateScore(event, index)
         break;
       case "ArrowDown": // move note down
         this.updateNote(
-          event,
-          index,
-          "b",
-          event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1
+          index, "b", event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1
         );
+        this.updateScore(event, index)
         break;
       case "ArrowLeft": // select the previous note
         this.selectPreviousNote(event, index, svgNote);
@@ -111,17 +101,42 @@ export default class extends Controller {
         const above = below + 12
         newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
         svgNote = this.updateNote(event, index, 'b', newMidiNum);
+        this.updateScore(event, index)
         this.selectNextNote(event, index, svgNote, false)
         break;
       case "Digit4": // 8th note
-        // break both list
         console.log("Bef, 8th note", this.music.notes);
-        this.music.notes.splice(index, 0, [["r", "A4"], 8]);
+        if (this.music.notes[index][1] === 4) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+        } else if (this.music.notes[index][1] === 2) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
+        } else if (this.music.notes[index][1] === 1) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 2]);
+        }
         console.log("Aft, 8th note", this.music.notes);
-        // insert a new rest
-        // change the note durations
-        // update display
+        this.music.notes[index][1] = 8
+        this.updateScore(event, index)
         break;
+      case "Digit5": // 8th note
+        console.log("Bef, 8th note", this.music.notes);
+        if (this.music.notes[index][1] === 4) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+        } else if (this.music.notes[index][1] === 2) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
+        } else if (this.music.notes[index][1] === 1) {
+          this.music.notes.splice(index+1, 0, [["r", "A4"], 8]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 4]);
+          this.music.notes.splice(index+2, 0, [["r", "A4"], 2]);
+        }
+        console.log("Aft, 8th note", this.music.notes);
+        this.music.notes[index][1] = 8
+        this.updateScore(event, index)
+        break;
+
     }
   }
 
@@ -143,7 +158,7 @@ export default class extends Controller {
     return svgNote;
   }
 
-  updateNote(event, index, accidental, newMidiNum, playNote = true) {
+  updateNote(index, accidental, newMidiNum) {
     // Note: works only for single notes. Doesn't handle chords
     if (!this.music.isRestIndex(index)) {
       if (accidental == "#") {
@@ -156,7 +171,9 @@ export default class extends Controller {
         );
       }
     }
+  }
 
+  updateScore(event, index, playNote = true) {
     this.score.draw(event);
     this.updateAttemptStringPlayback(event);
     const svgNote = this.score.getSvgNote(index);
