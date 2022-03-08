@@ -1,13 +1,27 @@
-<div class="d-flex justify-content-center"
+<div class="d-flex justify-content-center align-items-center"
       id="tone-controller"
       data-controller="tone"
       data-tone-question-value="<%= @question_music.notes %>"
       data-tone-attempt-value=""
       data-tone-chords-value="<%= @question_music.chords %>"
       data-tone-bpm-value="<%= @question_music.bpm %>">
-    <p class="lw-button lw-btn-sm text-center mx-2" data-action="click->tone#play_attempt"><i class="far fa-play-circle"
-      ></i> Attempt</p>
-  <p class="lw-button lw-btn-sm text-center mb-0 mx-2" data-action="click->tone#play_question">Play Melody</p>
+
+  <div class="form-check">
+    <input class="form-check-input"  type="radio" name="event" id="otherEvent" value="otherEvent"/>
+    <label class="form-check-label" for="flexRadioDefault2">
+      Play Melody &nbsp
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input"  type="radio" name="event" id="walkEvent" value="walkEvent"/>
+    <label class="form-check-label" for="flexRadioDefault1">
+      Play Attempt &nbsp
+    </label>
+  </div>
+  <div id='place'>
+    <%# <p id='place' name='meeting_or_location' class='lw-button lw-btn-sm  text-center mb-0 mx-2' data-action='click->tone#play_question'>Play Melody</p> %>
+  </div>
+
   <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2 my-0">Check</p> %>
   <%= simple_form_for(@attempt_music) do |f| %>
     <%= f.input :notes, as: :hidden, input_html: {data: {tone_target: "hidden-input"}} %>
