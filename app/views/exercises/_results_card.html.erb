@@ -27,9 +27,8 @@
               <%#= render 'shared/review_card', {review: review} %>
             <%# end %>
           <%# </div> %>
-          <div class="progress-bar-container mt-5">
-            <%= render "progress_bar", {title: "Daily Progress", stat: @daily_stat, max: Music::DAILY_TARGET} %>
-            <%= render "progress_bar", {title: "Weekly Progress", stat: @weekly_stat, max: Music::WEEKLY_TARGET} %>
+          <div class="text-center mt-5">
+            <%= link_to "Find next exercise", exercises_path, class: "exercise-button" %>
           </div>
         </div>
       </div>
