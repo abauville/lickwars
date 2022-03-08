@@ -35,14 +35,16 @@
         )%>
       <% end %>
     <% else %>
-      <% @exercises.each do |ex| %>
+      <% @exercises.map do |ex| %>
         <%= render(
           "exercise_index_card",
           {
+
             ex: ex,
             color: ex.attempt_music(current_user) ? colors[Music.statuses[ex.attempt_music(current_user).status]] : colors[2]
           }
         )%>
+
       <% end %>
     <% end %>
 
