@@ -15,10 +15,10 @@ class ExercisePolicy < ApplicationPolicy
   end
 
   def update?
-    record.user == user  # Only restaurant creator can update it
+    record.user == user # Only restaurant creator can update it
   end
 
   def destroy?
-    record.user == user  # Only restaurant creator can update it
+    record.user == user # Only restaurant creator can update it
   end
 end
