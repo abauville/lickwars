@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2022_03_06_024157) do
     t.bigint "exercise_id", null: false
     t.bigint "user_id", null: false
     t.text "content"
-    t.integer "vote", default: 0, null: false
+    t.integer "vote", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["exercise_id"], name: "index_reviews_on_exercise_id"
