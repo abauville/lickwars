@@ -1,38 +1,40 @@
-<div class="container">
-  <div class="col-8 offset-2 mb-5 mt-2">
-    <%= simple_form_for @exercise do |f| %>
-      <%= f.input :name, placeholder: "Input the exercise name" %>
-      <%= f.input :description %>
-      <%= f.input :chord_progression %>
-      <%= f.input :difficulty, input_html: { min: 0 } %>
-      <%= f.simple_fields_for :musics do |music| %>
-        <%= music.input :bpm %>
-        <%= music.input :mode %>
-        <%= music.hidden_field :key_signature %>
-        <%# need too read the notes from the score to put in the database %>
-        <%# score controller.js needs to write the vlaue of that field>
-        <%= music.hidden_field :notes %>
-        <%# <%= music.hidden_field :chords %>
-        <%# in the music model, needs the field is_question set to true  %>
-        <div class="text-center">
-          <%= render "score", music: Music.new(
-            notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
-            chords: "[]",
-            key_signature: 0,
-            mode: 0,
-            bpm: 80,
-            exercise: @exercise,
-            user: current_user)  %>
+<%= simple_form_for @exercise do |f| %>
+  <%= f.simple_fields_for :musics do |music| %>
+    <h1 class="text-center mt-3 w-50 new-exercise-title"><%= f.input :name, label: "Exercise name:", placeholder: "Input the exercise name" %>
+    </h1>
+    <div class="container">
+      <div class="col-8 offset-2 mb-5 mt-2 px-4">
+        <%= f.input :description, placeholder: "Put short description here" %>
+        <div class="row">
+          <div class="col-3">
+          <%= f.input :chord_progression, label: "Chord Prog", placeholder: "II - V - I" %>
+          </div>
+          <div class="col-3">
+          <%= f.input :difficulty, input_html: { min: 0 },placeholder: "3" %>
+          </div>
+          <div class="col-3">
+            <%= music.input :bpm %>
+          </div>
+          <div class="col-3">
+            <%= music.input :mode %>
+          </div>
+            <%= music.hidden_field :key_signature %>
         </div>
-        <div class="d-flex justify-content-center">
-          <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+      </div>
+    </div>
+    <div class="text-center">
+      <%= render "score", music: Music.new(
+        notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
+        chords: "[]",
+        key_signature: 0,
+        mode: 0,
+        bpm: 80,
+        exercise: @exercise,
+        user: current_user)  %>
+    </div>
+    <div class="d-flex justify-content-center">
+      <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
+    </div>
 
-
-<%= simple_form_for @exercise do |ex| %>
-
+  <% end %>
 <% end %>
