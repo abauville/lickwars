@@ -8,11 +8,7 @@
     <div class= "col-4   mr-4 pt-2">
       <h6 class="text-center mt-3 w-50 new-exercise-title "> <%= f.input :description, label: false, placeholder: "Put short description here" %>
       </h6>
-
-
     </div>
-
-
   </div>
     <div class="text-center mx-5">
       <%= render "new_exercise_card" %>
@@ -27,7 +23,7 @@
           <%= f.input :difficulty, input_html: { min: 0 },placeholder: "3" %>
           </div>
           <div class="col-3">
-            <%= music.input :bpm %>
+            <%= music.input :bpm, placeholder: "80"  %>
           </div>
           <div class="col-3">
             <%= music.input :mode %>
