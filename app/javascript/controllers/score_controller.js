@@ -143,17 +143,30 @@ export default class extends Controller {
     this.music.notes[index][1] = newValue
   }
 
-  mergeNotes(index, newValue) {
-    if (index === this.music.notes.length - 1) {
-      // The last note cannot be merged because there is nothing after
-      return
+  breakUpNote(index, newValue, fillWithRests = true) {
+    const note = this.music.notes[index][0]
+    const prevValue = this.music.notes[index][1]
+    for (let i = 0; i < newValue/prevValue - 1; i++) {
+      if (fillWithRests) {
+        this.music.notes.splice(index+1+i, 0, [["r", "A4"], newValue]);
+      } else {
+        this.music.notes.splice(index+1+i, 0, [note, newValue]);
+      }
     }
+    this.music.notes[index][1] = newValue
+  }
+
+  mergeNotes(index, newValue) {
     // Merging strategy
     // check if the next notes can be merged directly or if the last note
     // would need to be divided before merging
     // e.g. 8th + 8th notes can be merged into a quarter note
     // but, 8th + 2nd, will be merged into quarter + (8th + quarter) (in that case remainder == 8th)
     // Warning: this function is not yet aware of barlines, and will cause an error when dividing notes across a barline
+    if (index === this.music.notes.length - 1) {
+      // The last note cannot be merged because there is nothing after
+      return
+    }
 
     // check first if I have enough place to add that note in that measure
     let duration = 1.0/this.music.notes[index][1]
@@ -161,7 +174,7 @@ export default class extends Controller {
     let i = 0
     const tol = 1e-6
     let remainder
-    console.log("notes", this.music.notes.slice(index))
+    // console.log("notes", this.music.notes.slice(index))
     // compute remainder
 
     while (duration < target_duration - tol) {
@@ -172,14 +185,15 @@ export default class extends Controller {
         target_duration = 1.0/newValue
         i = 1
         duration = 1.0/this.music.notes[index][1]
-        console.log("newValue", newValue);
+        // console.log("newValue", newValue);
       }
       remainder = target_duration - duration
       duration += 1.0/this.music.notes[index+i][1]
-      console.log("Counting, dur, rem", duration, remainder)
+      // console.log("Counting, dur, rem", duration, remainder)
     }
     const num_notes_to_remove = i
     // divide last note if necessary
+    // console.log("dur, target_duration", duration, target_duration);
     if (duration > target_duration + tol) {
       this.divideNote(index+i, Math.round(1.0/remainder), false)
     }
@@ -201,18 +215,20 @@ export default class extends Controller {
       duration += 1.0/this.music.notes[i][1]
     }
     duration_after_index = duration
-    console.log("dur_u, dur_a", duration_until_index, duration_after_index);
+    // console.log("dur_u, dur_a", duration_until_index, duration_after_index);
 
-    console.log("Barcheck", duration, duration_until_index, Math.floor(duration_until_index / 1.0), Math.floor(duration / 1.0));
+    // console.log("Barcheck", duration, duration_until_index, Math.floor(duration_until_index / 1.0), Math.floor(duration / 1.0));
     // crossing a bar? hard coded for 4/4
-    if (Math.floor(duration_until_index / 1.0) !== Math.floor(duration_after_index / 1.0)) { // crossing a bar
-      remainder = 1.0 - (duration_until_index % 1.0)
-      console.log("Crossing a bar!", 1.0/remainder);
-      this.divideNote(index, Math.round(1.0/remainder), false)
+    const remainder_left = 1.0 - (duration_until_index % 1.0)
+    const remainder_right = (duration_after_index % 1.0)
+    if ((remainder_left > tol) && (remainder_right > tol)) {
+      const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
+      // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
+      this.breakUpNote(index, Math.round(breakUpVal), false)
       // should tie notes, but that's not an option yet
     }
 
-    console.log("notes", this.music.notes.slice(index))
+    // console.log("notes", this.music.notes.slice(index))
   }
 
   selectPreviousNote(event, index, svgNote, playNote = true) {
