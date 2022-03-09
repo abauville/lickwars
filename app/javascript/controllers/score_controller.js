@@ -139,7 +139,6 @@ export default class extends Controller {
       } else {
         this.music.notes.splice(index+1+i, 0, [note, newValue/(Math.pow(2,i))]);
       }
-
     }
     this.music.notes[index][1] = newValue
   }
@@ -245,21 +244,11 @@ export default class extends Controller {
   playAttempt(event) {
     console.log("playAttempt")
     this.boomBox.play(this.music);
-    // const toneController = document.querySelector("#attempt-tone-controller");
-    // toneController.dataset.toneNotesValue = JSON.stringify(this.music.notes);
-    // console.log(JSON.stringify(this.music.notes));
-    // document.getElementById("music_notes").value = JSON.stringify(
-    //   this.music.notes
-    // );
   }
 
   sendNotesToCheckForm(event) {
     const checkForm = document.querySelector("#form-notes-input");
     checkForm.value = JSON.stringify(this.music.notes);
-    // console.log(JSON.stringify(this.music.notes));
-    // document.getElementById("music_notes").value = JSON.stringify(
-    //   this.music.notes
-    // );
   }
 
 }
