@@ -96,3 +96,14 @@
 .music_notes {
   display: none;
 }
+
+.nav_items {
+  .dropnav {
+    display: none;
+  }
+  &.display {
+    .dropnav {
+      display: flex;
+    }
+  }
+}
