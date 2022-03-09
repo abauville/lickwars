@@ -1,6 +1,5 @@
-<% colors = ["color:gray", "color:yellow", "color:green"] %>
 <div class="pe-5 w-70 mb-5">
-    <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %>
+    <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %  >
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-lg-row flex-column">
           <%=
@@ -30,7 +29,7 @@
           "exercise_index_card",
           {
             ex: ex.first,
-            color: colors[Music.statuses[ex.second.first[:status]]]
+
           }
         )%>
       <% end %>
@@ -39,9 +38,7 @@
         <%= render(
           "exercise_index_card",
           {
-
             ex: ex,
-            color: ex.attempt_music(current_user) ? colors[Music.statuses[ex.attempt_music(current_user).status]] : colors[2]
           }
         )%>
        <% end %>
