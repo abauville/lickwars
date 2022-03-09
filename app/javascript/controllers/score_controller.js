@@ -152,11 +152,13 @@ export default class extends Controller {
     // but, 8th + 2nd, will be merged into quarter + (8th + quarter) (in that case remainder == 8th)
     // Warning: this function is not yet aware of barlines, and will cause an error when dividing notes across a barline
 
+    // check first if I have enough place to add that note in that measure
     let duration = 1.0/this.music.notes[index][1]
     const target_duration = 1.0/newValue
     let i = 0
     const tol = 1e-6
-    let remainder = 0
+    let remainder
+    console.log("notes", this.music.notes.slice(index))
     // compute remainder
     while (duration < target_duration - tol) {
       i += 1
