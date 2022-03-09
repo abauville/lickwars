@@ -1,37 +1,37 @@
 <% levels = [*1..10].map {|n| ["Level #{n}", n] }.unshift(["All", nil]) %>
 <div class="pe-5 w-70 mb-5">
-    <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %>
-      <div class="d-flex justify-content-between">
-        <div class="d-flex flex-lg-row flex-column align-items-center">
-          <%=
-            select_tag(
-              :status,
-              options_for_select(
-                [['New', nil], ['In Progress', 0], ['Finished', 1]], params[:status]
-              ),
-              class: "lw-dropdown ps-3 me-2"
-            )
-            %>
-          <%=
-            select_tag(
-              :difficulty,
-              options_for_select(levels, params[:difficulty]
-              ),
-              class: "lw-dropdown ps-3"
-            )
+  <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-lg-row flex-column align-items-center">
+        <%=
+          select_tag(
+            :status,
+            options_for_select(
+              [['New', nil], ['In Progress', 0], ['Finished', 1]], params[:status]
+            ),
+            class: "lw-dropdown ps-3 me-2"
+          )
           %>
-        </div>
-        <%= submit_tag "Search", class: "lw-button me-2" %>
+        <%=
+          select_tag(
+            :difficulty,
+            options_for_select(levels, params[:difficulty]
+            ),
+            class: "lw-dropdown ps-3"
+          )
+        %>
       </div>
+      <%= submit_tag "Search", class: "lw-button me-2" %>
+    </div>
+  <% end %>
+  <% if @query && @results %>
+    <% @results.each do |g| %>
+      <%= render "level_card", {g: g, query: 'status'} %>
     <% end %>
-    <% if @query && @results %>
-      <% @results.each do |g| %>
-        <%= render "level_card", {g: g, query: 'status'} %>
-      <% end %>
-    <% else %>
-      <% @exercises.each do |g| %>
-        <%= render "level_card", {g: g, query: 'difficulty'} %>
-      <% end %>
+  <% else %>
+    <% @exercises.each do |g| %>
+      <%= render "level_card", {g: g, query: 'difficulty'} %>
     <% end %>
+  <% end %>
 
-  </div>
+</div>
