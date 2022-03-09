@@ -27,6 +27,7 @@ export default class extends Controller {
     this.currentSelection = null;
 
     this.score.draw();
+    this.sendNotesToCheckForm();
   }
 
   initConverters() {
@@ -252,6 +253,7 @@ export default class extends Controller {
 
   updateScore(event, index, playNote = true) {
     this.score.draw(event);
+    this.sendNotesToCheckForm();
     const svgNote = this.score.getSvgNote(index);
     this.toggleNoteSelection(svgNote, playNote);
     this.currentSelection.focus();
@@ -292,6 +294,14 @@ export default class extends Controller {
     //   this.music.notes
     // );
   }
-  // use this as a model for when writing your score, make new function
-  sendAttemptStringToForm() {}
+
+  sendNotesToCheckForm(event) {
+    const checkForm = document.querySelector("#form-notes-input");
+    checkForm.value = JSON.stringify(this.music.notes);
+    // console.log(JSON.stringify(this.music.notes));
+    // document.getElementById("music_notes").value = JSON.stringify(
+    //   this.music.notes
+    // );
+  }
+
 }

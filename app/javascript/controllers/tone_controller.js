@@ -19,18 +19,8 @@ export default class extends Controller {
   }
 
   play(event) {
-    const play_question = document.querySelector("#radio_question")
-    if (play_question.checked) {
-      this.play_question(event);
-    } else {
-      this.play_attempt(event);
-    }
-  }
-
-  play(event) {
     this.boomBox.play(this.music);
   }
-
 
   stopPlayback(event) {
     this.boomBox.breakLoop = true;
@@ -38,6 +28,4 @@ export default class extends Controller {
       this.boomBox.breakLoop = true;
     }, 100);
   }
-
-
 }
