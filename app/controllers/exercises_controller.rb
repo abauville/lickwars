@@ -22,9 +22,8 @@ class ExercisesController < ApplicationController
   def create
     @exercise = current_user.exercises.new(exercise_params)
     authorize @exercise
-
     if @exercise.save
-      redirect_to exercises_path
+      redirect_to teacher_exercises_path
     else
       render :new
     end
@@ -44,9 +43,10 @@ class ExercisesController < ApplicationController
       Review.find_or_initialize_by(user: current_user, exercise: @exercise)
     @action =
       if @attempt_music.id
-        { path: music_path(@attempt_music), method: :patch }
+        { url: music_path(@attempt_music), method: :patch }
       else
-        { path: exercise_musics_path(@exercise), method: :post }
+        @attempt_music.init_notes_with_rests(@question_music.num_measures)
+        { url: exercise_musics_path(@exercise), method: :post }
       end
   end
 

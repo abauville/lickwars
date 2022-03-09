@@ -18,7 +18,7 @@ class Music < ApplicationRecord
               greater_than: 10,
               lower_than: 500
             }
-  validates :key_signature, :mode, :notes, :chords, presence: true
+  validates :notes, presence: true
   validate :valid_notes?
   validate :valid_chords?
   validates :user, uniqueness: { scope: %i[exercise is_question] }
@@ -125,6 +125,22 @@ class Music < ApplicationRecord
       )
     stat = (musics.count / WEEKLY_TARGET.to_f) * 100
     stat > 100 ? 100 : stat
+  end
+
+  def num_measures
+    # works only for measures where the duration is one whole note
+    notes = JSON.parse(self.notes)
+    duration = 0
+    notes.each do |note|
+      duration += 1.0 / note[1]
+    end
+    return duration.to_int
+  end
+
+  def init_notes_with_rests(n_measures)
+    out = []
+    n_measures.times { out << [['r', 'A4'], 1] }
+    self.notes = JSON[out]
   end
 
   private
