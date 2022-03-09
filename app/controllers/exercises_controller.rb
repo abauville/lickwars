@@ -77,10 +77,10 @@ class ExercisesController < ApplicationController
   def handle_queries
     @query = true
     if !params[:status].blank? && !params[:difficulty].blank?
-      @results = MusicsQuery.new(current_user.musics)
+      @results = MusicsQuery.new(current_user.musics, current_user)
                             .filter_by_status_and_difficulty(params[:status].to_i, params[:difficulty].to_i)
     elsif !params[:status].blank? && params[:difficulty].blank?
-      @results = MusicsQuery.new(current_user.musics).filter_by_status(params[:status].to_i)
+      @results = MusicsQuery.new(current_user.musics, current_user).filter_by_status(params[:status].to_i)
     else
       @exercises = ExercisesQuery.new(policy_scope(Exercise), current_user)
                                  .filter_by_difficulty(params[:difficulty].to_i)
@@ -90,8 +90,8 @@ class ExercisesController < ApplicationController
   def exercise_params
     params
       .require(:exercise)
-      .permit(:name, :description, :chord_progression, :user_id, :difficulty, musics_attributes: %i[bpm key_signature
-                                                                                                    mode notes chords])
+      .permit(:name, :description, :chord_progression, :user_id, :difficulty,
+              musics_attributes: %i[bpm key_signature mode notes chords is_question user_id exercise_id])
   end
 
   def set_exercise
