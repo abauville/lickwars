@@ -163,16 +163,21 @@ export default class extends Controller {
       i += 1
       remainder = target_duration - duration
       duration += 1.0/this.music.notes[index+i][1]
+      console.log("Counting, dur, rem", duration, remainder)
     }
+    const num_notes_to_remove = i
     // divide last note if necessary
     if (duration > target_duration + tol) {
+      console.log("Dividing")
       this.divideNote(index+i, Math.round(1.0/remainder), false)
     }
     // remove notes to be merged
-    for (let j = 1; j<=i; j++) {
-      this.music.notes.splice(index+j,1)
+
+    for (let j = 0; j < num_notes_to_remove; j++) {
+      this.music.notes.splice(index+1,1)
     }
     this.music.notes[index][1] = newValue
+    console.log("notes", this.music.notes)
   }
 
   selectPreviousNote(event, index, svgNote, playNote = true) {
