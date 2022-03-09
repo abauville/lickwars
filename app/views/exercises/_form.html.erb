@@ -1,9 +1,9 @@
 <%= simple_form_for @exercise do |f| %>
   <%= f.simple_fields_for :musics do |music| %>
-    <h1 class="text-center mt-3 w-50 new-exercise-title"><%= f.input :name, label: "Exercise name:", placeholder: "Input the exercise name" %>
-    </h1>
+    <h6 class="text-center mt-3 w-50 new-exercise-title"><%= f.input :name, label: "Exercise name:", placeholder: "Input the exercise name" %>
+    </h6>
     <div class="container">
-      <div class="col-8 offset-2 mb-5 mt-2 px-4">
+      <div class="col-8 offset-2 mb-2 mt-2 px-4">
         <%= f.input :description, placeholder: "Put short description here" %>
         <div class="row">
           <div class="col-3">
@@ -33,7 +33,7 @@
         user: current_user)  %>
     </div>
     <div class="d-flex justify-content-center">
-      <%= f.submit 'Submit', class: "lw-button lw-btn-lg"%>
+      <%= f.submit 'Submit', class: "lw-button lw-btn-lg mb-5"%>
     </div>
 
   <% end %>
