@@ -98,8 +98,20 @@
 }
 
 .note-input-button {
-  padding: 0;
+  min-width: 50px;
+  padding: 5px 10px;
   border: none;
   font-family: $note-font;
   font-size: 36px;
+  background-color: #dcd9fb;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0.8px 2px rgba(33, 37, 41, 0.4);
+  &:hover {
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0.8px 2px #212529;
+  }
 }
