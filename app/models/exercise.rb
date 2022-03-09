@@ -19,21 +19,18 @@ class Exercise < ApplicationRecord
 
   def self.search_by_difficulty(search_difficulty)
     case search_difficulty
-    when 0 then where(difficulty: 0..4)
-    when 1 then where(difficulty: 4..7)
-    when 2 then where(difficulty: 7..10)
+    when 1 then where(difficulty: 0..1)
+    when 2 then where(difficulty: 1..2)
+    when 3 then where(difficulty: 2..3)
+    when 4 then where(difficulty: 3..4)
+    when 5 then where(difficulty: 4..5)
+    when 6 then where(difficulty: 5..6)
+    when 7 then where(difficulty: 6..7)
+    when 8 then where(difficulty: 7..8)
+    when 9 then where(difficulty: 8..9)
+    when 10 then where(difficulty: 9..10)
     else
       where("difficulty > ?", MAX_DIFF)
-    end
-  end
-
-  def select_by_difficulty(search_difficulty)
-    case search_difficulty
-    when 0 then (0..4).include?(difficulty)
-    when 1 then (4..7).include?(difficulty)
-    when 2 then (7..10).include?(difficulty)
-    else
-      true
     end
   end
 

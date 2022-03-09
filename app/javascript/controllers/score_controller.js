@@ -104,6 +104,13 @@ export default class extends Controller {
       KeyA: 21,
       KeyB: 23,
     };
+    const noteValues = {
+      Digit3: 16,
+      Digit4: 8,
+      Digit5: 4,
+      Digit6: 2,
+      Digit7: 1,
+    };
     switch (event.code) {
       case "ArrowUp": // move note up
         this.updateNote(
@@ -138,40 +145,76 @@ export default class extends Controller {
         const above = below + 12;
         newMidiNum =
           Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above;
-        svgNote = this.updateNote(index, "b", newMidiNum, true);
-        this.updateScore(event, index);
+        this.updateNote(index, "b", newMidiNum, true);
+        svgNote = this.updateScore(event, index);
         this.selectNextNote(event, index, svgNote, false);
         break;
+      case "Digit3": // 16th note, follows MuseScore's key map
       case "Digit4": // 8th note
-        this.divideNote(index, 8);
-        this.updateScore(event, index);
-        break;
-      case "Digit5": // 4th note
-        const new_value = 4;
-        const old_value = this.music.notes[index][1];
-        if (new_value > old_value) {
-          console.log("DIVIDE");
-          this.divideNote(index, 4);
+      case "Digit5": // quarter note
+      case "Digit6": // half note
+      case "Digit7": // whole note
+        const newValue = noteValues[event.code];
+        const oldValue = this.music.notes[index][1];
+        if (newValue > oldValue) {
+          this.divideNote(index, newValue);
         } else {
-          console.log("MEEEERGE");
-          // check first if I have enough place to add that note in that measure
-          this.music.notes[index][1] = new_value;
-          this.music.notes.splice(index + 1, 1);
+          this.mergeNotes(index, newValue);
         }
         this.updateScore(event, index);
         break;
     }
   }
 
-  divideNote(index, new_value) {
-    const prev_value = this.music.notes[index][1];
-    for (let i = 0; i < Math.log2(new_value) - Math.log2(prev_value); i++) {
-      this.music.notes.splice(index + 1 + i, 0, [
-        ["r", "A4"],
-        new_value / Math.pow(2, i),
-      ]);
+  divideNote(index, newValue, fillWithRests = true) {
+    const note = this.music.notes[index][0];
+    const prevValue = this.music.notes[index][1];
+    for (let i = 0; i < Math.log2(newValue) - Math.log2(prevValue); i++) {
+      if (fillWithRests) {
+        this.music.notes.splice(index + 1 + i, 0, [
+          ["r", "A4"],
+          newValue / Math.pow(2, i),
+        ]);
+      } else {
+        this.music.notes.splice(index + 1 + i, 0, [
+          note,
+          newValue / Math.pow(2, i),
+        ]);
+      }
     }
-    this.music.notes[index][1] = new_value;
+    this.music.notes[index][1] = newValue;
+  }
+
+  mergeNotes(index, newValue) {
+    // Merging strategy
+    // check if the next notes can be merged directly or if the last note
+    // would need to be divided before merging
+    // e.g. 8th + 8th notes can be merged into a quarter note
+    // but, 8th + 2nd, will be merged into quarter + (8th + quarter) (in that case remainder == 8th)
+    // Warning: this function is not yet aware of barlines, and will cause an error when dividing notes across a barline
+
+    // check first if I have enough place to add that note in that measure
+    let duration = 1.0 / this.music.notes[index][1];
+    const target_duration = 1.0 / newValue;
+    let i = 0;
+    const tol = 1e-6;
+    let remainder;
+    console.log("notes", this.music.notes.slice(index));
+    // compute remainder
+    while (duration < target_duration - tol) {
+      i += 1;
+      remainder = target_duration - duration;
+      duration += 1.0 / this.music.notes[index + i][1];
+    }
+    // divide last note if necessary
+    if (duration > target_duration + tol) {
+      this.divideNote(index + i, Math.round(1.0 / remainder), false);
+    }
+    // remove notes to be merged
+    for (let j = 1; j <= i; j++) {
+      this.music.notes.splice(index + j, 1);
+    }
+    this.music.notes[index][1] = newValue;
   }
 
   selectPreviousNote(event, index, svgNote, playNote = true) {
