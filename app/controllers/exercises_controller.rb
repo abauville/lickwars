@@ -1,9 +1,13 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[edit update show destroy]
+
   def index
-    # will return only exercises where the user has had an attempt
-    # @user_exercises = Music.user_exercises_with_attempt(current_user)
-    @exercises = policy_scope(Exercise).includes(:musics).order(:difficulty)
+    if params[:status].blank? && params[:difficulty].blank?
+      @exercises = ExercisesQuery.new(policy_scope(Exercise), current_user).all
+    else
+      handle_queries
+      policy_scope(Exercise)
+    end
     @daily_stat = Music.daily_completion_stat(current_user)
     @weekly_stat = Music.weekly_completion_stat(current_user)
     @exercise_pie = Exercise.user_exercise_pie(current_user)
@@ -59,6 +63,21 @@ class ExercisesController < ApplicationController
   def destroy
     @exercise.destroy
     redirect_to exercises_path
+  end
+
+  private
+
+  def handle_queries
+    @query = true
+    if !params[:status].blank? && !params[:difficulty].blank?
+      @results = MusicsQuery.new(current_user.musics)
+                            .filter_by_status_and_difficulty(params[:status].to_i, params[:difficulty].to_i)
+    elsif !params[:status].blank? && params[:difficulty].blank?
+      @results = MusicsQuery.new(current_user.musics).filter_by_status(params[:status].to_i)
+    else
+      @exercises = ExercisesQuery.new(policy_scope(Exercise), current_user)
+                                 .filter_by_difficulty(params[:difficulty].to_i)
+    end
   end
 
   def exercise_params
