@@ -4,11 +4,10 @@
   align-items: center;
   position: relative;
   width: 100%;
-  // justify-content: space-between;
-  // padding: 0px 100px;
-  color: rgb(237, 237, 237);
+  color: #9a9999;
   bottom: 0;
   z-index: 5;
+  flex-shrink: 0;
 }
 .footer-links {
   // display: flex;
@@ -17,10 +16,10 @@
   margin-right: 30px;
 }
 .footer-links a {
-  color: rgb(237, 237, 237);
+  color: #9a9999;
   opacity: 1;
   text-decoration: none;
-  font-size: 21px;
+  font-size: 18px;
 }
 .footer-links a:hover {
   color: $primary;
