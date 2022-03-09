@@ -18,3 +18,7 @@ div#score {
   fill: red;
   outline: none;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

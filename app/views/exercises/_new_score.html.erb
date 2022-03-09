@@ -1,0 +1,22 @@
+<div data-controller="score"
+     id="score-controller"
+     data-score-notes-value=""
+     data-score-bpm-value="">
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div class='play-button'
+         title='play my input'
+         data-action='click->score#playAttempt'>
+         <i class='far fa-play-circle'></i>
+    </div>
+        <%#= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/sixteenth-note_unwb9y.jpg" %>
+        <%#= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285264/eighth-note_erdzte.jpg" %>
+        <%#= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/quarter-note_wbzr40.jpg" %>
+        <%#= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/half-note_uk6aeu.jpg" %>
+        <%#= image_tag "https://res.cloudinary.com/dto6yv11m/image/upload/c_scale,w_60/v1646285265/whole-note_chdou4.jpg" %>
+
+
+    <div id="score" data-score-target="score"></div>
+    <p data-score-target="output"></p>
+  </div>
+</div>
