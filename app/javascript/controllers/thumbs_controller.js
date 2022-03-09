@@ -8,14 +8,14 @@
 // </div>
 import { Controller } from "stimulus";
 export default class extends Controller {
-  static targets = ["hide"];
-  static classes = ["btn-dark"];
+  static targets = ["thumbs"];
 
   connect() {
     console.log("connected");
   }
   toggle() {
     console.log("toggle");
-    this.hideTarget.classList.toggle(this.displayClass);
+    this.thumbsTarget.classList.toggle("btn-dark");
+    console.log(this.displayClass);
   }
 }
