@@ -22,9 +22,8 @@ class ExercisesController < ApplicationController
   def create
     @exercise = current_user.exercises.new(exercise_params)
     authorize @exercise
-
     if @exercise.save
-      redirect_to exercises_path
+      redirect_to teacher_exercises_path
     else
       render :new
     end

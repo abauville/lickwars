@@ -4,6 +4,7 @@ class MusicsController < ApplicationController
     @music.exercise = Exercise.find(params[:exercise_id])
     @music.user = current_user
     @music.save
+    check_music unless @music.is_question
     authorize @music
     redirect_to exercise_path(@music.exercise)
   end
@@ -11,6 +12,14 @@ class MusicsController < ApplicationController
   def update
     @music = Music.find(params[:id])
     @music.update(music_params)
+    check_music unless @music.is_question
+    authorize @music
+    redirect_to exercise_path(@music.exercise)
+  end
+
+  private
+
+  def check_music
     if @music.notes == @music.exercise.question_music.notes
       flash[:success] = true
       flash[:notice] = 'Great job!'
@@ -19,11 +28,7 @@ class MusicsController < ApplicationController
     else
       flash[:alert] = 'It was incorrect! Try again!'
     end
-    authorize @music
-    redirect_to exercise_path(@music.exercise)
   end
-
-  private
 
   def music_params
     params

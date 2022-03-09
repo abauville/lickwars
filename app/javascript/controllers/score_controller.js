@@ -216,7 +216,7 @@ export default class extends Controller {
   }
 
   sendNotesToCheckForm(event) {
-    const checkForm = document.querySelector("#check-form-notes-input");
+    const checkForm = document.querySelector("#form-notes-input");
     checkForm.value = JSON.stringify(this.music.notes);
     // console.log(JSON.stringify(this.music.notes));
     // document.getElementById("music_notes").value = JSON.stringify(
