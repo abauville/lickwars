@@ -1,6 +1,8 @@
 class MusicsController < ApplicationController
   def create
     @music = Music.new(music_params)
+    @music.exercise = Exercise.find(params[:exercise_id])
+    @music.user = current_user
     @music.save
     authorize @music
     redirect_to exercise_path(@music.exercise)
@@ -34,7 +36,7 @@ class MusicsController < ApplicationController
         :chords,
         :note_values,
         :chord_values,
-        :status
+        :status,
       )
   end
 end

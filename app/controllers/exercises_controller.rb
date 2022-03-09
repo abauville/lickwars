@@ -46,6 +46,7 @@ class ExercisesController < ApplicationController
       if @attempt_music.id
         { url: music_path(@attempt_music), method: :patch }
       else
+        @attempt_music.init_notes_with_rests(@question_music.num_measures)
         { url: exercise_musics_path(@exercise), method: :post }
       end
   end
