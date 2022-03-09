@@ -105,8 +105,8 @@ export default class extends Controller {
         const below = - ((midiNum - refMidiNums[event.code] ) % 12)
         const above = below + 12
         newMidiNum = Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above
-        svgNote = this.updateNote(index, 'b', newMidiNum, true);
-        this.updateScore(event, index)
+        this.updateNote(index, 'b', newMidiNum, true);
+        svgNote = this.updateScore(event, index)
         this.selectNextNote(event, index, svgNote, false)
         break;
       case "Digit4": // 8th note
@@ -122,18 +122,46 @@ export default class extends Controller {
         } else {
           console.log("MEEEERGE")
           // check first if I have enough place to add that note in that measure
+          let duration = 0.0
+          const target_duration = 1.0/new_value
+          let i = 0
+          const tol = 1e-6
+          let remainder
+          console.log("notes", this.music.notes.slice(index))
+          while (duration < target_duration - tol) {
+            duration += 1.0/this.music.notes[index+i][1]
+            if (duration < target_duration - tol) {
+              remainder = target_duration - duration
+            }
+            i += 1
+          }
+          if (duration > target_duration + tol) {
+            // divide into remainder
+            this.divideNote(index+i-1, Math.round(1.0/remainder), false)
+            this.music.notes.splice(index+i-1,1)
+          }
+          for (let j = 1; j<i-1; j++) {
+            this.music.notes.splice(index+j,1)
+          }
+
           this.music.notes[index][1] = new_value
-          this.music.notes.splice(index+1,1)
+          console.log("notes", this.music.notes.slice(index))
         }
         this.updateScore(event, index)
         break;
     }
   }
 
-  divideNote(index, new_value) {
+  divideNote(index, new_value, fillWithRests = true) {
+    const note = this.music.notes[index][0]
     const prev_value = this.music.notes[index][1]
     for (let i = 0; i < Math.log2(new_value) - Math.log2(prev_value); i++) {
-      this.music.notes.splice(index+1+i, 0, [["r", "A4"], new_value/(Math.pow(2,i))]);
+      if (fillWithRests) {
+        this.music.notes.splice(index+1+i, 0, [["r", "A4"], new_value/(Math.pow(2,i))]);
+      } else {
+        this.music.notes.splice(index+1+i, 0, [note, new_value/(Math.pow(2,i))]);
+      }
+
     }
     this.music.notes[index][1] = new_value
   }
