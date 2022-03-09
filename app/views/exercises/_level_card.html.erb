@@ -1,5 +1,5 @@
 <h2 class="mt-5 ms-2 fw-bolder">Level <%= g.first %></h2>
-<p class="ms-2">GENERIC DESCRIPTION</p>
+<p class="ms-2"><%= g.flatten.second.description %></p>
 <div class="d-flex flex-wrap">
   <% if query == 'status' %>
     <%= render("exercise_index_card", {ex: g.flatten.second})%>

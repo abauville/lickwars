@@ -6,6 +6,24 @@ class Exercise < ApplicationRecord
   validates :difficulty, numericality: { greater_than_or_equal_to: 0 }
   validates :name, presence: true, length: { minimum: 3 }
 
+  DIFF_STRING = [
+    "Do-Re-Mi",
+    "Do-Re-Mi-So",
+    "Do-Re-Mi-Fa-So-La. Melodies on the I chord with passing tones",
+    "Major scale. Melodies on the I chord with passing and neighbor tones",
+    "Major melodies on the I - V - I progression",
+    "Major melodies on the I - IV - I progression",
+    "Major melodies on the I - IV - V - I progression",
+    "Major melodies on the I - IV - V - I progression",
+    "Introducing the V7 chord",
+    "Melodies on the ii - V7 - I progression"
+  ]
+
+  after_create do
+    self.description = DIFF_STRING[difficulty.floor]
+    save
+  end
+
   MIN_DIFF = 0
   MAX_DIFF = 10
 
