@@ -15,7 +15,8 @@ export default class extends Controller {
   }
   toggle() {
     console.log("toggle");
-    this.thumbsTarget.classList.toggle("btn-dark");
+    // this.thumbsTarget.classList.toggle("btn-dark");
     console.log(this.displayClass);
+    this.thumbsTarget.setAttribute("disabled", "");
   }
 }
