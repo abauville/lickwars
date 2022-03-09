@@ -168,7 +168,6 @@ export default class extends Controller {
     // divide last note if necessary
     if (duration > target_duration + tol) {
       this.divideNote(index+i, Math.round(1.0/remainder), false)
-      // this.music.notes.splice(index+i,1)
     }
     // remove notes to be merged
     for (let j = 1; j<=i; j++) {
