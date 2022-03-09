@@ -20,22 +20,20 @@
           <%= f.input :chord_progression, label: "Chord Prog", placeholder: "II - V - I" %>
           </div>
           <div class="col-3">
-          <%= f.input :difficulty, input_html: { min: 0 },placeholder: "3" %>
+          <%= f.input :difficulty, input_html: { min: 0, max: 10 },placeholder: "3" %>
           </div>
           <div class="col-3">
-            <%= music.input :bpm, placeholder: "80"  %>
+            <%= music.input :bpm, placeholder: "80",input_html: { min: 0, max: 300 }  %>
           </div>
           <div class="col-3">
-            <%= music.input :mode, placeholder: "major" %>
+            <%= music.input :mode, placeholder: "major", collection: Music.modes.keys  %>
           </div>
-            <%= music.hidden_field :key_signature %>
+            <%= music.hidden_field :notes %>
         </div>
       </div>
     </div>
-
     <div class="d-flex justify-content-center">
       <%= f.submit 'Submit', class: "lw-button lw-btn-lg mb-5"%>
     </div>
-
   <% end %>
 <% end %>
