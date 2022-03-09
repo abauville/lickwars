@@ -12,6 +12,13 @@ class ExercisesController < ApplicationController
   def new
     @exercise = current_user.exercises.new
     @exercise.musics.build
+    @music = Music.new(
+      notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
+      chords: "[]",
+      key_signature: 0,
+      exercise: @exercise,
+      user: current_user
+    )
     authorize @exercise
   end
 

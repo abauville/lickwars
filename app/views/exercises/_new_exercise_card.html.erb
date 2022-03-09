@@ -1,11 +1,6 @@
 
   <div class="player-card">
       <div class="text-center">
-        <%= render "score", music: Music.new(
-          notes: JSON[[[['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1], [['r', 'A4'], 1]]],
-          chords: "[]",
-          key_signature: 0,
-          exercise: @exercise,
-          user: current_user)  %>
+        <%= render "score", music: @music %>
       </div>
   </div>
