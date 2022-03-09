@@ -19,7 +19,7 @@ twinkle_exercise
 exercises
 
 # Faker users ============
-25.times do
+5.times do
   user =
     User.create(
       email: Faker::Internet.email,

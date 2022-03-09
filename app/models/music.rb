@@ -99,12 +99,10 @@ class Music < ApplicationRecord
     valid_json?(chords)
   end
 
-  def self.user_exercises_with_attempt(user)
-    includes(:exercise).where(user: user, is_question: false).group_by(&:exercise)
-  end
-
-  def self.user_exercises_with_attempt_search(status)
-    includes(:exercise).where(is_question: false, status: status).group_by(&:exercise)
+  def self.user_exercises_with_attempt_search(status, user)
+    includes(:exercise).where(is_question: false, status: status)
+                       .where.not(exercise: { user: user })
+                       .group_by(&:exercise)
   end
 
   def self.daily_completion_stat(user)
