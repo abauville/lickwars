@@ -17,16 +17,10 @@
       <div class="col-8 offset-2 mb-2 mt-2 px-4">
         <div class="row">
           <div class="col-3">
-          <%= f.input :chord_progression, label: "Chord Prog", placeholder: "II - V - I" %>
-          </div>
-          <div class="col-3">
           <%= f.input :difficulty, input_html: { min: 0, max: 10 },placeholder: "3" %>
           </div>
           <div class="col-3">
             <%= music.input :bpm, placeholder: "80",input_html: { min: 0, max: 300 }  %>
-          </div>
-          <div class="col-3">
-            <%= music.input :mode, placeholder: "major", collection: Music.modes.keys  %>
           </div>
             <%= music.hidden_field :notes %>
         </div>
