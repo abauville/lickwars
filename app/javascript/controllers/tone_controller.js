@@ -22,13 +22,10 @@ export default class extends Controller {
     this.boomBox.play(this.music);
   }
 
-
   stopPlayback(event) {
     this.boomBox.breakLoop = true;
     setTimeout(() => {
       this.boomBox.breakLoop = true;
     }, 100);
   }
-
-
 }
