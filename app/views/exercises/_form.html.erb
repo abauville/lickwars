@@ -1,20 +1,24 @@
 <%= simple_form_for @exercise do |f| %>
   <%= f.simple_fields_for :musics do |music| %>
   <div class="row justify-content-between">
-    <div class="col-4 ">
-      <h6 class="text-center mt-3 w-50 new-exercise-title pt-2"><%= f.input :name, label: false, placeholder: "Input the exercise name" %>
+    <div class="col-4 pt-2">
+      <h6 class="text-center mt-3 w-50 new-exercise-title pt-2"><%= f.input :name, label: false, placeholder: "Exercise name" %>
       </h6>
     </div>
-    <div class= "col-4 pt-4">
-      <%= render "new_tone" %>
+    <div class= "col-4   mr-4 pt-2">
+      <h6 class="text-center mt-3 w-50 new-exercise-title "> <%= f.input :description, label: false, placeholder: "Put short description here" %>
+      </h6>
+
+
     </div>
+
+
   </div>
     <div class="text-center mx-5">
       <%= render "new_exercise_card" %>
     </div>
     <div class="container">
       <div class="col-8 offset-2 mb-2 mt-2 px-4">
-        <%= f.input :description, placeholder: "Put short description here" %>
         <div class="row">
           <div class="col-3">
           <%= f.input :chord_progression, label: "Chord Prog", placeholder: "II - V - I" %>
