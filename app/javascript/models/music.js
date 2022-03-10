@@ -9,10 +9,13 @@ export class Music {
 
   playbackArrays(arrayName) {
     let array;
+    let velocity
     if (arrayName === "notes") {
       array = this.notes;
+      velocity = 0.6
     } else if (arrayName === "chords") {
       array = this.chords;
+      velocity = 0.3
     } else {
       throw new Error(
         `arrayName should be 'notes' or 'chords', instead got ${arrayName}`
@@ -26,8 +29,17 @@ export class Music {
     console.log("array", array);
     array.forEach((note) => {
       if (!this.isRest(note)) {
-        noteSequence.push([time, note[0]]);
-        noteLengths.push((wholeToneLength / note[1]) * 0.95); // 0.95 is have a bit of separation between notes
+        if (Array.isArray(note[0])) {
+          note[0].forEach((n) => {
+            noteSequence.push([time, {note: n, velocity: velocity}]);
+            noteLengths.push((wholeToneLength / note[1]) * 0.95); // 0.95 is have a bit of separation between notes
+          })
+        } else {
+          noteSequence.push([time, {note: note[0], velocity: velocity}]);
+          noteLengths.push((wholeToneLength / note[1]) * 0.95); // 0.95 is have a bit of separation between notes
+        }
+      } else {
+        noteSequence.push([time, 'rest']);
       }
       time += (1.0 / note[1]) * wholeToneLength;
     });

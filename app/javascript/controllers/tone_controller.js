@@ -19,7 +19,7 @@ export default class extends Controller {
   }
 
   play(event) {
-    this.boomBox.play(this.music);
+    this.boomBox.play(event, this.music);
   }
 
   stopPlayback(event) {
