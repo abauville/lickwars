@@ -57,13 +57,15 @@
   min-height: 56px;
   min-width: 40%;
   border-radius: 16px;
-  background-color: #ededed;
-  box-shadow: 3px 0.5rem 0.3rem rgba(0, 0, 0, 0.15);
-  transition: 0.2s;
+  background-color: #4A3A84;
+  color: rgb(200, 200, 200);
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.15);
+  // transition: 0.2s;
   &:hover {
-    box-shadow: 0 0.9rem 0.8rem rgba(0, 0, 0, 0.15);
-    transform: scale(1.00);
-    color: black;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.15);
+    // transform: scale(1.02);
+    color: rgb(255, 255, 255);
+
   }
 }
 
