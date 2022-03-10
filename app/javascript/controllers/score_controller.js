@@ -183,6 +183,19 @@ export default class extends Controller {
         ]);
       }
     }
+    this.music.notes[index][1] = newValue
+  }
+
+  breakUpNote(index, newValue, fillWithRests = true) {
+    const note = this.music.notes[index][0]
+    const prevValue = this.music.notes[index][1]
+    for (let i = 0; i < newValue/prevValue - 1; i++) {
+      if (fillWithRests) {
+        this.music.notes.splice(index+1+i, 0, [["r", "A4"], newValue]);
+      } else {
+        this.music.notes.splice(index+1+i, 0, [note, newValue]);
+      }
+    }
     this.music.notes[index][1] = newValue;
   }
 
@@ -193,29 +206,72 @@ export default class extends Controller {
     // e.g. 8th + 8th notes can be merged into a quarter note
     // but, 8th + 2nd, will be merged into quarter + (8th + quarter) (in that case remainder == 8th)
     // Warning: this function is not yet aware of barlines, and will cause an error when dividing notes across a barline
+    if (index === this.music.notes.length - 1) {
+      // The last note cannot be merged because there is nothing after
+      return
+    }
 
     // check first if I have enough place to add that note in that measure
-    let duration = 1.0 / this.music.notes[index][1];
-    const target_duration = 1.0 / newValue;
-    let i = 0;
-    const tol = 1e-6;
-    let remainder;
-    console.log("notes", this.music.notes.slice(index));
+    let duration = 1.0/this.music.notes[index][1]
+    let target_duration = 1.0/newValue
+    let i = 0
+    const tol = 1e-6
+    let remainder
+    // console.log("notes", this.music.notes.slice(index))
     // compute remainder
+
     while (duration < target_duration - tol) {
-      i += 1;
-      remainder = target_duration - duration;
-      duration += 1.0 / this.music.notes[index + i][1];
+      i += 1
+      if (index + i >= this.music.notes.length) {
+        // Prevents overflow over the last bar by increasing newValue (i.e. decreasing its duration)
+        newValue = Math.pow(2,Math.ceil(Math.log2(1.0/duration)))
+        target_duration = 1.0/newValue
+        i = 1
+        duration = 1.0/this.music.notes[index][1]
+        // console.log("newValue", newValue);
+      }
+      remainder = target_duration - duration
+      duration += 1.0/this.music.notes[index+i][1]
+      // console.log("Counting, dur, rem", duration, remainder)
     }
+    const num_notes_to_remove = i
     // divide last note if necessary
+    // console.log("dur, target_duration", duration, target_duration);
     if (duration > target_duration + tol) {
       this.divideNote(index + i, Math.round(1.0 / remainder), false);
     }
     // remove notes to be merged
-    for (let j = 1; j <= i; j++) {
-      this.music.notes.splice(index + j, 1);
+    for (let j = 0; j < num_notes_to_remove; j++) {
+      this.music.notes.splice(index+1,1)
     }
-    this.music.notes[index][1] = newValue;
+    this.music.notes[index][1] = newValue
+
+
+    // Check if the new notes cross a bar
+    duration = 0
+    let duration_after_index
+    let duration_until_index = 0
+    for (i=0; i<index+1; i++) {
+      if (i == index) {
+        duration_until_index = duration
+      }
+      duration += 1.0/this.music.notes[i][1]
+    }
+    duration_after_index = duration
+    // console.log("dur_u, dur_a", duration_until_index, duration_after_index);
+
+    // console.log("Barcheck", duration, duration_until_index, Math.floor(duration_until_index / 1.0), Math.floor(duration / 1.0));
+    // crossing a bar? hard coded for 4/4
+    const remainder_left = 1.0 - (duration_until_index % 1.0)
+    const remainder_right = (duration_after_index % 1.0)
+    if ((remainder_left > tol) && (remainder_right > tol)) {
+      const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
+      // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
+      this.breakUpNote(index, Math.round(breakUpVal), false)
+      // should tie notes, but that's not an option yet
+    }
+
+    // console.log("notes", this.music.notes.slice(index))
   }
 
   selectPreviousNote(event, index, svgNote, playNote = true) {
@@ -287,21 +343,11 @@ export default class extends Controller {
   playAttempt(event) {
     console.log("playAttempt");
     this.boomBox.play(this.music);
-    // const toneController = document.querySelector("#attempt-tone-controller");
-    // toneController.dataset.toneNotesValue = JSON.stringify(this.music.notes);
-    // console.log(JSON.stringify(this.music.notes));
-    // document.getElementById("music_notes").value = JSON.stringify(
-    //   this.music.notes
-    // );
   }
 
   sendNotesToCheckForm(event) {
     const checkForm = document.querySelector("#form-notes-input");
     checkForm.value = JSON.stringify(this.music.notes);
-    // console.log(JSON.stringify(this.music.notes));
-    // document.getElementById("music_notes").value = JSON.stringify(
-    //   this.music.notes
-    // );
   }
 
 }
