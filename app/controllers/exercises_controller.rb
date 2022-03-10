@@ -36,7 +36,9 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @music = @exercise.musics.where(user: current_user, is_question: true).first
+  end
 
   def show
     authorize @exercise
@@ -96,6 +98,7 @@ class ExercisesController < ApplicationController
 
   def set_exercise
     @exercise = Exercise.find(params[:id])
+    # raise
     authorize @exercise
   end
 end
