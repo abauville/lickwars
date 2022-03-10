@@ -101,11 +101,12 @@ $purplish-white: #efeefc;
 $hover-purple: #252536;
 
 .note-input-button {
+  position: relative;
   min-width: 50px;
-  padding: 4px 8px;
+  padding: 4px 8px 2px 8px;
   border: none;
   font-family: $note-font;
-  font-size: 28px;
+  font-size: 26px;
 
   background-color: $purple;
   color: $purplish-white;
@@ -125,6 +126,12 @@ $hover-purple: #252536;
     color: $purple;
     box-shadow: 0.8px 2px 2px 2px rgba(33, 37, 41, 0.507);
     // border: 1px solid $purple;
+  }
+  .keyboard-shortcut {
+    font-size: 10px;
+    position: absolute;
+    bottom: 2px;
+    right: 8px;
   }
 }
 
