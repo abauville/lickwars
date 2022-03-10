@@ -247,10 +247,14 @@ export default class extends Controller {
     // crossing a bar? hard coded for 4/4
     const remainder_left = 1.0 - (duration_until_index % 1.0)
     const remainder_right = (duration_after_index % 1.0)
-    if ((remainder_left > tol) && (remainder_right > tol)) {
-      const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
-      // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
-      this.breakUpNote(index, Math.round(breakUpVal), false)
+    const measure_index = Math.floor(duration_until_index / 1.0)
+    const measure_after_index = Math.floor(duration_after_index / 1.0)
+    if (measure_index != measure_after_index) { // the next note is in the next bar (at least)
+      if (measure_after_index - measure_index > 1 || remainder_right > tol) {
+        const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
+        // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
+        this.breakUpNote(index, Math.round(breakUpVal), false)
+      } // more than one bar across OR the next note starts later than the first beat
       // should tie notes, but that's not an option yet
     }
     // console.log("notes", this.music.notes.slice(index))
