@@ -1,0 +1,22 @@
+#footer {
+  background: $purple;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  color: #9a9999;
+  bottom: 0;
+  z-index: 5;
+  flex-shrink: 0;
+  font-family: $logo-font;
+}
+
+.footer-link {
+  color: #9a9999;
+  opacity: 1;
+  text-decoration: none;
+  font-size: 18px;
+  &:hover {
+      color: $primary;
+    }
+  }
