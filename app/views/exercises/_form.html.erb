@@ -3,19 +3,19 @@
   <div class="d-flex justify-content-center" >
     <div class="d-flex pt-2">
       <div class="row">
-        <h6 class="mt-3 w-75 new-exercise-title pt-2"><%= f.input :name, label: "Exercise Name", placeholder: "Fur Elise" %>
+        <h6 class="mt-3 w-75 new-exercise-title"><%= f.input :name, label: "Exercise Name", placeholder: "Fur Elise" %>
         </h6>
       </div>
       <div class="row">
-        <h6 class="mt-3 w-75 new-exercise-title "> <%= f.input :description, label: "Description", placeholder: "Good exercise for practicing your scales" %>
+        <h6 class="mt-3 w-75 new-exercise-title"> <%= f.input :description, label: "Description", placeholder: "Good exercise for practicing your scales" %>
         </h6>
       </div>
       <div class="row">
-        <h6 class="mt-3 w-75 new-exercise-title pt-2"> <%= f.input :difficulty, label: "Difficulty", input_html: { min: 0, max: 10 },placeholder: "level (1-10)" %>
+        <h6 class="mt-3 w-75 new-exercise-title"> <%= f.input :difficulty, label: "Difficulty", input_html: { min: 0, max: 10 },placeholder: "level (1-10)" %>
         </h6>
       </div>
       <div class="row">
-        <h6 class="mt-3 w-75 new-exercise-title "><%= music.input :bpm, label: "Beats Per Minute", placeholder: "bpm (1-300)",input_html: { min: 0, max: 300}  %>
+        <h6 class="mt-3 w-75 new-exercise-title"><%= music.input :bpm, label: "Beats Per Minute", placeholder: "bpm (1-300)",input_html: { min: 0, max: 300}  %>
         </h6>
       </div>
       <div class="col-2 align-self-center">
