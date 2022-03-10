@@ -85,8 +85,8 @@ def twinkle_exercise
           [%w[C3 E3 G3], 2],
           [%w[D3 F3 G3 B3], 2],
           [%w[E3 G3 C4], 2],
-          [%w[F3 A3 C4 D4], 4],
-          [%w[G3 B3 D4], 4],
+          [%w[F3 A3 C4], 4],
+          [%w[G3 B3], 4],
           [%w[C3 E3 G3], 2]
         ]
       ],
@@ -133,8 +133,8 @@ def twinkle_exercise
               [%w[C3 E3 G3], 2],
               [%w[D3 F3 G3 B3], 2],
               [%w[E3 G3 C4], 2],
-              [%w[F3 A3 C4 D4], 4],
-              [%w[G3 B3 D4], 4],
+              [%w[F3 A3 C4], 4],
+              [%w[G3 B3], 4],
               [%w[C3 E3 G3], 2]
             ]
           ],
