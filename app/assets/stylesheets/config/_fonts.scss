@@ -1,12 +1,14 @@
 // Import Google fonts
 // @import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Noto+Music&family=Sansita+Swashed:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@500&display=swap');
 
 // Define fonts for body and headers
 $logo-font: "Sansita Swashed", cursive;
 $body-font: "Work Sans", "Helvetica", "sans-serif";
 $headers-font: "Nunito", "Helvetica", "sans-serif";
 $note-font: 'Noto Music', sans-serif;
+$title-font: "Signika Negative", sans-serif;
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
