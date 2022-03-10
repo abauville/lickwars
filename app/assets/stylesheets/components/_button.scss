@@ -100,13 +100,19 @@
   display: none;
 }
 
+$purplish-white: #efeefc;
+$hover-purple: #252536;
+
 .note-input-button {
+  position: relative;
   min-width: 50px;
-  padding: 5px 10px;
+  padding: 4px 8px 2px 8px;
   border: none;
   font-family: $note-font;
-  font-size: 36px;
-  background-color: #dcd9fb;
+  font-size: 28px;
+
+  background-color: $purple;
+  color: $purplish-white;
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
@@ -114,7 +120,37 @@
   border: none;
   box-shadow: 0.8px 2px rgba(33, 37, 41, 0.4);
   &:hover {
-    background-color: rgb(250, 250, 250);
-    box-shadow: 0.8px 2px #212529;
+    background-color: $hover-purple;
+    // color: $purple;
+    // box-shadow: 0.8px 2px #212529;
+  }
+  &.selected {
+    background-color: $purplish-white;
+    color: $purple;
+    box-shadow: 0.8px 2px 2px 2px rgba(33, 37, 41, 0.507);
+    // border: 1px solid $purple;
+  }
+  .keyboard-shortcut {
+    font-size: 10px;
+    position: absolute;
+    bottom: 2px;
+    right: 8px;
+  }
+}
+
+.play-button {
+  background-color: $purple;
+  color: $purplish-white;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size-base*1.5;
+  cursor: pointer;
+  &:hover {
+    background-color: $hover-purple;
+    // color: $purple;
   }
 }
