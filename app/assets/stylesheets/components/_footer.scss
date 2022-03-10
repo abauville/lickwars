@@ -8,28 +8,15 @@
   bottom: 0;
   z-index: 5;
   flex-shrink: 0;
+  font-family: $logo-font;
 }
-.footer-links {
-  // display: flex;
-  // align-items: center;
-  margin-left: 30px;
-  margin-right: 30px;
-}
-.footer-links a {
+
+.footer-link {
   color: #9a9999;
   opacity: 1;
   text-decoration: none;
   font-size: 18px;
-}
-.footer-links a:hover {
-  color: $primary;
-}
-
-.footer-follow > p {
-  // margin-top: 0;
-  // margin-bottom: 1rem;
-  // position: relative;
-}
-.text-center p {
-  margin: 0;
-}
+  &:hover {
+      color: $primary;
+    }
+  }
