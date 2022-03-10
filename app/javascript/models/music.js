@@ -15,7 +15,7 @@ export class Music {
       velocity = 0.6
     } else if (arrayName === "chords") {
       array = this.chords;
-      velocity = 0.3
+      velocity = 0.25
     } else {
       throw new Error(
         `arrayName should be 'notes' or 'chords', instead got ${arrayName}`
@@ -40,6 +40,7 @@ export class Music {
         }
       } else {
         noteSequence.push([time, 'rest']);
+        noteLengths.push((wholeToneLength / note[1]) * 0.95);
       }
       time += (1.0 / note[1]) * wholeToneLength;
     });

@@ -16,43 +16,46 @@ export class BoomBox {
 
   initSequences(event, music) {
     const sequenceNames = ['notes', 'chords']
-    let endTime = 0
+    let endTime = 0.0
     sequenceNames.forEach((sequenceName) => {
       let playbackArrays = music.playbackArrays(sequenceName);
       const sequence = playbackArrays[0];
       const lengths = playbackArrays[1];
 
       const offSequence = sequence.map((n, i) => {return [n[0] + lengths[i], n[1]]})
-      endTime = Math.max(offSequence.slice(-1)[0], endTime)
+      if (offSequence.slice(-1).length>0 && offSequence.slice(-1)[0][0] > endTime) {
+        endTime = offSequence.slice(-1)[0][0]
+      }
 
-      const noteOnEvents = new Tone.Part(((time, event) => {
-        console.log("on", time, event)
-        if (event !== 'rest') {
-          this.piano.keyDown(event)
+      const noteOnEvents = new Tone.Part(((time, noteEvent) => {
+        // console.log("on", time, noteEvent)
+        if (noteEvent !== 'rest') {
+          this.piano.keyDown(noteEvent)
         }
       }), sequence).start(0)
 
-      const noteOffEvents = new Tone.Part(((time, event) => {
-        // console.log("off", time, event)
-        if (event !== 'rest') {
-          this.piano.keyUp(event)
+      const noteOffEvents = new Tone.Part(((time, noteEvent) => {
+        // console.log("off", time, noteEvent)
+        if (noteEvent !== 'rest') {
+          this.piano.keyUp(noteEvent)
         }
       }), offSequence).start(0)
     })
-    Tone.Transport.schedule((time) => {
-
-      this.togglePlayStop(event)
-    }, endTime+.01);
+    return endTime
   }
 
-  togglePlayStop(event) {
+
+  initAnimationQuestion(event, bpm) {
+    const wholeNoteLength = (4.0 * 60.0) / this.bpm;
+
+  }
+
+  togglePlayStop(target) {
     Tone.Transport.toggle()
-    console.log("state", Tone.Transport.state);
-    console.log("stopHtml", event.currentTarget.dataset.stopHtml);
-    if (Tone.Transport.state == 'started') {
-      event.currentTarget.innerHTML = event.currentTarget.dataset.stopHtml
+    if (Tone.Transport.state === 'started') {
+      target.innerHTML = target.dataset.stopHtml
     } else {
-      event.currentTarget.innerHTML = event.currentTarget.dataset.playHtml
+      target.innerHTML = target.dataset.playHtml
       for (let i=9; i<97; i++) {
         this.piano.keyUp({midi: i}, '+0')
       }
@@ -60,15 +63,18 @@ export class BoomBox {
   }
 
   play(event, music) {
-    console.log("play", event);
     Tone.Transport.cancel(0)
-    this.initSequences(event, music)
-    Tone.start();
-    this.togglePlayStop(event)
+    const endTime = this.initSequences(event, music)
+    const stopTransport = new Tone.Part(((time, t) => {
+      this.togglePlayStop(t)
+    }), [[endTime+.01, event.currentTarget]]).start(0)
 
-    // Tone.Transport.toggle(startTime)
-    // console.log("transport state", Tone.Transport.state, Tone.Transport.state === 'stopped', Tone.Transport)
-    //
+    if (event.currentTarget.id === "play-question") {
+      this.initAnimationQuestion(event, music.bpm)
+    }
+
+    Tone.start();
+    this.togglePlayStop(event.currentTarget)
   }
 
   playSingleEvent(music_event, value, bpm) {
