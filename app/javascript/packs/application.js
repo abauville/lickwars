@@ -9,7 +9,6 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "controllers";
 import "bootstrap";
-import "components";
 import "chartkick/chart.js";
 
 Rails.start();
