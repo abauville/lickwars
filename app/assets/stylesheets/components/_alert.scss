@@ -1,10 +1,3 @@
- // .alert {
-//   position: fixed;
-//   bottom: 16px;
-//   right: 16px;
-//   z-index: 1000;
-// }
-
 .alert {
     padding: 15px;
     background-color: #fafafa;
@@ -26,19 +19,19 @@
 .alert-success {
     border-color: #80D651;
 }
-trong {
+strong {
     color: #80D651;
 }
 .alert-info {
     border-color: #45ABCD;
 }
-trong {
+strong {
     color: #45ABCD;
 }
 .alert-warning {
     border-color: #FEAF20;
 }
-trong {
+strong {
     color: #FEAF20;
 }
 .alert-danger {
