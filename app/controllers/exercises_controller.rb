@@ -36,7 +36,9 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @music = @exercise.musics.where(user: current_user, is_question: true).first
+  end
 
   def show
     authorize @exercise
@@ -59,9 +61,8 @@ class ExercisesController < ApplicationController
 
   def update
     @exercise.update(exercise_params)
-
     if @exercise.save
-      redirect_to exercises_path
+      redirect_to teacher_exercises_path
     else
       render :edit
     end
@@ -91,7 +92,7 @@ class ExercisesController < ApplicationController
     params
       .require(:exercise)
       .permit(:name, :description, :chord_progression, :user_id, :difficulty,
-              musics_attributes: %i[bpm key_signature mode notes chords is_question user_id exercise_id])
+              musics_attributes: %i[id bpm key_signature mode notes chords is_question user_id exercise_id])
   end
 
   def set_exercise
