@@ -73,6 +73,7 @@ export class Music {
           clef: "treble",
           keys: this.keysForSingleNote(note),
           duration: `${note[1]}`,
+          auto_stem: true
         });
         if (this.hasAccidental(note)) {
           staveNote.addAccidental(0, new VF.Accidental(this.accidental(note)));

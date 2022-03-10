@@ -25,9 +25,11 @@ export default class extends Controller {
     this.score = new Score(this.music);
     this.initConverters();
     this.currentSelection = null;
+    this.selectedNoteValue = 4;
 
     this.score.draw();
     this.sendNotesToCheckForm();
+    this.toggleNoteValueButton()
   }
 
   initConverters() {
@@ -39,32 +41,10 @@ export default class extends Controller {
 
     const midiNumShift = 12;
     const noteNamesSharp = [
-      "C",
-      "C#",
-      "D",
-      "D#",
-      "E",
-      "F",
-      "F#",
-      "G",
-      "G#",
-      "A",
-      "A#",
-      "B",
+      "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
     ];
     const noteNamesFlat = [
-      "C",
-      "Db",
-      "D",
-      "Eb",
-      "E",
-      "F",
-      "Gb",
-      "G",
-      "Ab",
-      "A",
-      "Bb",
-      "B",
+      "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"
     ];
     for (let i = 9; i < 97; i += 1) {
       const noteNameSharp = noteNamesSharp[i % 12];
@@ -86,47 +66,37 @@ export default class extends Controller {
   keyDownOnNote(event) {
     let newMidiNum;
     // console.log("keydown", event.code, event, event.metaKey);
-    console.log(this.notesValue);
+    // console.log(this.notesValue);
     let svgNote = event.currentTarget;
     let index = this.score.getNoteIndex(svgNote);
     let midiNum;
     if (!this.music.isRestIndex(index)) {
       midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
     } else {
-      midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]];
+      midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]]; // by default use the rest as a reference
+      let i = 1
+      while (index - i >= 0 && i <= 5 ) { // go back at most 5 positions to find a note instead of a rest
+        if (!this.music.isRestIndex(index - i)) {
+          midiNum = this.noteName2MidiNum[this.music.notes[index-i][0]];
+          break
+        }
+        i += 1
+      }
     }
 
     const refMidiNums = {
-      KeyC: 12,
-      KeyD: 14,
-      KeyE: 16,
-      KeyF: 17,
-      KeyG: 19,
-      KeyA: 21,
-      KeyB: 23,
+      KeyC: 12, KeyD: 14, KeyE: 16, KeyF: 17, KeyG: 19, KeyA: 21, KeyB: 23,
     };
     const noteValues = {
-      Digit3: 16,
-      Digit4: 8,
-      Digit5: 4,
-      Digit6: 2,
-      Digit7: 1,
+      Digit3: 16, Digit4: 8, Digit5: 4, Digit6: 2, Digit7: 1,
     };
     switch (event.code) {
       case "ArrowUp": // move note up
-        this.updateNote(
-          index,
-          "#",
-          event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1
-        );
+        this.updateNote(index, "#", event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1);
         this.updateScore(event, index);
         break;
       case "ArrowDown": // move note down
-        this.updateNote(
-          index,
-          "b",
-          event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1
-        );
+        this.updateNote(index, "b", event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1);
         this.updateScore(event, index);
         break;
       case "ArrowLeft": // select the previous note
@@ -147,6 +117,7 @@ export default class extends Controller {
         newMidiNum =
           Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above;
         this.updateNote(index, "b", newMidiNum, true);
+        this.updateNoteDuration(index)
         svgNote = this.updateScore(event, index);
         this.selectNextNote(event, index, svgNote, false);
         break;
@@ -155,15 +126,28 @@ export default class extends Controller {
       case "Digit5": // quarter note
       case "Digit6": // half note
       case "Digit7": // whole note
-        const newValue = noteValues[event.code];
-        const oldValue = this.music.notes[index][1];
-        if (newValue > oldValue) {
-          this.divideNote(index, newValue);
-        } else {
-          this.mergeNotes(index, newValue);
-        }
-        this.updateScore(event, index);
-        break;
+        this.changeSelectedNoteValue(noteValues[event.code])
+
+        this.updateNoteDuration(index)
+        this.updateScore(event, index, false)
+        break
+      case "Backspace":
+        this.music.notes[index][0] = ['r', 'A4']
+        this.updateScore(event, index, false)
+        break
+
+    }
+  }
+
+  updateNoteDuration(index) {
+    const newValue = this.selectedNoteValue
+    const oldValue = this.music.notes[index][1];
+    if (newValue == oldValue) {
+      return
+    } else if (newValue > oldValue) {
+      this.divideNote(index, newValue);
+    } else {
+      this.mergeNotes(index, newValue);
     }
   }
 
@@ -228,7 +212,7 @@ export default class extends Controller {
         target_duration = 1.0/newValue
         i = 1
         duration = 1.0/this.music.notes[index][1]
-        // console.log("newValue", newValue);
+        console.log("overflow", "newValue", newValue);
       }
       remainder = target_duration - duration
       duration += 1.0/this.music.notes[index+i][1]
@@ -264,13 +248,16 @@ export default class extends Controller {
     // crossing a bar? hard coded for 4/4
     const remainder_left = 1.0 - (duration_until_index % 1.0)
     const remainder_right = (duration_after_index % 1.0)
-    if ((remainder_left > tol) && (remainder_right > tol)) {
-      const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
-      // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
-      this.breakUpNote(index, Math.round(breakUpVal), false)
+    const measure_index = Math.floor(duration_until_index / 1.0)
+    const measure_after_index = Math.floor(duration_after_index / 1.0)
+    if (measure_index != measure_after_index) { // the next note is in the next bar (at least)
+      if (measure_after_index - measure_index > 1 || remainder_right > tol) {
+        const breakUpVal = Math.max(1.0/remainder_left, 1.0/remainder_right)
+        // console.log("Crossing a bar!", 1.0/remainder_left, 1.0/remainder_right, breakUpVal, newValue);
+        this.breakUpNote(index, Math.round(breakUpVal), false)
+      } // more than one bar across OR the next note starts later than the first beat
       // should tie notes, but that's not an option yet
     }
-
     // console.log("notes", this.music.notes.slice(index))
   }
 
@@ -350,4 +337,26 @@ export default class extends Controller {
     checkForm.value = JSON.stringify(this.music.notes);
   }
 
+  setNoteValue(event) {
+    this.changeSelectedNoteValue(event.currentTarget.dataset.noteValue)
+    console.log("currentSelection", this.currentSelection)
+    if (this.currentSelection) {
+      const svgNote = this.currentSelection
+      const index = this.score.getNoteIndex(svgNote)
+      this.updateNoteDuration(index)
+      this.updateScore(event, index, false);
+    }
+  }
+
+  changeSelectedNoteValue(noteValue) {
+    this.toggleNoteValueButton() // current button goes off
+    this.selectedNoteValue = noteValue;
+    this.toggleNoteValueButton() // new button goes on
+  }
+
+  toggleNoteValueButton() {
+    const button = document.querySelector(`#note-value-${this.selectedNoteValue}`)
+    button.classList.toggle("selected");
+    console.log("button", button)
+  }
 }
