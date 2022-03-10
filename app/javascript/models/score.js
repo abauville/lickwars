@@ -30,7 +30,6 @@ export class Score {
     const allMeasureStaveNotes = this.music.staveNotes();
     const total_width =
       allMeasureStaveNotes.length * measure_width + key_time_signature_width;
-    console.log("total_width", total_width);
     this.renderer.resize(total_width + 15, 200);
     this.context.clear();
 

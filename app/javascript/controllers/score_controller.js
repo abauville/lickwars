@@ -64,7 +64,7 @@ export default class extends Controller {
 
   keyDownOnNote(event) {
     let newMidiNum;
-    console.log("keydown", event.code, event, event.metaKey);
+    // console.log("keydown", event.code, event, event.metaKey);
     // console.log(this.notesValue);
     let svgNote = event.currentTarget;
     let index = this.score.getNoteIndex(svgNote);
@@ -138,7 +138,6 @@ export default class extends Controller {
   }
 
   updateNoteDuration(index) {
-    console.log("updateNoteDuration", this.selectedValue)
     const newValue = this.selectedValue
     const oldValue = this.music.notes[index][1];
     if (newValue == oldValue) {
