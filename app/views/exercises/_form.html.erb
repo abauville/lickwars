@@ -1,11 +1,18 @@
 <%= simple_form_for @exercise do |f| %>
   <%= f.simple_fields_for :musics do |music| %>
-  <div class="row justify-content-between">
+  <div class="d-flex justify-content-between" >
     <div class="col-4 pt-2">
       <h6 class="text-center mt-3 w-50 new-exercise-title pt-2"><%= f.input :name, label: false, placeholder: "Exercise name" %>
       </h6>
     </div>
+
+    <div class="col-1 text-center align-self-center" >
+       <p class="lw-button text-center" data-bs-toggle="modal" data-bs-target="#helpModal"  >Help
+      </p>
+    </div>
+
     <div class= "col-4   mr-4 pt-2">
+
       <h6 class="text-center mt-3 w-50 new-exercise-title "> <%= f.input :description, label: false, placeholder: "Put short description here" %>
       </h6>
     </div>
@@ -22,7 +29,6 @@
           <div class="col-6">
             <%= music.input :bpm, placeholder: "80",input_html: { min: 0, max: 300, value: 80 }  %>
           </div>
-
         </div>
       </div>
     </div>
