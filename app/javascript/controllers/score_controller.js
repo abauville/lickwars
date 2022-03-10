@@ -25,10 +25,11 @@ export default class extends Controller {
     this.score = new Score(this.music);
     this.initConverters();
     this.currentSelection = null;
-    this.selectedValue = 4;
+    this.selectedNoteValue = 4;
 
     this.score.draw();
     this.sendNotesToCheckForm();
+    this.toggleNoteValueButton()
   }
 
   initConverters() {
@@ -125,20 +126,21 @@ export default class extends Controller {
       case "Digit5": // quarter note
       case "Digit6": // half note
       case "Digit7": // whole note
-        this.selectedValue = noteValues[event.code]
+        this.changeSelectedNoteValue(noteValues[event.code])
+
         this.updateNoteDuration(index)
-        this.updateScore(event, index)
+        this.updateScore(event, index, false)
         break
       case "Backspace":
         this.music.notes[index][0] = ['r', 'A4']
-        this.updateScore(event, index)
+        this.updateScore(event, index, false)
         break
 
     }
   }
 
   updateNoteDuration(index) {
-    const newValue = this.selectedValue
+    const newValue = this.selectedNoteValue
     const oldValue = this.music.notes[index][1];
     if (newValue == oldValue) {
       return
@@ -335,4 +337,26 @@ export default class extends Controller {
     checkForm.value = JSON.stringify(this.music.notes);
   }
 
+  setNoteValue(event) {
+    this.changeSelectedNoteValue(event.currentTarget.dataset.noteValue)
+    console.log("currentSelection", this.currentSelection)
+    if (this.currentSelection) {
+      const svgNote = this.currentSelection
+      const index = this.score.getNoteIndex(svgNote)
+      this.updateNoteDuration(index)
+      this.updateScore(event, index, false);
+    }
+  }
+
+  changeSelectedNoteValue(noteValue) {
+    this.toggleNoteValueButton() // current button goes off
+    this.selectedNoteValue = noteValue;
+    this.toggleNoteValueButton() // new button goes on
+  }
+
+  toggleNoteValueButton() {
+    const button = document.querySelector(`#note-value-${this.selectedNoteValue}`)
+    button.classList.toggle("selected");
+    console.log("button", button)
+  }
 }
