@@ -1,9 +1,13 @@
 <div class="m-3">
   <div class="d-flex justify-content-between">
     <h1 class="index-title text-center"><%= @exercise.name %></h1>
-      <%= render "tone" %>
+    <p class="help-button text-center mx-2 shine"
+       data-bs-toggle="modal"
+       data-bs-target="#helpModal">
+       <i class="far fa-question-circle"></i></p>
   </div>
   <%= render "player_exercise_card" %>
   <%= render "results_card" %>
   <%= render "help_card" %>
+  <%= render "tone" %>
 </div>
