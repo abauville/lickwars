@@ -85,8 +85,8 @@ export default class extends Controller {
 
   keyDownOnNote(event) {
     let newMidiNum;
-    // console.log("keydown", event.code, event, event.metaKey);
-    console.log(this.notesValue);
+    console.log("keydown", event.code, event, event.metaKey);
+    // console.log(this.notesValue);
     let svgNote = event.currentTarget;
     let index = this.score.getNoteIndex(svgNote);
     let midiNum;
@@ -164,6 +164,9 @@ export default class extends Controller {
         }
         this.updateScore(event, index);
         break;
+      case "Backspace":
+        this.music.notes[index][0] = ['r', 'A4'];
+        this.updateScore(event, index);
     }
   }
 
