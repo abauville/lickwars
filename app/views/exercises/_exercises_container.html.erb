@@ -1,8 +1,8 @@
 <% levels = [*1..10].map {|n| ["Level #{n}", n] }.unshift(["All", nil]) %>
 <div class="pe-5 w-70 mb-5">
-  <%= form_tag exercises_path, method: :get, class: 'lw-filter' do %>
+  <%= form_tag exercises_path, method: :get, class: 'lw-filter mb-4' do %>
     <div class="d-flex justify-content-between">
-      <div class="d-flex w-75 flex-lg-row flex-column align-items-center">
+      <div class="d-flex w-80 flex-lg-row flex-column align-items-center">
         <%=
           select_tag(
             :status,
@@ -21,7 +21,7 @@
           )
         %>
       </div>
-      <%= submit_tag "Search", class: "lw-button me-5" %>
+      <%= submit_tag "Search", class: "lw-button d-flex mx-2 justify-content-center flex-grow-1" %>
     </div>
   <% end %>
   <% if @query && @results %>
