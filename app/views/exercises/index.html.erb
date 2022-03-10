@@ -3,7 +3,7 @@
   <%= render 'exercises_container' %>
   <div class="d-flex flex-grow-1 justify-content-center text-center">
     <div class="w-100">
-      <div class="progress-bar-container mt-5">
+      <div class="progress-bar-container">
       <%= render "progress_bar", {title: "Daily Progress", stat: @daily_stat, max: Music::DAILY_TARGET} %>
       <%= render "progress_bar", {title: "Weekly Progress", stat: @weekly_stat, max: Music::WEEKLY_TARGET} %>
       <% if @exercise_pie %>
