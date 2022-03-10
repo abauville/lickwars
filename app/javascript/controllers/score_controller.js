@@ -88,7 +88,7 @@ export default class extends Controller {
       KeyC: 12, KeyD: 14, KeyE: 16, KeyF: 17, KeyG: 19, KeyA: 21, KeyB: 23,
     };
     const noteValues = {
-      Digit3: 16, Digit4: 8, Digit5: 4, Digit6: 2, Digit7: 1,
+      Digit2: 32, Digit3: 16, Digit4: 8, Digit5: 4, Digit6: 2, Digit7: 1
     };
     switch (event.code) {
       case "ArrowUp": // move note up
@@ -121,6 +121,7 @@ export default class extends Controller {
         svgNote = this.updateScore(event, index);
         this.selectNextNote(event, index, svgNote, false);
         break;
+      case "Digit2": // 32nd note, follows MuseScore's key map
       case "Digit3": // 16th note, follows MuseScore's key map
       case "Digit4": // 8th note
       case "Digit5": // quarter note
