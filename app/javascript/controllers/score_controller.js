@@ -328,7 +328,7 @@ export default class extends Controller {
   }
 
   playAttempt(event) {
-    console.log("playAttempt", event);
+    // console.log("playAttempt", event);
     console.log(this.music)
     this.boomBox.play(event, this.music);
   }

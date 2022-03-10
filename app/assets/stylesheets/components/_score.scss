@@ -19,6 +19,13 @@ div#score {
   outline: none;
 }
 
+.vf-stavenote.highlight path{
+  stroke: rgb(46, 126, 216);
+  fill: rgb(46, 126, 216);
+  filter: drop-shadow(0 0 0.1rem rgb(46, 126, 216));
+
+}
+
 ::-webkit-scrollbar {
   display: none;
 }

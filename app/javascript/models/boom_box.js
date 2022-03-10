@@ -45,8 +45,26 @@ export class BoomBox {
   }
 
 
-  initAnimationQuestion(event, bpm) {
-    const wholeNoteLength = (4.0 * 60.0) / this.bpm;
+  initAnimationAttempt(event, music) {
+    // const wholeNoteLength = (4.0 * 60.0) / this.bpm;
+
+    let playbackArrays = music.playbackArrays('notes');
+    let sequence = playbackArrays[0];
+    const lengths = playbackArrays[1];
+    sequence = sequence.map((s, i) => {return [s[0], i]})
+    let offSequence = sequence.map((n, i) => {return [n[0] + lengths[i], n[1]]})
+    offSequence = offSequence.map((s, i) => {return [s[0], i]})
+    const svg = document.querySelector("svg");
+    const notes = svg.querySelectorAll(".vf-stavenote");
+    const noteOnEvents = new Tone.Part(((time, index) => {
+      // console.log("onEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), sequence).start(0)
+
+    const noteOffEvents = new Tone.Part(((time, index) => {
+      // console.log("offEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), offSequence).start(0)
 
   }
 
@@ -56,9 +74,14 @@ export class BoomBox {
       target.innerHTML = target.dataset.stopHtml
     } else {
       target.innerHTML = target.dataset.playHtml
+      // release every note
       for (let i=9; i<97; i++) {
         this.piano.keyUp({midi: i}, '+0')
       }
+      // remove every highlight
+      const svg = document.querySelector("svg");
+      const notes = svg.querySelectorAll(".vf-stavenote");
+      notes.forEach((n) => {n.classList.remove("highlight")})
     }
   }
 
@@ -69,8 +92,8 @@ export class BoomBox {
       this.togglePlayStop(t)
     }), [[endTime+.01, event.currentTarget]]).start(0)
 
-    if (event.currentTarget.id === "play-question") {
-      this.initAnimationQuestion(event, music.bpm)
+    if (event.currentTarget.id === "play-attempt") {
+      this.initAnimationAttempt(event, music)
     }
 
     Tone.start();

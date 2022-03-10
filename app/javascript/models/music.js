@@ -26,7 +26,6 @@ export class Music {
     const noteSequence = [];
     const noteLengths = [];
     let time = 0.0;
-    console.log("array", array);
     array.forEach((note) => {
       if (!this.isRest(note)) {
         if (Array.isArray(note[0])) {
