@@ -1,13 +1,17 @@
 <div class="d-flex">
   <div class="flex-grow-1">
-    <h1 class="index-title text-center mt-4">Uploaded Exercises</h1>
+    <div class="row align-items-center mt-3">
+      <div id="button-container" class="col-6">
+        <h1 class="index-title text-center mt-4">Uploaded Exercises</h1>
+      </div>
+      <div id="button-container" class="col-6 mt-4">
+        <%= link_to new_exercise_path, id: "teacher-ex-card-button-add" do %>
+          <p class="teacher-ex-card-button ms-3">Add new exercise</p>
+        <% end %>
+      </div>
+    </div>
     <% @exercises.each do |exercise| %>
       <%= render "teacher_exercise_card", {exercise: exercise} %>
-    <% end %>
-  </div>
-  <div id="button-container">
-    <%= link_to new_exercise_path, id: "teacher-ex-card-button-add" do %>
-      <p class="teacher-ex-card-button ms-3">Add new exercise</p>
     <% end %>
   </div>
 
