@@ -2,7 +2,9 @@
 <p class="ms-2"><%= g.flatten.second.description %></p>
 <div class="d-flex flex-wrap">
   <% if query == 'status' %>
-    <%= render("exercise_index_card", {ex: g.flatten.second})%>
+    <% g.second.each do |ex| %>
+      <%= render("exercise_index_card", {ex: ex.first})%>
+    <% end %>
   <% else %>
     <% g.second.each do |ex|%>
       <%= render("exercise_index_card", {ex: ex})%>
