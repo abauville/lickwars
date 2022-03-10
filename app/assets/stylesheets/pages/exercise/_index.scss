@@ -1,10 +1,11 @@
 .w-70 {
-  min-width: 70%;
+  max-width: 70%;
 }
 
 .progress-bar-container {
   position: sticky;
   top: 40px;
+  min-width: 25%;
   // background-color: rgb(200, 200, 200);
   background-image: linear-gradient(
       226deg,
@@ -75,6 +76,6 @@
 
 .lw-dropdown{
   border-radius: 8px;
-  height: 34px;
-  width: 260px;
+  height: 40px;
+  width: 450px;
 }
