@@ -25,6 +25,7 @@ export default class extends Controller {
     this.score = new Score(this.music);
     this.initConverters();
     this.currentSelection = null;
+    this.selectedValue = 4;
 
     this.score.draw();
     this.sendNotesToCheckForm();
@@ -72,8 +73,8 @@ export default class extends Controller {
       midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
     } else {
       midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]]; // by default use the rest as a reference
-      i = 1
-      while (i <= 5 ) { // go back at most 5 positions to find a note instead of a rest
+      let i = 1
+      while (index - i >= 0 && i <= 5 ) { // go back at most 5 positions to find a note instead of a rest
         if (!this.music.isRestIndex(index - i)) {
           midiNum = this.noteName2MidiNum[this.music.notes[index-i][0]];
           break
@@ -83,36 +84,18 @@ export default class extends Controller {
     }
 
     const refMidiNums = {
-      KeyC: 12,
-      KeyD: 14,
-      KeyE: 16,
-      KeyF: 17,
-      KeyG: 19,
-      KeyA: 21,
-      KeyB: 23,
+      KeyC: 12, KeyD: 14, KeyE: 16, KeyF: 17, KeyG: 19, KeyA: 21, KeyB: 23,
     };
     const noteValues = {
-      Digit3: 16,
-      Digit4: 8,
-      Digit5: 4,
-      Digit6: 2,
-      Digit7: 1,
+      Digit3: 16, Digit4: 8, Digit5: 4, Digit6: 2, Digit7: 1,
     };
     switch (event.code) {
       case "ArrowUp": // move note up
-        this.updateNote(
-          index,
-          "#",
-          event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1
-        );
+        this.updateNote(index, "#", event.metaKey || event.ctrlKey ? midiNum + 12 : midiNum + 1);
         this.updateScore(event, index);
         break;
       case "ArrowDown": // move note down
-        this.updateNote(
-          index,
-          "b",
-          event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1
-        );
+        this.updateNote(index, "b", event.metaKey || event.ctrlKey ? midiNum - 12 : midiNum - 1);
         this.updateScore(event, index);
         break;
       case "ArrowLeft": // select the previous note
@@ -133,6 +116,7 @@ export default class extends Controller {
         newMidiNum =
           Math.abs(below) < Math.abs(above) ? midiNum + below : midiNum + above;
         this.updateNote(index, "b", newMidiNum, true);
+        this.updateNoteDuration(index)
         svgNote = this.updateScore(event, index);
         this.selectNextNote(event, index, svgNote, false);
         break;
@@ -141,18 +125,28 @@ export default class extends Controller {
       case "Digit5": // quarter note
       case "Digit6": // half note
       case "Digit7": // whole note
-        const newValue = noteValues[event.code];
-        const oldValue = this.music.notes[index][1];
-        if (newValue > oldValue) {
-          this.divideNote(index, newValue);
-        } else {
-          this.mergeNotes(index, newValue);
-        }
-        this.updateScore(event, index);
-        break;
+        this.selectedValue = noteValues[event.code]
+        this.updateNoteDuration(index)
+        this.updateScore(event, index)
+        break
       case "Backspace":
-        this.music.notes[index][0] = ['r', 'A4'];
-        this.updateScore(event, index);
+        this.music.notes[index][0] = ['r', 'A4']
+        this.updateScore(event, index)
+        break
+
+    }
+  }
+
+  updateNoteDuration(index) {
+    console.log("updateNoteDuration", this.selectedValue)
+    const newValue = this.selectedValue
+    const oldValue = this.music.notes[index][1];
+    if (newValue == oldValue) {
+      return
+    } else if (newValue > oldValue) {
+      this.divideNote(index, newValue);
+    } else {
+      this.mergeNotes(index, newValue);
     }
   }
 
@@ -217,7 +211,7 @@ export default class extends Controller {
         target_duration = 1.0/newValue
         i = 1
         duration = 1.0/this.music.notes[index][1]
-        // console.log("newValue", newValue);
+        console.log("overflow", "newValue", newValue);
       }
       remainder = target_duration - duration
       duration += 1.0/this.music.notes[index+i][1]
@@ -259,7 +253,6 @@ export default class extends Controller {
       this.breakUpNote(index, Math.round(breakUpVal), false)
       // should tie notes, but that's not an option yet
     }
-
     // console.log("notes", this.music.notes.slice(index))
   }
 
