@@ -1,5 +1,5 @@
-<h2 class="mt-5 ms-2 fw-bolder">Level <%= g.first %></h2>
-<p class="ms-2"><%= g.flatten.second.description %></p>
+<h2 class="index-title mt-5 ms-2 fw-bolder fs-3">Level <%= g.first %></h2>
+<p class="ms-2 fs-5 fw-light"><%= g.flatten.second.description %></p>
 <div class="d-flex flex-wrap">
   <% if query == 'status' %>
     <% g.second.each do |ex| %>
