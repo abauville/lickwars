@@ -93,7 +93,15 @@ export default class extends Controller {
     if (!this.music.isRestIndex(index)) {
       midiNum = this.noteName2MidiNum[this.music.notes[index][0]];
     } else {
-      midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]];
+      midiNum = this.noteName2MidiNum[this.music.notes[index][0][1]]; // by default use the rest as a reference
+      i = 1
+      while (i <= 5 ) { // go back at most 5 positions to find a note instead of a rest
+        if (!this.music.isRestIndex(index - i)) {
+          midiNum = this.noteName2MidiNum[this.music.notes[index-i][0]];
+          break
+        }
+        i += 1
+      }
     }
 
     const refMidiNums = {
