@@ -1,8 +1,13 @@
 .banner {
   background-size: cover;
+  object-fit: cover;
   background-position: center;
-
-  padding: 302px 0;
+  padding: 250px 0;
+  background-position-y: -184px;
+  background-repeat: no-repeat;
+  height: 223vh;
+  background-image: url(https://images.unsplash.com/photo-1593698054590-a5b3a19565a3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80);
+  background: brightness(50%);
 }
 
 .banner h1 {
