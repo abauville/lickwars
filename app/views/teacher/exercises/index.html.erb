@@ -1,6 +1,6 @@
 <div class="d-flex">
   <div class="flex-grow-1">
-    <h1 class="text-center mt-4">Uploaded Exercises</h1>
+    <h1 class="index-title text-center mt-4">Uploaded Exercises</h1>
     <% @exercises.each do |exercise| %>
       <%= render "teacher_exercise_card", {exercise: exercise} %>
     <% end %>
