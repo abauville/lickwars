@@ -97,53 +97,53 @@ def twinkle_exercise
   )
 
   # Attempts
-  User
-    .all
-    .sample(rand(3..8))
-    .each do |user|
-      Music.create(
-        bpm: 80,
-        key_signature: 2,
-        notes:
-          JSON[
-            [
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 2],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 4],
-              [['r', 'A4'], 8],
-              [['r', 'A4'], 8],
-              [['r', 'A4'], 8],
-              [['r', 'A4'], 8],
-              [['r', 'A4'], 2]
-            ]
-          ],
-        chords:
-          JSON[
-            [
-              [%w[C3 E3 G3], 1],
-              [%w[C3 F3 A3], 2],
-              [%w[C3 E3 G3], 2],
-              [%w[D3 F3 G3 B3], 2],
-              [%w[E3 G3 C4], 2],
-              [%w[F3 A3 C4], 4],
-              [%w[G3 B3], 4],
-              [%w[C3 E3 G3], 2]
-            ]
-          ],
-        user: user,
-        is_question: false,
-        status: rand(0..1),
-        exercise: twinkle
-      )
-    end
+  # User
+  #   .all
+  #   .sample(rand(3..8))
+  #   .each do |user|
+  #     Music.create(
+  #       bpm: 80,
+  #       key_signature: 2,
+  #       notes:
+  #         JSON[
+  #           [
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 2],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 4],
+  #             [['r', 'A4'], 8],
+  #             [['r', 'A4'], 8],
+  #             [['r', 'A4'], 8],
+  #             [['r', 'A4'], 8],
+  #             [['r', 'A4'], 2]
+  #           ]
+  #         ],
+  #       chords:
+  #         JSON[
+  #           [
+  #             [%w[C3 E3 G3], 1],
+  #             [%w[C3 F3 A3], 2],
+  #             [%w[C3 E3 G3], 2],
+  #             [%w[D3 F3 G3 B3], 2],
+  #             [%w[E3 G3 C4], 2],
+  #             [%w[F3 A3 C4], 4],
+  #             [%w[G3 B3], 4],
+  #             [%w[C3 E3 G3], 2]
+  #           ]
+  #         ],
+  #       user: user,
+  #       is_question: false,
+  #       status: rand(0..1),
+  #       exercise: twinkle
+  #     )
+  #   end
 end
 
 def power_users
@@ -344,21 +344,21 @@ def musics
       status: 1,
       exercise: exercise
     )
-    User
-      .all
-      .sample(rand(3..15))
-      .each do |user|
-        Music.create(
-          bpm: 80,
-          key_signature: 2,
-          notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
-          chords: JSON[[[%w[C3 E3 G3], 1]]],
-          user: user,
-          is_question: false,
-          status: rand(0..1),
-          exercise: exercise
-        )
-      end
+    # User
+    #   .all
+    #   .sample(rand(3..15))
+    #   .each do |user|
+    #     Music.create(
+    #       bpm: 80,
+    #       key_signature: 2,
+    #       notes: JSON[[['C4', 4], ['D4', 4], ['E4', 4], ['G4', 4]]],
+    #       chords: JSON[[[%w[C3 E3 G3], 1]]],
+    #       user: user,
+    #       is_question: false,
+    #       status: rand(0..1),
+    #       exercise: exercise
+    #     )
+    #   end
   end
   # ====================================
 end
