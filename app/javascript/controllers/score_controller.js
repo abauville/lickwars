@@ -352,7 +352,7 @@ export default class extends Controller {
 
   changeSelectedNoteValue(noteValue) {
     this.toggleNoteValueButton() // current button goes off
-    this.selectedNoteValue = noteValue;
+    this.selectedNoteValue = Number(noteValue);
     this.toggleNoteValueButton() // new button goes on
   }
 
