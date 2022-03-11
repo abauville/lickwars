@@ -10,7 +10,7 @@ export default class extends Controller {
   };
 
   connect() {
-    this.boomBox = new BoomBox();
+    this.boomBox = new BoomBox(document.querySelector("#play-question"));
     this.music = new Music(
       this.notesValue,
       this.chordsValue,
