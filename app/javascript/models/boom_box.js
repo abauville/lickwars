@@ -71,22 +71,13 @@ export class BoomBox {
   initQuestionAnimation(event, music) {
     console.log("initQuestionAnimation")
     const wholeNoteLength = (4.0 * 60.0) / music.bpm;
-    // for (let i=0; i<4) {
 
-    // }
-
+    // highlight staves
     const svg = document.querySelector("svg");
     const staveLines = svg.querySelectorAll("[stroke='#999999']");
-    // const staveLines = []
-    // paths.forEach((path) => {
-    //   if (path.style.stroke === '#999999') {
-    //     staveLines.push(path)
-    //   }
-    // });
-    // console.log("paths", paths)
     console.log("stavelines", staveLines)
-    const sequence = []
-    const offSequence = []
+    let sequence = []
+    let offSequence = []
     staveLines.forEach((stave, index) => {
       const i_measure = Math.floor(index / 5)
       sequence.push([wholeNoteLength * i_measure, stave])
@@ -105,6 +96,23 @@ export class BoomBox {
       stave.classList.toggle("stave-highlight")
     }), offSequence).start(0)
 
+    // highlight notes
+    let playbackArrays = music.playbackArrays('notes');
+    sequence = playbackArrays[0];
+    const lengths = playbackArrays[1];
+    sequence = sequence.map((s, i) => {return [Math.floor(s[0]/wholeNoteLength) * wholeNoteLength, i]})
+    offSequence = sequence.map((s, i) => {return [(Math.floor(s[0]/wholeNoteLength) + 1) * wholeNoteLength, s[1]]})
+    offSequence = offSequence.map((s, i) => {return [s[0], i]})
+    const notes = svg.querySelectorAll(".vf-stavenote");
+    const noteOnEvents = new Tone.Part(((time, index) => {
+      // console.log("onEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), sequence).start(0)
+
+    const noteOffEvents = new Tone.Part(((time, index) => {
+      // console.log("offEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), offSequence).start(0)
 
   }
 
