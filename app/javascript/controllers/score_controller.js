@@ -329,6 +329,7 @@ export default class extends Controller {
   }
 
   playAttempt(event) {
+    event.preventDefault();
     // console.log("playAttempt", event);
     console.log(this.music)
     this.boomBox.play(event, this.music);
