@@ -66,13 +66,6 @@
   width: 160px;
 }
 
-.play-button {
-  // color: $primary;
-  // &:hover {
-  //   color: #7c9b9a;
-  //   cursor: pointer;
-  // }
-}
 
 .exercise-button {
   opacity: 1 !important;
@@ -145,10 +138,23 @@ $hover-purple: #252536;
   justify-content: center;
   align-items: center;
   font-size: $font-size-base*1.5;
-  cursor: pointer;
+  border: none;
+  // cursor: pointer;
   &:hover {
     background-color: $hover-purple;
     // color: $purple;
+  }
+  &:disabled {
+    background-color: #a6a6ac;
+    color: #cdcdd1;
+  }
+}
+
+#play-question {
+  &:disabled {
+    cursor: default;
+    background-color: #a6a6ac;
+    color: #cdcdd1;
   }
 }
 
