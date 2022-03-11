@@ -3,53 +3,101 @@ import { Piano } from "@tonejs/piano";
 
 export class BoomBox {
   constructor() {
-    this.piano = new Piano({ velocities: 3 }).toDestination();
+    const vol = new Tone.Volume(-12).toDestination();
+    this.piano = new Piano({
+      release: true,
+      velocities: 5 });
+    this.piano.connect(vol);
     this.piano.load().then(() => {
       console.log("loaded!");
     });
     this.breakLoop = false;
   }
 
-  play(music) {
-    Tone.start();
-    let playbackArrays = music.playbackArrays("notes");
-    const noteSequence = playbackArrays[0];
-    const noteLengths = playbackArrays[1];
+  initSequences(event, music) {
+    const sequenceNames = ['notes', 'chords']
+    let endTime = 0.0
+    sequenceNames.forEach((sequenceName) => {
+      let playbackArrays = music.playbackArrays(sequenceName);
+      const sequence = playbackArrays[0];
+      const lengths = playbackArrays[1];
 
-    playbackArrays = music.playbackArrays("chords");
-    const chordSequence = playbackArrays[0];
-    const chordLengths = playbackArrays[1];
-    console.log("chordLength", chordLengths);
-    console.log("chord", chordSequence);
-    let note, chord;
-
-    const now = Tone.now() + 0.1;
-    console.log(this.piano);
-    for (let index = 0; index < noteSequence.length; index += 1) {
-      note = noteSequence[index];
-      const downTime = now + note[0];
-      const upTime = now + note[0] + noteLengths[index];
-      // const downTime =`+${note[0]}`
-      // const upTime = `+${note[0] + chordLengths[index]}`
-      this.piano
-        .keyDown({ note: `${note[1]}`, time: downTime, velocity: 0.6 })
-        .keyUp({ note: `${note[1]}`, time: upTime });
-      if (this.breakLoop) {
-        break;
+      const offSequence = sequence.map((n, i) => {return [n[0] + lengths[i], n[1]]})
+      if (offSequence.slice(-1).length>0 && offSequence.slice(-1)[0][0] > endTime) {
+        endTime = offSequence.slice(-1)[0][0]
       }
+
+      const noteOnEvents = new Tone.Part(((time, noteEvent) => {
+        // console.log("on", time, noteEvent)
+        if (noteEvent !== 'rest') {
+          this.piano.keyDown(noteEvent)
+        }
+      }), sequence).start(0)
+
+      const noteOffEvents = new Tone.Part(((time, noteEvent) => {
+        // console.log("off", time, noteEvent)
+        if (noteEvent !== 'rest') {
+          this.piano.keyUp(noteEvent)
+        }
+      }), offSequence).start(0)
+    })
+    return endTime
+  }
+
+
+  initAnimationAttempt(event, music) {
+    // const wholeNoteLength = (4.0 * 60.0) / this.bpm;
+
+    let playbackArrays = music.playbackArrays('notes');
+    let sequence = playbackArrays[0];
+    const lengths = playbackArrays[1];
+    sequence = sequence.map((s, i) => {return [s[0], i]})
+    let offSequence = sequence.map((n, i) => {return [n[0] + lengths[i], n[1]]})
+    offSequence = offSequence.map((s, i) => {return [s[0], i]})
+    const svg = document.querySelector("svg");
+    const notes = svg.querySelectorAll(".vf-stavenote");
+    const noteOnEvents = new Tone.Part(((time, index) => {
+      // console.log("onEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), sequence).start(0)
+
+    const noteOffEvents = new Tone.Part(((time, index) => {
+      // console.log("offEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), offSequence).start(0)
+
+  }
+
+  togglePlayStop(target) {
+    Tone.Transport.toggle()
+    if (Tone.Transport.state === 'started') {
+      target.innerHTML = target.dataset.stopHtml
+    } else {
+      target.innerHTML = target.dataset.playHtml
+      // release every note
+      for (let i=9; i<97; i++) {
+        this.piano.keyUp({midi: i}, '+0')
+      }
+      // remove every highlight
+      const svg = document.querySelector("svg");
+      const notes = svg.querySelectorAll(".vf-stavenote");
+      notes.forEach((n) => {n.classList.remove("highlight")})
     }
-    for (let index = 0; index < chordSequence.length; index += 1) {
-      chord = chordSequence[index];
-      chord[1].forEach((noteName) => {
-        const downTime = now + chord[0];
-        const upTime = now + chord[0] + chordLengths[index];
-        this.piano
-          .keyDown({ note: `${noteName}`, time: downTime, velocity: 0.35 })
-          .keyUp({ note: `${noteName}`, time: upTime })
-          .pedalDown({ time: downTime })
-          .pedalUp({ time: upTime });
-      });
+  }
+
+  play(event, music) {
+    Tone.Transport.cancel(0)
+    const endTime = this.initSequences(event, music)
+    const stopTransport = new Tone.Part(((time, t) => {
+      this.togglePlayStop(t)
+    }), [[endTime+.01, event.currentTarget]]).start(0)
+
+    if (event.currentTarget.id === "play-attempt") {
+      this.initAnimationAttempt(event, music)
     }
+
+    Tone.start();
+    this.togglePlayStop(event.currentTarget)
   }
 
   playSingleEvent(music_event, value, bpm) {
