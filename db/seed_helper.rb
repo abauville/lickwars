@@ -45,8 +45,8 @@ def twinkle_exercise
   sarah = User.find_by(email: 'sarah@lickwars.com')
   twinkle =
     Exercise.create(
-      difficulty: 2.0,
-      name: 'Twinkle twinkle little star',
+      difficulty: 6.99,
+      name: '⭐ Twinkle twinkle little star ⭐',
       description: 'An all time favorite made famous by Mozart',
       chord_progression: 'I - IV - V - I',
       user: sarah
@@ -222,10 +222,21 @@ def exercises
   ladygogo = User.find_by(email: 'ladygogo@lickwars.com')
 
   # Exercises made by power users ==========================
-  11.times do |i_exercise|
+  5.times do |i_exercise|
     Exercise.create(
-      difficulty: rand(0.0..10.0),
-      name: "Exploring the I - V relation ##{i_exercise + 1}",
+      difficulty: 0.01 + (i_exercise/5.0)*0.1,
+      name: "Warmup ##{i_exercise + 1}",
+      description:
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  6.times do |i_exercise|
+    Exercise.create(
+      difficulty: 0.1 + (i_exercise/6.0)*0.1,
+      name: "Got ryhthm ##{i_exercise + 1}",
       description:
         'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
       chord_progression: 'I - V - I',
@@ -235,45 +246,195 @@ def exercises
 
   8.times do |i_exercise|
     Exercise.create(
-      difficulty: rand(0.0..10.0),
-      name: "Easy licks ##{i_exercise + 1}",
+      difficulty: 1.01 + (i_exercise/8.0)*0.1,
+      name: "Meet the tonic ##{i_exercise + 1}",
       description:
-        'The ii7 - V7 - IΔ7 (or 2-5-1) progression is the building block of jazz',
-      chord_progression: 'ii7 - V7 - IΔ7',
-      user: hiromi
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
     )
   end
 
-  progs = [
-    'I - IV',
-    'I - V',
-    'I - V -',
-    'I - IV - I',
-    'I - IV -V - I',
-    'I - V - IV - I'
-  ]
-  15.times do |i_exercise|
+  1.times do |i_exercise|
     Exercise.create(
-      difficulty: rand(0.0..10.0),
-      name: "IV vs V chords ##{i_exercise + 1}",
-      description: 'Learn to recognize melodies using the IV or V chords',
-      chord_progression: progs.sample,
-      user: johann
+      difficulty: 1.11 + (i_exercise/1.0)*0.1,
+      name: "J'ai du bon tabac",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
     )
   end
 
-  progs = ['vi - IV - I - V']
-
-  12.times do |i_exercise|
+  1.times do |i_exercise|
     Exercise.create(
-      difficulty: rand(0.0..10.0),
-      name: "Get pop! ##{i_exercise + 1}",
+      difficulty: 1.21 + (i_exercise/1.0)*0.1,
+      name: "Au clair de la Lune",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  6.times do |i_exercise|
+    Exercise.create(
+      difficulty: 2.01 + (i_exercise/6.0)*0.1,
+      name: "Get pentatonic ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+  4.times do |i_exercise|
+    Exercise.create(
+      difficulty: 2.1 + (i_exercise/4.0)*0.1,
+      name: "Just passing ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  5.times do |i_exercise|
+    Exercise.create(
+      difficulty: 3.01 + (i_exercise/5.0)*0.1,
+      name: "A major change ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  5.times do |i_exercise|
+    Exercise.create(
+      difficulty: 3.01 + (i_exercise/5.0)*0.1,
+      name: "Happy mood ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  4.times do |i_exercise|
+    Exercise.create(
+      difficulty: 3.11 + (i_exercise/4.0)*0.1,
+      name: "Noodling around ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+
+
+
+  # Exercises made by power users ==========================
+  11.times do |i_exercise|
+    Exercise.create(
+      difficulty: 4.01 + (i_exercise/11.0)*0.1,
+      name: "The I - V relation ##{i_exercise + 1}",
       description:
-        'The vi - IV - I - V is used in about 80% of the hit pop songs for the last 20 years',
-      chord_progression: progs.sample,
-      user: ladygogo
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
     )
   end
+
+  # Exercises made by power users ==========================
+  7.times do |i_exercise|
+    Exercise.create(
+      difficulty: 4.11 + (i_exercise/7.0)*0.1,
+      name: "Dominating the conversation ##{i_exercise + 1}",
+      description:
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  # Exercises made by power users ==========================
+  7.times do |i_exercise|
+    Exercise.create(
+      difficulty: 5.01 + (i_exercise/7.0)*0.1,
+      name: "The sub-dominant ##{i_exercise + 1}",
+      description:
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  5.times do |i_exercise|
+    Exercise.create(
+      difficulty: 5.01 + (i_exercise/5.0)*0.1,
+      name: "Not so dominant ##{i_exercise + 1}",
+      description:
+        'The I and V chords are the fundamental building blocks of western tonal music. In this series of exercise we train to recognize and understand their usage.',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  5.times do |i_exercise|
+    Exercise.create(
+      difficulty: 6.01 + (i_exercise/5.0)*0.1,
+      name: "The double cadence ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  6.times do |i_exercise|
+    Exercise.create(
+      difficulty: 6.11 + (i_exercise/6.0)*0.1,
+      name: "Getting somewhere ##{i_exercise + 1}",
+      description: 'Lorem',
+      chord_progression: 'I - V - I',
+      user: sarah
+    )
+  end
+
+  # 8.times do |i_exercise|
+  #   Exercise.create(
+  #     difficulty: 10.01 + (i_exercise/8.0) * 0.9,
+  #     name: "Easy licks ##{i_exercise + 1}",
+  #     description:
+  #       'The ii7 - V7 - IΔ7 (or 2-5-1) progression is the building block of jazz',
+  #     chord_progression: 'ii7 - V7 - IΔ7',
+  #     user: hiromi
+  #   )
+  # end
+
+  # progs = [
+  #   'I - IV',
+  #   'I - V',
+  #   'I - V -',
+  #   'I - IV - I',
+  #   'I - IV -V - I',
+  #   'I - V - IV - I'
+  # ]
+  # 15.times do |i_exercise|
+  #   Exercise.create(
+  #     difficulty: 7.01 + (i_exercise/15.0)*0.9,
+  #     name: "IV vs V chords ##{i_exercise + 1}",
+  #     description: 'Learn to recognize melodies using the IV or V chords',
+  #     chord_progression: progs.sample,
+  #     user: johann
+  #   )
+  # end
+
+  # progs = ['vi - IV - I - V']
+
+  # 12.times do |i_exercise|
+  #   Exercise.create(
+  #     difficulty: 6.01 + (i_exercise/12.0)*0.9,
+  #     name: "Get pop! ##{i_exercise + 1}",
+  #     description:
+  #       'The vi - IV - I - V is used in about 80% of the hit pop songs for the last 20 years',
+  #     chord_progression: progs.sample,
+  #     user: ladygogo
+  #   )
+  # end
   # ====================================
 end
 
