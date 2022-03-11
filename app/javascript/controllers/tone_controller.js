@@ -19,6 +19,7 @@ export default class extends Controller {
   }
 
   play(event) {
+    event.preventDefault();
     this.boomBox.play(event, this.music);
   }
 
