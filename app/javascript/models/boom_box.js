@@ -45,7 +45,7 @@ export class BoomBox {
   }
 
 
-  initAnimationAttempt(event, music) {
+  initAttemptAnimation(event, music) {
     // const wholeNoteLength = (4.0 * 60.0) / this.bpm;
 
     let playbackArrays = music.playbackArrays('notes');
@@ -65,6 +65,46 @@ export class BoomBox {
       // console.log("offEvent", index);
       notes[index].classList.toggle("highlight")
     }), offSequence).start(0)
+
+  }
+
+  initQuestionAnimation(event, music) {
+    console.log("initQuestionAnimation")
+    const wholeNoteLength = (4.0 * 60.0) / music.bpm;
+    // for (let i=0; i<4) {
+
+    // }
+
+    const svg = document.querySelector("svg");
+    const staveLines = svg.querySelectorAll("[stroke='#999999']");
+    // const staveLines = []
+    // paths.forEach((path) => {
+    //   if (path.style.stroke === '#999999') {
+    //     staveLines.push(path)
+    //   }
+    // });
+    // console.log("paths", paths)
+    console.log("stavelines", staveLines)
+    const sequence = []
+    const offSequence = []
+    staveLines.forEach((stave, index) => {
+      const i_measure = Math.floor(index / 5)
+      sequence.push([wholeNoteLength * i_measure, stave])
+      offSequence.push([wholeNoteLength * (i_measure + 1), stave])
+    })
+    console.log("seq", sequence)
+    console.log("offSequence", offSequence)
+
+    const onEvents = new Tone.Part(((time, stave) => {
+      console.log("onEvent", time, stave);
+      stave.classList.toggle("stave-highlight")
+    }), sequence).start(0)
+
+    const offEvents = new Tone.Part(((time, stave) => {
+      // console.log("offEvent", index);
+      stave.classList.toggle("stave-highlight")
+    }), offSequence).start(0)
+
 
   }
 
@@ -90,10 +130,14 @@ export class BoomBox {
     const endTime = this.initSequences(event, music)
     const stopTransport = new Tone.Part(((time, t) => {
       this.togglePlayStop(t)
-    }), [[endTime+.01, event.currentTarget]]).start(0)
+    }), [[endTime+0.8, event.currentTarget]]).start(0)
 
     if (event.currentTarget.id === "play-attempt") {
-      this.initAnimationAttempt(event, music)
+      this.initAttemptAnimation(event, music)
+    }
+    console.log("target", event.currentTarget)
+    if (event.currentTarget.id === "play-question") {
+      this.initQuestionAnimation(event, music)
     }
 
     Tone.start();
