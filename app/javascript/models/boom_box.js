@@ -46,7 +46,7 @@ export class BoomBox {
   }
 
 
-  initAnimationAttempt(event, music) {
+  initAttemptAnimation(event, music) {
     // const wholeNoteLength = (4.0 * 60.0) / this.bpm;
 
     let playbackArrays = music.playbackArrays('notes');
@@ -56,6 +56,54 @@ export class BoomBox {
     let offSequence = sequence.map((n, i) => {return [n[0] + lengths[i], n[1]]})
     offSequence = offSequence.map((s, i) => {return [s[0], i]})
     const svg = document.querySelector("svg");
+    const notes = svg.querySelectorAll(".vf-stavenote");
+    const noteOnEvents = new Tone.Part(((time, index) => {
+      // console.log("onEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), sequence).start(0)
+
+    const noteOffEvents = new Tone.Part(((time, index) => {
+      // console.log("offEvent", index);
+      notes[index].classList.toggle("highlight")
+    }), offSequence).start(0)
+
+  }
+
+  initQuestionAnimation(event, music) {
+    console.log("initQuestionAnimation")
+    const wholeNoteLength = (4.0 * 60.0) / music.bpm;
+
+    // highlight staves
+    const svg = document.querySelector("svg");
+    const staveLines = svg.querySelectorAll("[stroke='#999999']");
+    console.log("stavelines", staveLines)
+    let sequence = []
+    let offSequence = []
+    staveLines.forEach((stave, index) => {
+      const i_measure = Math.floor(index / 5)
+      sequence.push([wholeNoteLength * i_measure, stave])
+      offSequence.push([wholeNoteLength * (i_measure + 1), stave])
+    })
+    console.log("seq", sequence)
+    console.log("offSequence", offSequence)
+
+    const onEvents = new Tone.Part(((time, stave) => {
+      console.log("onEvent", time, stave);
+      stave.classList.toggle("stave-highlight")
+    }), sequence).start(0)
+
+    const offEvents = new Tone.Part(((time, stave) => {
+      // console.log("offEvent", index);
+      stave.classList.toggle("stave-highlight")
+    }), offSequence).start(0)
+
+    // highlight notes
+    let playbackArrays = music.playbackArrays('notes');
+    sequence = playbackArrays[0];
+    const lengths = playbackArrays[1];
+    sequence = sequence.map((s, i) => {return [Math.floor(s[0]/wholeNoteLength) * wholeNoteLength, i]})
+    offSequence = sequence.map((s, i) => {return [(Math.floor(s[0]/wholeNoteLength) + 1) * wholeNoteLength, s[1]]})
+    offSequence = offSequence.map((s, i) => {return [s[0], i]})
     const notes = svg.querySelectorAll(".vf-stavenote");
     const noteOnEvents = new Tone.Part(((time, index) => {
       // console.log("onEvent", index);
@@ -91,10 +139,14 @@ export class BoomBox {
     const endTime = this.initSequences(event, music)
     const stopTransport = new Tone.Part(((time, t) => {
       this.togglePlayStop(t)
-    }), [[endTime+.01, event.currentTarget]]).start(0)
+    }), [[endTime+0.8, event.currentTarget]]).start(0)
 
     if (event.currentTarget.id === "play-attempt") {
-      this.initAnimationAttempt(event, music)
+      this.initAttemptAnimation(event, music)
+    }
+    console.log("target", event.currentTarget)
+    if (event.currentTarget.id === "play-question") {
+      this.initQuestionAnimation(event, music)
     }
 
     Tone.start();

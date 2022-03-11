@@ -1,21 +1,23 @@
+$select: rgb(236, 38, 38);
+$hover: #4337ee;
 div#score {
   // background-color: $body-color;
   overflow: scroll;
 }
 .vf-stavenote:hover path {
-  stroke: rgb(36, 80, 255);
-  fill: rgb(36, 80, 255);
-  filter: drop-shadow(0 0 0.1rem rgba(36, 80, 255, 0.8));
+  stroke: $hover;
+  fill: $hover;
+  filter: drop-shadow(0 0 0.1rem $hover);
 }
 
 .vf-stavenote.selected path {
-  stroke: red;
-  fill: red;
+  stroke: $select;
+  fill: $select;
 }
 
 .vf-stavenote:focus {
-  stroke: red;
-  fill: red;
+  stroke: $select;
+  fill: $select;
   outline: none;
 }
 
@@ -23,7 +25,12 @@ div#score {
   stroke: rgb(46, 126, 216);
   fill: rgb(46, 126, 216);
   filter: drop-shadow(0 0 0.1rem rgb(46, 126, 216));
+}
 
+path.stave-highlight {
+  stroke: rgb(46, 126, 216);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 0.2rem rgb(46, 126, 216));
 }
 
 ::-webkit-scrollbar {
