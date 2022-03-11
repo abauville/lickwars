@@ -1,16 +1,17 @@
-<div class="teacher-exercise-card-index p-3 m-5">
+<%# <div class="teacher-exercise-card d-flex flex-column justify-content-center align-items-center mt-2"> %>
+<div class="teacher-exercise-card p-2 m-3">
   <%= link_to exercise_path(exercise), class: "text-decoration-none text-black d-flex flex-grow-1" do  %>
     <div class="d-flex flex-column justify-content-evenly p-3 ms-4">
-        <p class="mb-0 lw-text-header"><%= exercise.name %></p>
-      <p class="mb-0 lw-text-description"><%= exercise.chord_progression %></p>
+        <p class="mb-0"><%= exercise.name %></p>
+
     </div>
   <% end %>
   <div class="d-flex align-items-center justify-content-end me-5">
     <div class="teacher-ex-card-button me-3" data-bs-toggle="modal" data-bs-target="#commentModal<%=exercise.id%>">
-      <p class="mb-0">View Comments</p>
+      <i class="mb-0">View Comments</i>
     </div>
     <%= link_to edit_exercise_path(exercise), class: "teacher-ex-card-button" do %>
-      <p class="mb-0">Edit</p>
+      <i class="mb-0">Edit</i>
     <% end %>
   </div>
 </div>

@@ -72,16 +72,27 @@
   margin-right: 8px;
   flex-grow: 1;
   display: flex;
-  min-height: 56px;
+  min-height: 48px;
   min-width: 40%;
   border-radius: 16px;
-  background-color: #4A3A84;
-  color: rgb(225, 225, 225);
+  background-color: $card-white; //#4A3A84;
+  // color: rgb(225, 225, 225);
+  color: $purple;
+  font-weight: bold;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.15);
+  & p {
+    color: $purple;
+  }
+
+  &:hover p {
+    color: $purplish-white;
+  }
   &:hover {
     box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.275);
-    color: rgb(255, 255, 255);
-    background-color: #3b2e6a;
+    // color: rgb(255, 255, 255);
+    background-color: $purple;
+    color: $purplish-white;
+    // background-color: #3b2e6a;
   }
 }
 
