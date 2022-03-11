@@ -21,7 +21,7 @@ export default class extends Controller {
   connect() {
     this.bpm = this.bpmValue;
     this.music = new Music(this.notesValue, "[]", this.bpm);
-    this.boomBox = new BoomBox();
+    this.boomBox = new BoomBox(document.querySelector("#play-attempt"));
     this.score = new Score(this.music);
     this.initConverters();
     this.currentSelection = null;

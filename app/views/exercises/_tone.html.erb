@@ -5,14 +5,16 @@
       data-tone-chords-value="<%= @question_music.chords %>"
       data-tone-bpm-value="<%= @question_music.bpm %>">
   <%# <p class="lw-button lw-btn-sm text-center mx-2 shine"  data-bs-toggle="modal" data-bs-target="#helpModal">Help</p> %>
-  <div id='play-question'>
-    <p
+  <div>
+    <button id='play-question'
       class='lw-button w-btn-sm  text-center mb-0 mx-2'
       data-play-html="<i class='far fa-play-circle'></i> Question"
       data-stop-html="<i class='far fa-stop-circle'></i> Question"
-      data-action='click->tone#play'>
+      data-action='click->tone#play'
+      disabled
+      >
       <i class='far fa-play-circle'></i> Question
-    </p>
+    </button>
   </div>
   <%# <p class="lw-button lw-btn-sm text-center mb-0 mx-2 my-0">Check</p> %>
   <%= simple_form_for(@attempt_music, @action) do |f| %>

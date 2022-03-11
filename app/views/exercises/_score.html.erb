@@ -27,15 +27,16 @@
       <div class="keyboard-shortcut">7</div>
     </button>
   <div class="d-flex justify-content-center align-items-center">
-    <div
+    <button
       id="play-attempt"
       class='play-button'
       title='play my input'
       data-action='click->score#playAttempt'
       data-play-html="<i class='far fa-play-circle'></i>"
-      data-stop-html="<i class='far fa-stop-circle'></i>">
+      data-stop-html="<i class='far fa-stop-circle'></i>"
+      disabled>
         <i class='far fa-play-circle'></i>
-    </div>
+    </button>
 
     <div id="score" data-score-target="score"></div>
     <p data-score-target="output"></p>

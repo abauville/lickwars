@@ -2,14 +2,15 @@ import * as Tone from "tone";
 import { Piano } from "@tonejs/piano";
 
 export class BoomBox {
-  constructor() {
+  constructor(target) {
     const vol = new Tone.Volume(-12).toDestination();
     this.piano = new Piano({
       release: true,
       velocities: 5 });
     this.piano.connect(vol);
     this.piano.load().then(() => {
-      console.log("loaded!");
+      console.log("loaded! target:", target);
+      target.disabled = false
     });
     this.breakLoop = false;
   }
