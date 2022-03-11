@@ -79,8 +79,17 @@ export class BoomBox {
     console.log("stavelines", staveLines)
     let sequence = []
     let offSequence = []
+    let yTopStave = Number(staveLines[0].attributes.d.value.split('L')[0].split(' ')[1])
+
+    let y
+    let i_measure = -1
     staveLines.forEach((stave, index) => {
-      const i_measure = Math.floor(index / 5)
+      y = Number(stave.attributes.d.value.split('L')[0].split(' ')[1])
+      if (y === yTopStave) {
+        i_measure += 1
+      }
+
+      // const i_measure = Math.floor(index / 5)
       sequence.push([wholeNoteLength * i_measure, stave])
       offSequence.push([wholeNoteLength * (i_measure + 1), stave])
     })
@@ -97,23 +106,23 @@ export class BoomBox {
       stave.classList.toggle("stave-highlight")
     }), offSequence).start(0)
 
-    // highlight notes
-    let playbackArrays = music.playbackArrays('notes');
-    sequence = playbackArrays[0];
-    const lengths = playbackArrays[1];
-    sequence = sequence.map((s, i) => {return [Math.floor(s[0]/wholeNoteLength) * wholeNoteLength, i]})
-    offSequence = sequence.map((s, i) => {return [(Math.floor(s[0]/wholeNoteLength) + 1) * wholeNoteLength, s[1]]})
-    offSequence = offSequence.map((s, i) => {return [s[0], i]})
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    const noteOnEvents = new Tone.Part(((time, index) => {
-      // console.log("onEvent", index);
-      notes[index].classList.toggle("highlight")
-    }), sequence).start(0)
+    // // highlight notes
+    // let playbackArrays = music.playbackArrays('notes');
+    // sequence = playbackArrays[0];
+    // const lengths = playbackArrays[1];
+    // sequence = sequence.map((s, i) => {return [Math.floor(s[0]/wholeNoteLength) * wholeNoteLength, i]})
+    // offSequence = sequence.map((s, i) => {return [(Math.floor(s[0]/wholeNoteLength) + 1) * wholeNoteLength, s[1]]})
+    // offSequence = offSequence.map((s, i) => {return [s[0], i]})
+    // const notes = svg.querySelectorAll(".vf-stavenote");
+    // const noteOnEvents = new Tone.Part(((time, index) => {
+    //   // console.log("onEvent", index);
+    //   notes[index].classList.toggle("highlight")
+    // }), sequence).start(0)
 
-    const noteOffEvents = new Tone.Part(((time, index) => {
-      // console.log("offEvent", index);
-      notes[index].classList.toggle("highlight")
-    }), offSequence).start(0)
+    // const noteOffEvents = new Tone.Part(((time, index) => {
+    //   // console.log("offEvent", index);
+    //   notes[index].classList.toggle("highlight")
+    // }), offSequence).start(0)
 
   }
 
