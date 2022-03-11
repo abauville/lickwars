@@ -131,6 +131,8 @@ export class BoomBox {
       const svg = document.querySelector("svg");
       const notes = svg.querySelectorAll(".vf-stavenote");
       notes.forEach((n) => {n.classList.remove("highlight")})
+      const staveLines = svg.querySelectorAll("[stroke='#999999']");
+      staveLines.forEach((s) => {s.classList.remove("stave-highlight")})
     }
   }
 
