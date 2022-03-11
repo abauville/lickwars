@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 import { Piano } from "@tonejs/piano";
+import { X } from "vexflow/src/registry";
 
 export class BoomBox {
   constructor(target) {
@@ -79,42 +80,49 @@ export class BoomBox {
     console.log("stavelines", staveLines)
     let sequence = []
     let offSequence = []
+    let yTopStave = Number(staveLines[0].attributes.d.value.split(/[LM]/)[1].split(' ')[1])
+
+    let y
+    let i_measure
+    let xStartMeasures = []
+    let xEndMeasures = []
     staveLines.forEach((stave, index) => {
-      const i_measure = Math.floor(index / 5)
-      sequence.push([wholeNoteLength * i_measure, stave])
-      offSequence.push([wholeNoteLength * (i_measure + 1), stave])
+      y = Number(stave.attributes.d.value.split(/[LM]/)[1].split(' ')[1])
+      if (y === yTopStave) {
+        xStartMeasures.push(Number(stave.attributes.d.value.split(/[LM]/)[1].split(' ')[0]))
+        xEndMeasures.push(Number(stave.attributes.d.value.split(/[LM]/)[2].split(' ')[0]))
+      }
     })
+    console.log("xStartMeasures", xStartMeasures)
     console.log("seq", sequence)
     console.log("offSequence", offSequence)
 
+    const n_measures = xStartMeasures.length
+    const paths = svg.querySelectorAll("path");
+    let i_m, xStart, xEnd
+    paths.forEach((path, index) => {
+      for (i_m = 0; i_m < n_measures; i_m++) {
+        xStart = Number(path.attributes.d.value.split(/[LM]/)[1].split(' ')[0])
+        xEnd = Number(path.attributes.d.value.split(/[LM]/)[1].split(' ')[0])
+        if (xStart >= xStartMeasures[i_m] && xEnd < xEndMeasures[i_m]) {
+          i_measure = i_m
+          break;
+        }
+      }
+      sequence.push([wholeNoteLength * i_measure, path])
+      offSequence.push([wholeNoteLength * (i_measure+1), path])
+    })
+
     const onEvents = new Tone.Part(((time, stave) => {
       console.log("onEvent", time, stave);
-      stave.classList.toggle("stave-highlight")
+      stave.classList.toggle("highlight")
     }), sequence).start(0)
 
     const offEvents = new Tone.Part(((time, stave) => {
       // console.log("offEvent", index);
       stave.classList.toggle("stave-highlight")
+      stave.classList.toggle("highlight")
     }), offSequence).start(0)
-
-    // highlight notes
-    let playbackArrays = music.playbackArrays('notes');
-    sequence = playbackArrays[0];
-    const lengths = playbackArrays[1];
-    sequence = sequence.map((s, i) => {return [Math.floor(s[0]/wholeNoteLength) * wholeNoteLength, i]})
-    offSequence = sequence.map((s, i) => {return [(Math.floor(s[0]/wholeNoteLength) + 1) * wholeNoteLength, s[1]]})
-    offSequence = offSequence.map((s, i) => {return [s[0], i]})
-    const notes = svg.querySelectorAll(".vf-stavenote");
-    const noteOnEvents = new Tone.Part(((time, index) => {
-      // console.log("onEvent", index);
-      notes[index].classList.toggle("highlight")
-    }), sequence).start(0)
-
-    const noteOffEvents = new Tone.Part(((time, index) => {
-      // console.log("offEvent", index);
-      notes[index].classList.toggle("highlight")
-    }), offSequence).start(0)
-
   }
 
   togglePlayStop(target) {
@@ -131,6 +139,8 @@ export class BoomBox {
       const svg = document.querySelector("svg");
       const notes = svg.querySelectorAll(".vf-stavenote");
       notes.forEach((n) => {n.classList.remove("highlight")})
+      const staveLines = svg.querySelectorAll("[stroke='#999999']");
+      staveLines.forEach((s) => {s.classList.remove("stave-highlight")})
     }
   }
 

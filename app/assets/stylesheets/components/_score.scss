@@ -21,15 +21,16 @@ div#score {
   outline: none;
 }
 
-.vf-stavenote.highlight path{
+// .vf-stavenote.highlight path{
+//   stroke: rgb(46, 126, 216);
+//   fill: rgb(46, 126, 216);
+//   filter: drop-shadow(0 0 0.1rem rgb(46, 126, 216));
+// }
+
+path.highlight {
   stroke: rgb(46, 126, 216);
   fill: rgb(46, 126, 216);
-  filter: drop-shadow(0 0 0.1rem rgb(46, 126, 216));
-}
-
-path.stave-highlight {
-  stroke: rgb(46, 126, 216);
-  stroke-width: 2;
+  // stroke-width: 2;
   filter: drop-shadow(0 0 0.2rem rgb(46, 126, 216));
 }
 
