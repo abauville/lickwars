@@ -120,7 +120,6 @@ export class BoomBox {
 
     const offEvents = new Tone.Part(((time, stave) => {
       // console.log("offEvent", index);
-      stave.classList.toggle("stave-highlight")
       stave.classList.toggle("highlight")
     }), offSequence).start(0)
   }
@@ -139,8 +138,8 @@ export class BoomBox {
       const svg = document.querySelector("svg");
       const notes = svg.querySelectorAll(".vf-stavenote");
       notes.forEach((n) => {n.classList.remove("highlight")})
-      const staveLines = svg.querySelectorAll("[stroke='#999999']");
-      staveLines.forEach((s) => {s.classList.remove("stave-highlight")})
+      const paths = svg.querySelectorAll("path");
+      paths.forEach((s) => {s.classList.remove("highlight")})
     }
   }
 
