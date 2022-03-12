@@ -48,8 +48,7 @@ class ExercisesController < ApplicationController
         exercise: @exercise,
         is_question: false
       )
-    @review =
-      Review.find_or_initialize_by(user: current_user, exercise: @exercise)
+    @review = Review.find_or_initialize_by(user: current_user, exercise: @exercise)
     @action =
       if @attempt_music.id
         { url: music_path(@attempt_music), method: :patch }

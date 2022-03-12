@@ -23,8 +23,7 @@ class MusicsController < ApplicationController
     if @music.notes == @music.exercise.question_music.notes
       flash[:success] = true
       flash[:notice] = 'Great job!'
-      @music.status = 1
-      @music.save
+      @music.finished!
     else
       flash[:alert] = 'It was incorrect! Try again!'
     end
@@ -41,7 +40,7 @@ class MusicsController < ApplicationController
         :chords,
         :note_values,
         :chord_values,
-        :status,
+        :status
       )
   end
 end
