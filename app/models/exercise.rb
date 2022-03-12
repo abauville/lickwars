@@ -64,9 +64,9 @@ class Exercise < ApplicationRecord
   def self.user_exercise_pie(user)
     grouped =
       Exercise
-      .includes(:musics)
-      .where(user: user, musics: { is_question: false })
-      .group_by { |ex| ex.difficulty_string.capitalize }
+        .includes(:musics)
+        .where(user: user)
+        .group_by { |ex| ex.difficulty_string.capitalize }
     grouped.map { |k, v| { k => v.count } }.reduce(:merge)
   end
 end
