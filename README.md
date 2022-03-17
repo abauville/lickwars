@@ -1,4 +1,4 @@
-# Melodict
+# [Melodict](http://www.melodict.xyz/)
 
 ## Introduction
 
