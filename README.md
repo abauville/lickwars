@@ -1,8 +1,8 @@
-# [Melodict](http://www.melodict.xyz/)
+# Melodict
 
 ## Introduction
 
-Melodict is an ear training web app focused on melody dictation. The user listens to a melody and attempts to write it down by interact with a sheet music editor. 
+[Melodict](http://www.melodict.xyz/) is an ear training web app focused on melody dictation. The user listens to a melody and attempts to write it down by interact with a sheet music editor. 
 
 <img width="1089" alt="Screen Shot 2022-03-17 at 14 50 25" src="https://user-images.githubusercontent.com/39847270/158745456-c1c0f409-4349-4875-a4e7-c36c7e171889.png">
 
