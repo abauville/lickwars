@@ -35,4 +35,7 @@ Sound is generated using the JavaScript synthesizer [ToneJS](https://tonejs.gith
 ### User interaction with the sheet music
 
 The user plays the game by inputing her answer on the sheet music using the keyboard keys. Keyboard shortcuts are accessible via the help button.
-The sheet music display is generated using [VexFlow](https://www.vexflow.com/). VexFlow allowed us to generate an SVG representation of the sheet music. Then, we wrapped the SVG DOM inside a [Stimulus controller](https://stimulus.hotwired.dev/).
+The sheet music display is generated using [VexFlow](https://www.vexflow.com/). VexFlow allowed us to generate an SVG representation of the sheet music. Then, we wrapped the SVG DOM inside a [Stimulus controller](https://stimulus.hotwired.dev/). This controller allowed us to:
+- handle user interactions (clicks and keyboard presses) with the SVG elements
+- update and redraw the SVG as the user modifies the music
+- apply CSS styling to SVG elements to reflect user interactions and audio-visual feedback
